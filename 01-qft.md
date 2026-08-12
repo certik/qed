@@ -20,7 +20,7 @@ lots of examples (arbitrarily long), that use the theory (but do not
 develop new ideas), so that one can learn how the theory works from the
 examples. For instance, one can ask \"why is there the term $(\mathbf{p}-e\mathbf{A})^2$ in the Schrödinger equation for electromagnetic field,
 why this and not something else?\" or \"why is there the
-$boldsymbolsigmacdot\mathbf{B}$ term in the Pauli equation?\", to find the
+$\boldsymbol{\sigma}\cdot\mathbf{B}$ term in the Pauli equation?\", to find the
 answer, one just finds the Pauli equation in the theory and then looks
 at the derivation, so in this case one quickly finds that it follows
 from the minimal coupling in QED, e.g. it's the easiest way how
@@ -59,7 +59,7 @@ Lagrangian with a global $SU(2)\times U(1)$ symmetry:
 
 $$\mathcal{L}=i\bar L^{(l)}\gamma_\mu\partial^\mu L^{(l)}+i\bar l_R \gamma_\mu\partial^\mu l_R +\frac{1}{2} \partial_\mu\Phi^*\partial^\mu\Phi-m^2\Phi^*\Phi-{1\over4} \lambda(\Phi^*\Phi)^2 -h_e\bar L^{(l)} \Phi e_R - \text{h.c.}$$
 
-where $l=e,mu,tau$ and $a=1,2$, $l\_{L,R} = half (1mpgamma_5)l$
+where $l=e,\mu,\tau$ and $a=1,2$, $l_{L,R} = \frac{1}{2}(1\mp\gamma_5)l$
 and
 
 $$\begin{aligned}
@@ -85,8 +85,8 @@ $$\begin{aligned}
 \Phi = e^{{i\over v}\pi^a(x)\tau^a} \left( \begin{array}{c} 0 \\ {1\over\sqrt{2}}(v+H(x)) \end{array} \right)
 \end{aligned}$$
 
-This breaks the gauge invariance. The $partial^mupi^a$ are going to
-be added to $A^a_mu$ so we can set $pi_a = 0$ now.
+This breaks the gauge invariance. The $\partial^\mu\pi^a$ are going to
+be added to $A^a_\mu$ so we can set $\pi_a = 0$ now.
 
 ::: index
 Higgs boson
@@ -96,16 +96,16 @@ Higgs boson
 
 $$\mathcal{L}_{Higgs}= \frac{1}{2} \partial_\mu\Phi^*\partial^\mu\Phi-m^2\Phi^*\Phi-{1\over4} \lambda(\Phi^*\Phi)^2$$
 
-Plugging in the covariant derivatives and $Phi$ in U-gauge (symmetry
+Plugging in the covariant derivatives and $\Phi$ in U-gauge (symmetry
 breaking):
 
-$$\mathcal{L}_{Higgs} = {1\over2}\Phi^+(\overleftarrow\partial_\mu+igA^a_\mu {\tau^a\over 2} + ig'YB_\mu) (\overrightarrow\partial^\mu+igA^{a\mu} {\tau^a\over 2} + ig'YB^\mu)\Phi -\lambda(\Phi^+\Phi-{v^2\over2})^2=$$
+$$\mathcal{L}_{Higgs} = {1\over2}\Phi^+(\overleftarrow{\partial}_\mu+igA^a_\mu {\tau^a\over 2} + ig'YB_\mu) (\overrightarrow{\partial}^\mu+igA^{a\mu} {\tau^a\over 2} + ig'YB^\mu)\Phi -\lambda(\Phi^+\Phi-{v^2\over2})^2=$$
 
-$$= \Phi^+_U(\overleftarrow\partial_\mu+igA^a_\mu {\tau^a\over 2} + ig'YB_\mu) (\overrightarrow\partial^\mu+igA^{a\mu} {\tau^a\over 2} + ig'YB\mu)\Phi_U -\lambda(\Phi^+_U\Phi_U-{v^2\over2})^2 =$$
+$$= \Phi^+_U(\overleftarrow{\partial}_\mu+igA^a_\mu {\tau^a\over 2} + ig'YB_\mu) (\overrightarrow{\partial}^\mu+igA^{a\mu} {\tau^a\over 2} + ig'YB\mu)\Phi_U -\lambda(\Phi^+_U\Phi_U-{v^2\over2})^2 =$$
 
 $$= {1\over2}\partial_\mu H\partial^\mu H - \lambda v^2 H^2 - \lambda v H^3 - {1\over 4}\lambda H^4 +$$
 
-$$+{1\over 8}(v+H)^2 \left(2g^2{A^1_\mu+iA^2_\mu\over\sqrt2}{A^{1\mu}-iA^{2\mu}\over\sqrt2} + (g^2+4Y^2g'^2){gA^3_\mu-2Yg'B_\mu\over\sqrt{g^2+4Y^2g'^2}} {gA^{3\mu}-2Yg'B^\mu\over\sqrt{g^2+4Y^2g'^2}}\right) =$$
+$$+{1\over 8}(v+H)^2 \left(2g^2{A^1_\mu+iA^2_\mu\over\sqrt{2}}{A^{1\mu}-iA^{2\mu}\over\sqrt{2}} + (g^2+4Y^2g'^2){gA^3_\mu-2Yg'B_\mu\over\sqrt{g^2+4Y^2g'^2}} {gA^{3\mu}-2Yg'B^\mu\over\sqrt{g^2+4Y^2g'^2}}\right) =$$
 
 $$= {1\over2}\partial_\mu H\partial^\mu H - \lambda v^2 H^2 - \lambda v H^3 - {1\over 4}\lambda H^4 + {1\over 8}(v+H)^2 \left(2g^2W^-_\mu W^{+\mu} + {g^2\over\cos^2\theta_W}Z_\mu Z^\mu\right) =$$
 
@@ -115,11 +115,11 @@ $$+{1\over2}vg^2W_\mu^-W^{+\mu}H +{g^2\over4\cos\theta_W}vZ_\mu Z^\mu H +{1\over
 
 Where we put
 
-$$W^{\pm}_\mu = {1\over\sqrt2}(A^1_\mu \mp iA^2_\mu)$$
+$$W^{\pm}_\mu = {1\over\sqrt{2}}(A^1_\mu \mp iA^2_\mu)$$
 
 $$Z_\mu = {g\over\sqrt{g^2+4Y^2g'^2}}A^3_\mu- {2Yg'\over\sqrt{g^2+4Y^2g'^2}}B_\mu$$
 
-we defined $theta_W$ by the relation
+we defined $\theta_W$ by the relation
 
 $$\cos\theta_W = {g\over\sqrt{g^2+4Y^2g'^2}}$$
 
@@ -139,11 +139,11 @@ Yukawa terms
 
 $$\mathcal{L}_{Yukawa} = -h_e \bar L \Phi e_R - \text{h.c.}= -h_e \bar L \Phi_U e_R - \text{h.c.}=$$
 
-$$=-{1\over\sqrt2}h_e(v+H)(\bar e_L e_R + \bar e_R e_L)= -{1\over\sqrt2}h_e(v+H)\bar ee=$$
+$$=-{1\over\sqrt{2}}h_e(v+H)(\bar e_L e_R + \bar e_R e_L)= -{1\over\sqrt{2}}h_e(v+H)\bar ee=$$
 
-$$=-{1\over\sqrt2}h_ev\bar ee-{1\over\sqrt2}h_e\bar eeH$$
+$$=-{1\over\sqrt{2}}h_ev\bar ee-{1\over\sqrt{2}}h_e\bar eeH$$
 
-The term $bar L Phi e_R$ is $U(1)$ (hypercharge) invariant, so
+The term $\bar L \Phi e_R$ is $U(1)$ (hypercharge) invariant, so
 
 $$-Y_L+Y+Y_R=0$$
 
@@ -159,34 +159,34 @@ $$\to i\bar L\gamma^\mu(\partial_\mu-igA^a_\mu{\tau^a\over2}-ig'Y_LB_\mu) L +i\b
 
 $$= i\bar L\gamma^\mu\partial_\mu L+i\bar e_R \gamma^\mu\partial_\mu e_R +g\bar L\gamma^\mu{\tau^a\over2}LA^a_\mu +g'Y_L\bar L\gamma^\mu LB_\mu +g'Y_R\bar e_R \gamma^\mu e_R B_\mu =$$
 
-$$= i\bar L\gamma^\mu\partial_\mu L+i\bar e_R \gamma^\mu\partial_\mu e_R +{g\over\sqrt2}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \text{h.c.}) +{1\over2}g\bar L\gamma^\mu\tau^3L A^3_\mu +g'Y_L\bar L\gamma^\mu LB_\mu +g'Y_R\bar e_R \gamma^\mu e_R B_\mu =$$
+$$= i\bar L\gamma^\mu\partial_\mu L+i\bar e_R \gamma^\mu\partial_\mu e_R +{g\over\sqrt{2}}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \text{h.c.}) +{1\over2}g\bar L\gamma^\mu\tau^3L A^3_\mu +g'Y_L\bar L\gamma^\mu LB_\mu +g'Y_R\bar e_R \gamma^\mu e_R B_\mu =$$
 
-$$= i\bar \nu_L\gamma^\mu\partial_\mu \nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over\sqrt2}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \text{h.c.}) +{1\over2}g\bar\nu_L\gamma^\mu\nu_LA^3_\mu -{1\over2}g\bar e_L\gamma^\mu e_LA^3_\mu$$
+$$= i\bar \nu_L\gamma^\mu\partial_\mu \nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over\sqrt{2}}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \text{h.c.}) +{1\over2}g\bar\nu_L\gamma^\mu\nu_LA^3_\mu -{1\over2}g\bar e_L\gamma^\mu e_LA^3_\mu$$
 
 $$+g'Y_L\bar\nu_L\gamma^\mu\nu_LB_\mu +g'Y_L\bar e_L\gamma^\mu e_LB_\mu +g'Y_R\bar e_R \gamma^\mu e_R B_\mu =$$
 
-$$= i\bar \nu_L\gamma^\mu\partial_\mu \nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over\sqrt2}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \text{h.c.})$$
+$$= i\bar \nu_L\gamma^\mu\partial_\mu \nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over\sqrt{2}}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \text{h.c.})$$
 
 $$+\left[ (\frac{1}{2} g\sin\theta_W+Y_Lg'\cos\theta_W)\bar\nu_L\gamma^\mu\nu_L +(-\frac{1}{2} g\sin\theta_W +Y_Lg'\cos\theta_W)\bar e_L\gamma^\mu e_L +Y_Rg'\cos\theta_W\bar e_R\gamma^\mu e_R \right]A_\mu$$
 
 $$+\left[ (\frac{1}{2} g\cos\theta_W-Y_Lg'\sin\theta_W)\bar\nu_L\gamma^\mu\nu_L +(-\frac{1}{2} g\cos\theta_W -Y_Lg'\sin\theta_W)\bar e_L\gamma^\mu e_L -2Y_Lg'\sin\theta_W\bar e_R\gamma^\mu e_R \right]Z_\mu$$
 
-Where we substituted new fields $Z_mu$ and $A_mu$ for the old ones
-$A^3_mu$ and $B_mu$ using the relation:
+Where we substituted new fields $Z_\mu$ and $A_\mu$ for the old ones
+$A^3_\mu$ and $B_\mu$ using the relation:
 
 $$Z_\mu= \cos\theta_W A^3_\mu - \sin\theta_W B_\mu$$
 
 $$A_\mu= \sin\theta_W A^3_\mu + \cos\theta_W B_\mu$$
 
-The angle $theta_W$ must be the same as in the Higgs sector, so that
-the field $Z_mu$ is the same. We now need to make the following
+The angle $\theta_W$ must be the same as in the Higgs sector, so that
+the field $Z_\mu$ is the same. We now need to make the following
 requirement in order to proceed further:
 
 $$Y = -Y_L$$
 
 This follows for example by requiring that neutrinos have zero charge,
-i.e. setting $half gsintheta_W+Y_Lg'costheta_W = 0$ and substituting
-for $theta_W$ from the definition (see the Higgs terms), from which
+i.e. setting $\frac{1}{2} g\sin\theta_W + Y_L g'\cos\theta_W = 0$ and substituting
+for $\theta_W$ from the definition (see the Higgs terms), from which
 one gets $Y=-Y_L$. From $-Y_L+Y+Y_R=0$ we now get
 
 $$Y_R = 2Y_L$$
@@ -203,19 +203,17 @@ $$\tan\theta_W = -2Y_L {g'\over g}$$
 
 and the Lagrangian can be further simplified:
 
-$$\mathcal{L}= i\bar\nu_L\gamma^\mu\partial_\mu\nu_L+i\bar e\gamma^\mu\partial_\mu e +{g\over\sqrt2}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \text{h.c.})$$
+$$\mathcal{L}= i\bar\nu_L\gamma^\mu\partial_\mu\nu_L+i\bar e\gamma^\mu\partial_\mu e +{g\over\sqrt{2}}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \text{h.c.})$$
 
 $$-g\sin\theta_W(\bar e_L\gamma^\mu e_L+\bar e_R\gamma^\mu e_R) A_\mu$$
 
 $$+{g\over\cos\theta_W}\left[ \frac{1}{2} \bar\nu_L\gamma^\mu\nu_L +(-\frac{1}{2} + \sin^2\theta_W)\bar e_L\gamma^\mu e_L +\sin^2\theta_W\bar e_R\gamma^\mu e_R \right]Z_\mu=$$
 
-$$= i\bar\nu_L\gamma^\mu\partial_\mu\nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over2\sqrt2}(\bar \nu\gamma^\mu (1-\gamma_5) e W^+_\mu + \text{h.c.}) -g\sin\theta_W\bar e\gamma^\mu e A_\mu$$
+$$= i\bar\nu_L\gamma^\mu\partial_\mu\nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over2\sqrt{2}}(\bar \nu\gamma^\mu (1-\gamma_5) e W^+_\mu + \text{h.c.}) -g\sin\theta_W\bar e\gamma^\mu e A_\mu$$
 
 $$+{g\over2\cos\theta_W}\left[ \bar\nu\gamma^\mu(1-\gamma_5)\nu +\bar e\gamma^\mu (-\frac{1}{2}+2\sin^2\theta_W+\frac{1}{2}\gamma_5) e \right]Z_\mu$$
 
-Where we used the relations $barnu_Lgamma^mu e_L=halfbarnugamma^mu
-(1-gamma_5)e$ and $barnu_Rgamma^mu e_R=halfbarnugamma^mu
-(1+gamma_5)e$ .
+Where we used the relations $\bar\nu_L\gamma^\mu e_L=\frac{1}{2}\bar\nu\gamma^\mu(1-\gamma_5)e$ and $\bar\nu_R\gamma^\mu e_R=\frac{1}{2}\bar\nu\gamma^\mu(1+\gamma_5)e$ .
 
 ::: index
 gauge
@@ -233,21 +231,21 @@ $$= -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z
 
 $$-{1\over4}g^2[(A^a_\mu A^{a\mu})(A^b_\nu A^{b\nu})- (A^a_\mu A^a_\nu)(A^{b\mu} A^{b\nu})]=$$
 
-$$= -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} -g[A^1_\mu A^2_\nu \overleftrightarrow\partial^\mu A^{3\nu}+ \text{cycl. perm. (123)}]$$
+$$= -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} -g[A^1_\mu A^2_\nu \overleftrightarrow{\partial}^\mu A^{3\nu}+ \text{cycl. perm. (123)}]$$
 
 $$-{1\over4}g^2[(A^a_\mu A^{a\mu})(A^b_\nu A^{b\nu})- (A^a_\mu A^a_\nu)(A^{b\mu} A^{b\nu})] =$$
 
-$$= -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} -ig(W^0_\mu W^-_\nu\overleftrightarrow\partial^\mu W^{+\nu}+ \text{cycl. perm. (0-+)})$$
+$$= -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} -ig(W^0_\mu W^-_\nu\overleftrightarrow{\partial}^\mu W^{+\nu}+ \text{cycl. perm. (0-+)})$$
 
 $$-g^2[ \frac{1}{2}(W^+_\mu W^{-\mu})^2 -\frac{1}{2}(W^+_\mu W^{+\mu})(W^-_\nu W^{-\nu}) +(W^0_\mu W^{0\mu})(W^+_\nu W^{-\nu}) -(W^-_\mu W^+_\nu)(W^{0\mu} W^{0\nu})=$$
 
 $$= -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} +\mathcal{L}_{WW\gamma}+L_{WWZ}+L_{WW\gamma\gamma}+L_{WWWW}+L_{WWZZ}+L_{WWZ\gamma}$$
 
-Where $W^0_mu = A^3_mu=costheta_W [Z]()mu + sintheta_W [A]()mu$ and:
+Where $W^0_\mu = A^3_\mu=\cos\theta_W Z_\mu + \sin\theta_W A_\mu$ and:
 
-$$\mathcal{L}_{WW\gamma}=-ig\sin\theta_W(A_\mu W^-_\nu\overleftrightarrow\partial^\mu W^{+\nu} + \text{cycl. perm. ($A$ $W^-$ $W^+$)})$$
+$$\mathcal{L}_{WW\gamma}=-ig\sin\theta_W(A_\mu W^-_\nu\overleftrightarrow{\partial}^\mu W^{+\nu} + \text{cycl. perm. ($A$ $W^-$ $W^+$)})$$
 
-$$\mathcal{L}_{WWZ}=-ig\cos\theta_W(Z_\mu W^-_\nu\overleftrightarrow\partial^\mu W^{+\nu}+\text{cycl. perm. ($Z$ $W^-$ $W^+$)})$$
+$$\mathcal{L}_{WWZ}=-ig\cos\theta_W(Z_\mu W^-_\nu\overleftrightarrow{\partial}^\mu W^{+\nu}+\text{cycl. perm. ($Z$ $W^-$ $W^+$)})$$
 
 $$\mathcal{L}_{WW\gamma\gamma}=-g^2\sin^2\theta_W(W^-_\mu W^{+\mu}A_\nu A^\nu- W^-_\mu A^\mu W^+_\nu A^\nu)$$
 
@@ -269,18 +267,18 @@ $$\mathcal{L} = {1\over2}\partial_\mu H\partial^\mu H - \lambda v^2 H^2 +{1\over
 
 $$+{1\over2}vg^2W_\mu^-W^{+\mu}H +{g^2\over4\cos\theta_W}vZ_\mu Z^\mu H +{1\over4}g^2W_\mu^-W^{+\mu}H^2 +{g^2\over8\cos\theta_W}Z_\mu Z^\mu H^2$$
 
-$$-{1\over\sqrt2}h_ev\bar ee-{1\over\sqrt2}h_e\bar eeH$$
+$$-{1\over\sqrt{2}}h_ev\bar ee-{1\over\sqrt{2}}h_e\bar eeH$$
 
 $$-{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} +\mathcal{L}_{WW\gamma}+L_{WWZ}+L_{WW\gamma\gamma}+L_{WWWW}+L_{WWZZ}+L_{WWZ\gamma}$$
 
-$$+i\bar\nu_L\gamma^\mu\partial_\mu\nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over2\sqrt2}(\bar \nu\gamma^\mu (1-\gamma_5) e W^+_\mu + \text{h.c.}) -g\sin\theta_W\bar e\gamma^\mu e A_\mu$$
+$$+i\bar\nu_L\gamma^\mu\partial_\mu\nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over2\sqrt{2}}(\bar \nu\gamma^\mu (1-\gamma_5) e W^+_\mu + \text{h.c.}) -g\sin\theta_W\bar e\gamma^\mu e A_\mu$$
 
 $$+{g\over2\cos\theta_W}\left[ \bar\nu\gamma^\mu(1-\gamma_5)\nu +\bar e\gamma^\mu (-\frac{1}{2}+2\sin^2\theta_W+\frac{1}{2}\gamma_5) e \right]Z_\mu$$
 
 $$+ (e, \nu_e, h_e \leftrightarrow \mu, \nu_\mu, h_\mu) + (e, \nu_e, h_e \leftrightarrow \tau, \nu_\tau, h_\tau)$$
 
-The free parameters are $g$, $theta_W$, $v$, $lambda$, $h_e$,
-$h_mu$, $h_tau$.
+The free parameters are $g$, $\theta_W$, $v$, $\lambda$, $h_e$,
+$h_\mu$, $h_\tau$.
 
 ::: index
 particle mass
@@ -294,7 +292,7 @@ $$\mathcal{L} = -{1\over2}m_H^2 H^2 +m_W^2 W^-_\mu W^{+\mu} +{1\over2}m_Z^2 Z_\m
 
 comparing to the above:
 
-$$\mathcal{L} = -\lambda v^2 H^2 +{1\over4}g^2v^2W^-_\mu W^{+\mu} +{g^2v^2\over8\cos^2\theta_W}Z_\mu Z^\mu -{1\over\sqrt2}h_ev\bar ee +\cdots$$
+$$\mathcal{L} = -\lambda v^2 H^2 +{1\over4}g^2v^2W^-_\mu W^{+\mu} +{g^2v^2\over8\cos^2\theta_W}Z_\mu Z^\mu -{1\over\sqrt{2}}h_ev\bar ee +\cdots$$
 
 we get
 
@@ -304,11 +302,11 @@ $$m_Z = {gv\over2\cos\theta_W}={m_W\over\cos\theta_W}$$
 
 $$m_H = v\sqrt{2\lambda}$$
 
-$$m_e = {1\over\sqrt2}h_ev$$
+$$m_e = {1\over\sqrt{2}}h_ev$$
 
-$$m_\mu = {1\over\sqrt2}h_\mu v$$
+$$m_\mu = {1\over\sqrt{2}}h_\mu v$$
 
-$$m_\tau = {1\over\sqrt2}h_\tau v$$
+$$m_\tau = {1\over\sqrt{2}}h_\tau v$$
 
 Note that those are the bare masses (e.g. in order to obtain the real
 mesaured masses of the particles, one has to renormalize them by
@@ -320,8 +318,8 @@ quarks
 
 ### Parameters of the Standard Model
 
-The free parameters are $g$, $theta_W$, $v$, $lambda$, then
-three masses of the charged leptons $h_e$, $h_mu$, $h_tau$, six
+The free parameters are $g$, $\theta_W$, $v$, $\lambda$, then
+three masses of the charged leptons $h_e$, $h_\mu$, $h_\tau$, six
 quark masses and four parameters of the CKM mixing matrix, which gives
 4 + 3 + 6 + 4 = 17 free parameters (if one allows for three neutrino
 masses and the corresponding four mixings parameters, one gets 17 + 3 +
@@ -345,7 +343,7 @@ $$h_\mu = 6.065\cdot 10^{-4} {\rm\,eV}$$
 
 $$h_\tau = 1.021\cdot 10^{-2} {\rm\,eV}$$
 
-All the parameters have been measured quite exactly, except $lambda$.
+All the parameters have been measured quite exactly, except $\lambda$.
 
 Other physical constants can then be calculated using the formulas:
 
@@ -355,11 +353,11 @@ $$m_Z = {m_W\over\cos\theta_W} = 88.6 {\rm\, GeV}$$
 
 $$m_H = v\sqrt{2\lambda} = \mbox{from }150 {\rm\,GeV}\mbox{ to }700 {\rm\,GeV}$$
 
-$$m_e = {1\over\sqrt2}h_ev = 511{\rm\,KeV}$$
+$$m_e = {1\over\sqrt{2}}h_ev = 511{\rm\,KeV}$$
 
-$$m_\mu= {1\over\sqrt2}h_\mu v = 105.6{\rm\,MeV}$$
+$$m_\mu= {1\over\sqrt{2}}h_\mu v = 105.6{\rm\,MeV}$$
 
-$$m_\tau= {1\over\sqrt2}h_\tau v = 1.777{\rm\,GeV}$$
+$$m_\tau= {1\over\sqrt{2}}h_\tau v = 1.777{\rm\,GeV}$$
 
 $$G_F = {1\over\sqrt{2} v^2} = (1.16639 \pm 0.00001) \times 10^{-5}
     {\rm\, GeV^{-2}}$$
@@ -413,16 +411,16 @@ expressed using the creation and anihilation operators below, also the
 corresponding non-interacting Hamiltonian is shown.
 
 The general idea behind the machinery is that the field operator
-$hatpsi(\mathbf{x}) = sum_k psi_k(\mathbf{x}) c_k$ is constructed as a sum (or
+$\hat\psi(\mathbf{x}) = \sum_k \psi_k(\mathbf{x}) c_k$ is constructed as a sum (or
 an integral, depending on if the index $k$ is discrete or continuous)
 of single-particle wave functions (i.e. solutions of the noninteracting
 equation of motion) multiplied by the creation/anihilation operators
-($c_k$ or $c_k^dag$) that create/destroy the particle in the given
+($c_k$ or $c_k^\dagger$) that create/destroy the particle in the given
 single-particle state. Note that the noninteracting equation of motion
 usually means that we set all potentials (interactions) as zero, but in
 principle it can be any equation that we can solve exactly.
 
-The coefficients $psi_k(\mathbf{x})$ don't depend on time (so neither the
+The coefficients $\psi_k(\mathbf{x})$ don't depend on time (so neither the
 field operators in the Schrödinger picture), but we work in the
 interaction picture, where the creation/anihilation operators depend on
 time, and the time dependence is put into the exponentials below (but
@@ -444,7 +442,7 @@ $$\left[a_{\mathbf{p}}, a_{\mathbf{q}}^{\dag}\right] =
     (2\pi)^3\delta^{(3)}({\mathbf{p}} - {\mathbf{q}})$$
 
 (all other commutators are equal to zero). The equal-time commutation
-relations for $phi$ and $pi$ are then:
+relations for $\phi$ and $pi$ are then:
 
 $$\left[\phi({\mathbf{x}}), \pi({\mathbf{y}})\right] =
     i\delta^{(3)}({\mathbf{x}} - {\mathbf{y}})$$
@@ -484,7 +482,7 @@ $$\left\{b_{\mathbf{p}}^r, b_{\mathbf{q}}^{s\dag}\right\} =
     (2\pi)^3\delta^{(3)}({\mathbf{p}} - {\mathbf{q}}) \delta^{rs}$$
 
 (all other anticommutators are equal to zero). The equal-time
-anticommutation relations for $psi$ and $psi^dag$ are then:
+anticommutation relations for $\psi$ and $\psi^\dagger$ are then:
 
 $$\left\{\psi_a({\mathbf{x}}), \psi_b^\dag({\mathbf{y}})\right\} =
     \delta^{(3)}({\mathbf{x}} - {\mathbf{y}}) \delta_{ab}$$
@@ -521,7 +519,7 @@ where
 $$\left[a_{\mathbf{p}}^r, a_{\mathbf{q}}^{s\dag}\right] =
     (2\pi)^3\delta^{(3)}({\mathbf{p}} - {\mathbf{q}}) \delta^{rs}$$
 
-The equal-time commutation relations for $A_mu$ are then:
+The equal-time commutation relations for $A_\mu$ are then:
 
 $$\left[A_\mu({\mathbf{x}}), A_\nu^\dag({\mathbf{y}})\right] =
     \delta^{(3)}({\mathbf{x}} - {\mathbf{y}}) \delta_{\mu\nu}$$
@@ -532,7 +530,7 @@ We are interested in calculating the following scattering amplitudes:
 
 $$\langle f|i \rangle$$
 
-where the initial $ket{i}$ and final $ket{f}$ states are created by
+where the initial $|i\rangle$ and final $|f\rangle$ states are created by
 creation operators of the fields from the previous section. For example
 
 $$|i\rangle = b_1^\dag b_2^\dag|\Omega\rangle$$
@@ -586,9 +584,9 @@ $$a^r_{\mathbf{k}}\,{}_\text{out} \to
     \epsilon_\mu^r({\mathbf{k}}){k^2\over i}
         \tilde A^\mu(k)$$
 
-where the \"in\" is the operator for $tto -infty$ and \"out\" for
-$ttoinfty$. The fields $phi(x)$, $psi(x)$, $barpsi(x)$ and
-$A^mu(x)$ have to be time ordered. On the left hand side is a
+where the \"in\" is the operator for $t\to -\infty$ and \"out\" for
+$t\to\infty$. The fields $\phi(x)$, $\psi(x)$, $\bar\psi(x)$ and
+$A^\mu(x)$ have to be time ordered. On the left hand side is a
 position space representation, the two expressions on the right hand
 side are the momentum representation (the last expression is written
 using the propagators), e.g. a Fourier transform, which is essentially
@@ -643,8 +641,8 @@ $$\left[\left(i\overleftarrow{\not{\partial}_1}+m\right)
 $$\left[\left(i\overleftarrow{\not{\partial}_2}+m\right)
     u^{s_2}({\mathbf{p}}_2)\right]_{\alpha_2} \,e^{ip_2x_2}$$
 
-where the $alpha_1$, $alpha_2$, $alpha\_{1'}$ and
-$alpha\_{2'}$ spinor indices were introduced to show how the matrices
+where the $\alpha_1$, $\alpha_2$, $\alpha_{1'}$ and
+$\alpha_{2'}$ spinor indices were introduced to show how the matrices
 should be multiplied. The vacuum amplitude is called a 4 point
 interacting Green function in position space:
 
@@ -739,7 +737,7 @@ examples:
 
 #### Example 1
 
-$nu_e$ - $e$ elastic scattering:
+$\nu_e$ - $e$ elastic scattering:
 
 $$\nu_e(k) + e(p) \to \nu_e(k') + e(p')$$
 
@@ -874,7 +872,7 @@ $$\left[{1\over\tilde S(-k_2)}v^s({\mathbf{k}}_2)\right]
 
 #### Example 4
 
-$H(p)to Z(k)+Z(l)$ decay. Initial and final states:
+$H(p)\to Z(k)+Z(l)$ decay. Initial and final states:
 
 $$|i\rangle = a^\dag_{\mathbf{p}}|\Omega\rangle$$
 
@@ -899,7 +897,7 @@ $$= {\epsilon^{r*}_\mu({\mathbf{k}})\epsilon^{s*}_\nu({\mathbf{l}})
 
 #### Example 5
 
-$e^+ e^- to W^+ W^-$ scattering:
+$e^+ e^- \to W^+ W^-$ scattering:
 
 $$e^-(k) + e^+(-l) \to W^-(p) + W^+(r)$$
 
@@ -933,7 +931,7 @@ $$\left[{1\over\tilde S(-{\mathbf{k}})} u({\mathbf{k}}) \right]$$
 
 #### Example 6
 
-$W^+ W^- to W^+ W^-$ scattering:
+$W^+ W^- \to W^+ W^-$ scattering:
 
 $$W^-(k) + W^+(p) \to W^-(r) + W^+(l)$$
 
@@ -980,11 +978,9 @@ $$S=U_I(\infty, -\infty) =
 T\exp\left(-{i\over\hbar}\int_{-\infty}^{\infty}H_1(t)\mathrm{d} t \right) =
 T\exp\left(-{i\over\hbar}\int\mathrm{d}^4 x \mathcal{H}_1(x) \right)$$
 
-$phi_H$ is a field in the Heisenberg picture ($phi(\mathbf{x},
-t)=e^{iHt}phi(\mathbf{x}, 0)e^{-iHt}$) and $phi_I$ is a field in the
-interaction picture ($phi(\mathbf{x}, t)=e^{iH_0t}phi(\mathbf{x},
-0)e^{-iH_0t}$), where the Hamiltonian is $H=H_0 + H_1$ and the vacua
-(ground states) are $H_0ket{0} = 0$ and $Hket{Omega} = 0$.
+$\phi_H$ is a field in the Heisenberg picture ($\phi(\mathbf{x}, t)=e^{iHt}\phi(\mathbf{x}, 0)e^{-iHt}$) and $\phi_I$ is a field in the
+interaction picture ($\phi(\mathbf{x}, t)=e^{iH_0t}\phi(\mathbf{x}, 0)e^{-iH_0t}$), where the Hamiltonian is $H=H_0 + H_1$ and the vacua
+(ground states) are $H_0|0\rangle = 0$ and $H|\Omega\rangle = 0$.
 
 This can be proven by evaluating the right hand side:
 
@@ -1049,7 +1045,7 @@ We are interested in calculating the S matrix elements:
 
 $$\langle f|U(\infty, -\infty)|i \rangle=\langle f|S|i \rangle=S_{fi}$$
 
-so we first calculate $U(infty, -infty)$. Integrating the equation for
+so we first calculate $U(\infty, -\infty)$. Integrating the equation for
 the evolution operator:
 
 $$U(t_2, t_1)=U(t_1, t_1)-{i\over\hbar}\int_{t_1}^{t_2} H(t)U(t, t_1)\mathrm{d} t =1-{i\over\hbar}\int_{t_1}^{t_2} H(t)U(t, t_1)\mathrm{d} t$$
@@ -1068,9 +1064,9 @@ If $L$ doesn't contain derivatives of the fields, then $H = -L$ so:
 
 $$U(\infty, -\infty) = T\exp\left({i\over\hbar}\int_{-\infty}^{\infty}\mathrm{d}^4 x \mathcal{L}(x) \right)$$
 
-Let's write $S=1+iT$ and $ket{i}=ket{k_1cdots k_m}$,
-$ket{f}=ket{p_1cdots p_n}$. As a first step now, let's investigate a
-scalar field, e.g. $L=-{lambdaover4}phi^4$ (e.g. a Higgs self
+Let's write $S=1+iT$ and $|i\rangle=|k_1\cdots k_m\rangle$,
+$|f\rangle=|p_1\cdots p_n\rangle$. As a first step now, let's investigate a
+scalar field, e.g. $L=-{\lambda\over4}\phi^4$ (e.g. a Higgs self
 interaction term above), we'll look at other fields later:
 
 $$\langle f|S|i \rangle= \langle f|iT|i \rangle= \langle p_1\cdots p_n|iT|k_1\cdots k_m \rangle= {1\over\tilde D(k_1)\cdots\tilde D(k_m)} {1\over\tilde D(p_1)\cdots\tilde D(p_n)}$$
@@ -1084,11 +1080,11 @@ $$G(x_1, \cdots, x_n)= \langle \Omega|T\{\phi(x_1)\cdots\phi(x_n)\}|\Omega \rang
 $${\langle 0|T\{\phi_I(x_1)\cdots\phi_I(x_n)\exp\left({i\over\hbar}\int_{-\infty}^{\infty}\mathrm{d}^4 x \mathcal{L}(x) \right)\}|0 \rangle \over \langle 0|T\exp\left({i\over\hbar}\int_{-\infty}^{\infty}\mathrm{d}^4 x \mathcal{L}(x) \right)|0 \rangle }$$
 
 This is called the LSZ formula. Now we use the Wick contraction, get
-some terms like $D\_{23}D\_{34}$ integrate things out, this will give
-the delta function and $tilde D(p)$'s and that's it.
+some terms like $D_{23}D_{34}$ integrate things out, this will give
+the delta function and $\tilde D(p)$'s and that's it.
 
-Let's see how it goes for $L=-{lambdaover4}phi^4$ for the process
-$k_1+k_2to p_1+p_2$:
+Let's see how it goes for $L=-{\lambda\over4}\phi^4$ for the process
+$k_1+k_2\to p_1+p_2$:
 
 $$\langle p_1 p_2|S|k_1 k_2 \rangle = {\int\mathrm{d}^4 x_1\mathrm{d}^4 x_2 e^{-i(k_1x_1+k_2x_2)} \int\mathrm{d}^4 y_1\mathrm{d}^4 y_2 e^{i(p_1y_1+p_2y_2)} \over \tilde D(k_1)\tilde D(k_2) \tilde D(p_1)\tilde D(p_2)}$$
 
@@ -1125,11 +1121,11 @@ $$+\text{disconnected}$$
 
 Where the \"disconnected\" terms are
 $D(x_1-y_1)D(x_2-y_2)D(x-x)D(x-x)$ and similar. When they are
-integrated over, they do not generate enough $tilde D(p_1)$
+integrated over, they do not generate enough $\tilde D(p_1)$
 propagators to cancel the propagators from the LSZ formula, which will
 cause the terms to vanish.
 
-For the $L=phi^3(x)$ theory, one also needs the following
+For the $L=\phi^3(x)$ theory, one also needs the following
 contractions:
 
 $$\langle 0|T\{\phi_I(x_1)\phi_I(x_2) \phi_I(y_1)\phi_I(y_2) \phi_I^3(x)\}|0 \rangle = 0$$
@@ -1137,11 +1133,11 @@ $$\langle 0|T\{\phi_I(x_1)\phi_I(x_2) \phi_I(y_1)\phi_I(y_2) \phi_I^3(x)\}|0 \ra
 $$\langle 0|T\{\phi_I(x_1)\phi_I(x_2) \phi_I(y_1)\phi_I(y_2) \phi_I^3(x)\phi_I^3(y)\}|0 \rangle = D(x_1-x)D(x_2-x)D(x-y)D(y_1-y)D(y_2-y)$$
 
 Thus it is clear that the only difference from the above is the factor
-$D(x-y)$ which after integrating changes to $tilde D(p_1+p_2)$ and
+$D(x-y)$ which after integrating changes to $\tilde D(p_1+p_2)$ and
 this ends up in the final result.
 
 One always gets the delta function in the result, so we define the
-matrix element $M\_{fi}$ by:
+matrix element $M_{fi}$ by:
 
 $$S_{fi} = (2\pi)^4\delta^{(4)}(p_1+p_2+\cdots - k_1 - k_2 - \cdots) i \mathcal{M}_{fi}$$
 
@@ -1236,7 +1232,7 @@ graphs are listed (and also the combinatorial factor is omitted).
 One difference in nonrelativistic quantum mechanics is that the
 noninteracting solutions to the equation of motion (Schrödinger equation
 in this case) can be numbered using a discrete index, so for example the
-momentum $bf q$ is not continuous, thus the (anti)commutation
+momentum $\mathbf{q}$ is not continuous, thus the (anti)commutation
 relations for creation and anihilation operators contain the Kronecker
 delta (instead of a delta function) and integrals over the index are
 replaced by sums. The reason for that is that we usually employ boundary
@@ -1255,7 +1251,7 @@ $$[c_k, c_l^\dag] = \delta_{kl}$$
 
 $$[c_k, c_l] = [c_k^\dag, c_l^\dag] = 0$$
 
-so the commutation relations for $hatpsi$ and $hatpsi^dag$ are:
+so the commutation relations for $\hat\psi$ and $\hat\psi^\dagger$ are:
 
 $$[ \hat\psi({\mathbf{x}}), \hat\psi^\dag({\mathbf{y}}) ] = \delta^{(3)}({\mathbf{x}}-{\mathbf{y}})$$
 
@@ -1274,7 +1270,7 @@ $$\{c_k, c_l^\dag\} = \delta_{kl}$$
 
 $$\{c_k, c_l\} = \{c_k^\dag, c_l^\dag\} = 0$$
 
-so the commutation relations for $hatpsi$ and $hatpsi^dag$ are:
+so the commutation relations for $\hat\psi$ and $\hat\psi^\dagger$ are:
 
 $$\{\hat\psi({\mathbf{x}}), \hat\psi^\dag({\mathbf{y}})\} =\delta^{(3)}({\mathbf{x}}-{\mathbf{y}})$$
 
@@ -1290,14 +1286,14 @@ $$\hat H = \hat T + \hat V = \sum_{ij} c_i^\dag\langle i|T|j \rangle c_j +
 
 Note the ordering of the final two destruction operators $c_l c_k$,
 which is opposite that of the last two single-particle wave functions in
-the matrix elements of the potential $braket{ij\|V\|kl}$ (for bosons
+the matrix elements of the potential $\langle ij|V|kl\rangle$ (for bosons
 it doesn't matter, for fermions it changes a sign).
 
 ### Nonrelativistic Propagator
 
 Nonrelativistic limits of the propagators are obtained by assuming
-$\|{\\mathbf{p}}\|/mc ll 1$, and then expressing the propagator using the
-nonrelativistic energy $omega$ (total energy minus the rest mass
+$\|\mathbf{p}\|/mc \ll 1$, and then expressing the propagator using the
+nonrelativistic energy $\omega$ (total energy minus the rest mass
 energy) by using the well-known relations:
 
 $$p_0 c = E = mc^2 + \omega$$
@@ -1305,8 +1301,7 @@ $$p_0 c = E = mc^2 + \omega$$
 $$\sqrt{{\mathbf{p}}^2c^2 + m^2c^4} = E_{\mathbf{p}} = mc^2+{{\mathbf{p}}^2\over 2m} +
     O\left({1\over mc^2}\left(p^2\over m\right)^2\right)$$
 
-we use them to simplify $E^2 - [E]()\mathbf{p}^2$ in the limit $c to
-infty$:
+we use them to simplify $E^2 - [E]()\mathbf{p}^2$ in the limit $c \to \infty$:
 
 $${1\over c^2}(E^2 - E_{\mathbf{p}}^2)
     = {1\over c^2}(E - E_{\mathbf{p}})(E + E_{\mathbf{p}})
@@ -1328,8 +1323,8 @@ $$=2m\left(\omega-{{\mathbf{p}}^2\over 2m} + {\omega\over 2mc^2}
 
 $$\to 2m\left(\omega-{{\mathbf{p}}^2\over 2m}\right)$$
 
-Where $E$ is the total energy, $omega$ is the nonrelativistic
-energy, $E\_\mathbf{p}$ is the relativistic energy of a noninteracting
+Where $E$ is the total energy, $\omega$ is the nonrelativistic
+energy, $E_{\mathbf{p}}$ is the relativistic energy of a noninteracting
 particle (kinetic energy). Now we can rewrite the propagator of a scalar
 boson:
 
@@ -1349,8 +1344,7 @@ $$=
 {1\over2m}{i\over\omega-{{\mathbf{p}}^2\over 2m} + i\epsilon'}$$
 
 As you can see, we are interested in the behavior of the propagator in
-the vicinity of its positive frequency pole $omegaapprox{\mathbf{p}^2over
-2m}$.
+the vicinity of its positive frequency pole $\omega\approx{\mathbf{p}^2\over 2m}$.
 
 Similarly for fermions (we set $c=1$):
 
@@ -1381,7 +1375,7 @@ selects the two upper components of a given bispinor. The second term
 $$- {p^j\gamma_j\over2m} = \begin{pmatrix}0 & -{p^j\sigma_j\over2m} \\ {p^j\sigma_j\over2m} & 0\end{pmatrix}$$
 
 mixes the upper and lower components of the bispinor and the
-contribution of this term is quadratic in $\mathbf{p}over m$ so it can be
+contribution of this term is quadratic in ${\mathbf{p}\over m}$ so it can be
 neglected. The numerator of
 `fermion-propagator-approx`{.interpreted-text role="eq"} reduces to a
 unit matrix (in spin space):
@@ -1393,7 +1387,7 @@ $$\tilde S(p) \approx
 {i\mathbf{1}\over \omega-{{\mathbf{p}}^2\over 2m} + i\epsilon}
 =\mathbf{1} G_0^+({\mathbf{p}}, \omega)$$
 
-where $G_0^+(\mathbf{p}, omega)$ is the nonrelativistic retarded
+where $G_0^+(\mathbf{p}, \omega)$ is the nonrelativistic retarded
 propagator defined by:
 
 $$G_0^+(x-y) =
@@ -1404,7 +1398,7 @@ G_0^+({\mathbf{p}}, \omega)
     e^{-i\omega(t_x - t_y)}$$
 
 (For the other pole $p_0 = -sqrt{\mathbf{p}^2+m^2}$, we define
-$omega=-p_0-m$ and we would see that the antiparticles' propagator
+$\omega=-p_0-m$ and we would see that the antiparticles' propagator
 reduces to the advanced Green's function in the nonrelativistic limit.)
 
 As shown above, the nonrelativistic free propagator is defined by:
@@ -1421,8 +1415,7 @@ with:
 $$G_0^+({\mathbf{p}}, \omega)=
 {i\over \omega-{{\mathbf{p}}^2\over 2m} + i\epsilon}$$
 
-If we use the energies of the nonineracting particles $E_k equiv
-epsilon_k = {hbar^2k^2over 2m} = {k^2over 2m}$, we can write it as:
+If we use the energies of the nonineracting particles $E_k \equiv \epsilon_k = {\hbar^2 k^2\over 2m} = {k^2\over 2m}$, we can write it as:
 
 $$G_0^+({\mathbf{p}}, \omega)=
 {i\over \omega-{{\mathbf{p}}^2\over 2m} + i\epsilon}
@@ -1433,7 +1426,7 @@ so
 
 $$G_0^+(k, \omega) = {i\over \omega-E_k + i\epsilon}$$
 
-using $E = hbaromega$ we can also write:
+using $E = \hbar\omega$ we can also write:
 
 $$G_0^+(k, E) = {i\over E-E_k + i\epsilon}$$
 
@@ -1455,8 +1448,7 @@ G_0^+(k, \omega)
     e^{i {\mathbf{k}}\cdot({\mathbf{x}-y})}
     e^{-i\omega(t_x - t_y)}$$
 
-Sometimes it's useful to calculate the mixed representation $G_0^+(k,
-t)$:
+Sometimes it's useful to calculate the mixed representation $G_0^+(k, t)$:
 
 $$G_0^+(k, t) = \int {\mathrm{d}\omega\over2\pi}e^{-i\omega t}G_0^+(k, \omega)
 = \int {\mathrm{d}\omega\over2\pi}e^{-i\omega t}
@@ -1465,12 +1457,12 @@ $$G_0^+(k, t) = \int {\mathrm{d}\omega\over2\pi}e^{-i\omega t}G_0^+(k, \omega)
 \cdots
 =\theta_t e^{-i (E_k-i\epsilon)t}$$
 
-(The \"$cdots$\" means to use the Residue Theorem and distinguish two
+(The \"$\cdots$\" means to use the Residue Theorem and distinguish two
 cases $t < 0$ and $t > 0$, thus getting the Heaviside step
-function $theta_t$ in the result.)
+function $\theta_t$ in the result.)
 
 Very often, in practice, one just needs to work with $G_0^+(k, t)$
-and $G_0^+(k, omega)$, here is how to convert between those:
+and $G_0^+(k, \omega)$, here is how to convert between those:
 
 $$G_0^+(k, t) = \int_{-\infty}^\infty
     {\mathrm{d}\omega\over2\pi}e^{-i\omega t}G_0^+(k, \omega)$$
@@ -1482,7 +1474,7 @@ The relation to the contraction of operators is:
 $$G_0^+({\mathbf{k}}, t_2 - t_1) = -i \theta_{t_2-t_1} \langle \Psi_0|
     c_{\mathbf{k}}(t_2) c_{\mathbf{k}}^\dag(t_1)|\Psi_0 \rangle$$
 
-where $ket{Psi_0}$ is the ground state wavefunction and:
+where $|\Psi_0\rangle$ is the ground state wavefunction and:
 
 $$c_{\mathbf{k}}(t) = e^{i H_0 t} c_{\mathbf{k}} e^{-i H_0 t}$$
 
@@ -1502,8 +1494,7 @@ $$= -i \theta_{t_2-t_1} \left(e^{-i H_0 t_2}|\Psi_0\rangle\right)^\dag
 
 which describes the probability amplitude of adding a bare particle at
 time $t_1$, removing at time $t_2$ and regaining the original
-many-body system (that in the meantime evolved into $e^{-i H_0
-t_2}ket{Psi_0}$).
+many-body system (that in the meantime evolved into $e^{-i H_0 t_2}|\Psi_0\rangle$).
 
 ::: index
 Feynman rules
@@ -1516,7 +1507,7 @@ theorem, or using Feynman diagrams and the corresponding Feynman rules.
 
 #### Example 1
 
-$L\_{ZZH} = lambda [Z]()mu Z^mu H$, in the first order:
+$\mathcal{L}_{ZZH} = \lambda Z_\mu Z^\mu H$, in the first order:
 
 $$\langle \Omega|T \tilde A^\mu(k)\tilde A^\nu(l)\tilde \phi(-p)|\Omega \rangle
 =i\lambda (2\pi)^4 \delta(k+l-p) \tilde D^\mu{}_\alpha(k)
@@ -1524,7 +1515,7 @@ $$\langle \Omega|T \tilde A^\mu(k)\tilde A^\nu(l)\tilde \phi(-p)|\Omega \rangle
 
 #### Example 2
 
-$L\_{eegamma}=-lambda bar egamma^mu e [A]()mu$, in the second order:
+$\mathcal{L}_{ee\gamma}=-\lambda \bar e\gamma^\mu e A_\mu$, in the second order:
 
 $$\langle \Omega|T\tilde\psi(k_1)\tilde{\bar\psi}(k_2)\tilde{\bar\psi}(-p_1)
     \tilde\psi(-p_2) |\Omega \rangle
@@ -1543,8 +1534,7 @@ $$\left. +
 
 #### Example 3
 
-$L\_{rm int}={gover 2 sqrt 2} barnu_e gamma^mu (1-gamma_5) e
-[W]()mu^+ + hbox{h.c.}$, in the second order:
+$\mathcal{L}_{\mathrm{int}}={g\over 2\sqrt{2}} \bar\nu_e \gamma^\mu (1-\gamma_5) e W_\mu^+ + \text{h.c.}$, in the second order:
 
 $$\langle \Omega|T\tilde A^\alpha(r) \tilde A^\beta(p)
     \tilde{\bar\psi}(-k)\tilde{\psi}(-l)
@@ -1628,8 +1618,8 @@ $$= \left(i{g\over 2 \sqrt 2}\right)^2
 
 ### ZZH interaction
 
-Let's calculate the $L\_{ZZH}=lambda [Z]()mu Z^mu H$ interaction in
-the SM, where $lambda={g^2over4costheta_W}$. Consider $H(p)to
+Let's calculate the $\mathcal{L}_{ZZH}=\lambda Z_\mu Z^\mu H$ interaction in
+the SM, where $\lambda={g^2\over4\cos\theta_W}$. Consider $H(p)\to
 Z(k)+Z(l)$:
 
 $$\langle f|S|i \rangle= \langle f|iT|i \rangle= \langle k l|iT|p \rangle=
@@ -1671,7 +1661,7 @@ $$= i\lambda (2\pi)^4 \delta(k+l-p)
     \epsilon^{r*}_\mu({\mathbf{k}})\epsilon^{s\mu*}({\mathbf{l}})$$
 
 where we used the fact, that the first order contribution of the
-$lambda [Z]()mu Z^mu H$ interaction to the interacting Green function
+$\lambda Z_\mu Z^\mu H$ interaction to the interacting Green function
 is:
 
 $$\langle \Omega|T \tilde A^\mu(k)\tilde A^\nu(l)\tilde \phi(-p)|\Omega \rangle
@@ -1682,9 +1672,8 @@ $$\langle \Omega|T \tilde A^\mu(k)\tilde A^\nu(l)\tilde \phi(-p)|\Omega \rangle
 
 This is only approximate, it will be fixed soon.
 
-Let's calculate the $L\_{eeH}=-lambda bar ee H$ interaction in the
-SM, where $lambda={h_eoversqrt2}$. Consider $H(p)to
-e^-(k)+e^+(l)$:
+Let's calculate the $\mathcal{L}_{eeH}=-\lambda \bar e e H$ interaction in the
+SM, where $\lambda={h_e\over\sqrt{2}}$. Consider $H(p)\to e^-(k)+e^+(l)$:
 
 $$\langle f|S|i \rangle= \langle f|iT|i \rangle= \langle k l|iT|p \rangle= {\bar u(k) v(l)\over\tilde S(k)\tilde S(l)} {1\over\tilde D(p)}$$
 
@@ -1705,9 +1694,9 @@ $$\int\mathrm{d}^4 x \langle 0|T\{\bar e(y_1) e(y_2) H(x_1)\bar e(x)e(x) H(x)\}|
 
 This is only approximate, it will be fixed soon.
 
-Let's calculate the $L\_{eegamma}=-lambda bar egamma^mu e [A]()mu$
-interaction in the SM, where $lambda=gsintheta_W$. Consider
-$gamma(p)to e^-(k)+e^+(l)$:
+Let's calculate the $\mathcal{L}_{ee\gamma}=-\lambda \bar e\gamma^\mu e A_\mu$
+interaction in the SM, where $\lambda=g\sin\theta_W$. Consider
+$\gamma(p)\to e^-(k)+e^+(l)$:
 
 $$\langle f|S|i \rangle= \langle f|iT|i \rangle= \langle k l|iT|p \rangle= {\bar u(k) v(l)\over\tilde S(k)\tilde S(l)} {\varepsilon_\mu(p)\over\tilde D_{\alpha\beta}(p)}$$
 
@@ -1728,9 +1717,9 @@ $$=\pm S(y_2-x) \gamma^\mu S(y_1-x) D^\alpha_\mu(x_1-x)$$
 
 ### eeee interaction
 
-Let's calculate the $L\_{eegamma}=-lambda bar egamma^mu e [A]()mu$
-interaction in the SM, where $lambda=gsintheta_W$. Consider
-$e^-(p_1)+e^+(p_2)togamma(q)to e^-(k_1)+e^+(k_2)$:
+Let's calculate the $\mathcal{L}_{ee\gamma}=-\lambda \bar e\gamma^\mu e A_\mu$
+interaction in the SM, where $\lambda=g\sin\theta_W$. Consider
+$e^-(p_1)+e^+(p_2)\to\gamma(q)\to e^-(k_1)+e^+(k_2)$:
 
 $$\langle f|S|i \rangle= \langle f|iT|i \rangle= \langle k_1 k_2|iT|p_1p_2 \rangle=
 \langle \Omega|
@@ -1827,38 +1816,38 @@ low energy theories
 
 ### Fermi-type theory
 
-This is a low energy ($m_W^2 gg [m]()mu m_e$) model for the EW
+This is a low energy ($m_W^2 \gg m_\mu m_e$) model for the EW
 interactions, that can be derived for example from the muon decay:
 
 $$\mu^- \to e^- +\nu_\mu + \bar \nu_e$$
 
 From the SM the relevant Lagrangian is
 
-$$\mathcal{L} = {g\over2\sqrt2}(\bar e \gamma^\mu (1-\gamma_5) \nu_e W^-_\mu) + {g\over2\sqrt2}(\bar \mu \gamma^\mu (1-\gamma_5) \nu_\mu W^-_\mu)$$
+$$\mathcal{L} = {g\over2\sqrt{2}}(\bar e \gamma^\mu (1-\gamma_5) \nu_e W^-_\mu) + {g\over2\sqrt{2}}(\bar \mu \gamma^\mu (1-\gamma_5) \nu_\mu W^-_\mu)$$
 
-and one gets the diagram $mu^- +barnu_mu+ to e^- + bar nu_e$ and the
+and one gets the diagram $\mu^- + \bar\nu_\mu \to e^- + \bar\nu_e$ and the
 corresponding matrix element:
 
 $$iM = -i{g^2\over8}[\bar u\gamma_\mu (1-\gamma_5) u] {-g^{\mu\nu}+{q^\mu q^\nu\over m_W^2}\over q^2 - m_W^2} [\bar u\gamma_\nu (1-\gamma_5) v]$$
 
-which when the momentum transfer $q$ is much less than $m_w$ becomes
+which when the momentum transfer $q$ is much less than $m_W$ becomes
 
 $$iM = -i{g^2\over8m_W^2}[\bar u\gamma^\mu (1-\gamma_5) u] [\bar u\gamma_\mu (1-\gamma_5) v]$$
 
 but this matrix element can be derived directly from the Lagrangian:
 
-$$\mathcal{L} = -{G_\mu\over\sqrt2} [\bar \psi_{\nu_\mu}\gamma^\mu (1-\gamma_5) \psi_\mu] [\bar \psi_e\gamma^\mu (1-\gamma_5) \psi_{\nu_e}]$$
+$$\mathcal{L} = -{G_\mu\over\sqrt{2}} [\bar \psi_{\nu_\mu}\gamma^\mu (1-\gamma_5) \psi_\mu] [\bar \psi_e\gamma^\mu (1-\gamma_5) \psi_{\nu_e}]$$
 
 with
 
-$${G_\mu\over\sqrt2} = {g^2\over8m_W^2}$$
+$${G_\mu\over\sqrt{2}} = {g^2\over8m_W^2}$$
 
 This is the universal V-A theory Lagrangian (after adding the h.c.
-term). Note that the Fermi constant $G_F$ is equal to $G_mu$.
+term). Note that the Fermi constant $G_F$ is equal to $G_\mu$.
 
 For the beta decay we get:
 
-$$\mathcal{L} = -{G_\beta\over\sqrt2} [\bar \psi_p\gamma^\mu (1-f\gamma_5) \psi_n] [\bar \psi_e\gamma^\mu (1-\gamma_5) \psi_{\nu_e}]$$
+$$\mathcal{L} = -{G_\beta\over\sqrt{2}} [\bar \psi_p\gamma^\mu (1-f\gamma_5) \psi_n] [\bar \psi_e\gamma^\mu (1-\gamma_5) \psi_{\nu_e}]$$
 
-where $G_beta = G_F costheta_C$, $theta_C=13^circ$ is the Cabibbo
-angle and $fdoteq 1.26$.
+where $G_\beta = G_F \cos\theta_C$, $\theta_C=13^\circ$ is the Cabibbo
+angle and $f \doteq 1.26$.
