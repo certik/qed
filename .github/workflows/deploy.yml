@@ -1,4 +1,4 @@
-# Build MyST site and deploy to GitHub Pages (main only).
+# Build MyST site on every PR; deploy to GitHub Pages only from main.
 # Based on: https://mystmd.org/guide/deployment-github-pages
 
 name: MyST GitHub Pages Deploy
@@ -6,6 +6,7 @@ name: MyST GitHub Pages Deploy
 on:
   push:
     branches: [main]
+  pull_request:
   # Allow manual re-runs from the Actions tab
   workflow_dispatch:
 
@@ -16,24 +17,17 @@ env:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Cancel outdated PR runs; never cancel an in-progress main deploy
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
 
       - uses: actions/setup-node@v4
         with:
@@ -45,10 +39,25 @@ jobs:
       - name: Build HTML Assets
         run: myst build --html
 
-      - name: Upload artifact
+      - name: Upload pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./_build/html
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Deploy to GitHub Pages
         id: deployment
