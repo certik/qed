@@ -34,6 +34,17 @@ def msub(expr, k, val):
     return expr.subs(dict(zip(k, val)), simultaneous=True)
 
 
+def feynman_shift_general(D, k):
+    """D(k) quadratic in k with k^2 coefficient A (possibly parameter
+    dependent). Returns (s, Delta, A) with D(k = l + s) = A (l^2 - Delta).
+    """
+    from sympy import cancel
+    D = expand(D)
+    A = D.coeff(k[0], 2)
+    s, Delta = feynman_shift(expand(cancel(D / A)), k)
+    return s, Delta, A
+
+
 def feynman_shift(D, k):
     """D(k) quadratic in components of k with unit k^2 coefficient.
 
@@ -55,6 +66,9 @@ def feynman_shift(D, k):
     Delta = -expand(msub(D, k, sval))
     check = expand(msub(D, k, [l[m] + sval[m] for m in range(4)])
                    - (dot(l, l) - Delta))
+    if check != 0:
+        from sympy import simplify, cancel, together
+        check = simplify(cancel(together(check)))
     assert check == 0, "denominator not reduced to l^2 - Delta"
     return sval, Delta
 
