@@ -28,7 +28,8 @@ the diagram, whether/how it must be renormalized, the computation strategy,
 the known analytic value, and (once done) our own SymPy derivation
 cross-checked numerically in Fortran. Currently done: LO massive-photon
 kernel, the full two-loop pipeline (validated at LO), diagram IIe
-(analytic + numeric), diagram IId (analytic + numeric).
+(analytic + numeric), diagram IId (analytic + numeric), diagram IIc
+(numeric; analytic TODO).
 
 As in the LO section, the anomalous moment is the on-shell form factor
 
@@ -467,7 +468,7 @@ insert into the outer LO-type loop. This and IIc are the genuinely
 hard two-loop parametric integrals (4–5 parameters).
 **Target**: $\mu_\mathrm{IIa} = \frac{11}{48} + \frac{\pi^2}{18}$.
 
-## Diagram IIc: corner (vertex part at an internal vertex) — TODO
+## Diagram IIc: corner (vertex part at an internal vertex) — numeric DONE, analytic TODO
 
 ![Diagram IIc](figures/g2-nlo-IIc.svg)
 
@@ -506,7 +507,44 @@ detail in `petermann1958.pdf` — our reproduction target:
    and check them against his, then evaluate analytically by sequential
    integration.
 
-**Target**: $\mu_\mathrm{IIc} = -\frac{67}{24} + \frac{\pi^2}{18}
+**Derivation** (`pixi run iic-sympy`, `code/g2_iic.py`): the inner vertex
+part with one on-shell leg is derived by the pipeline,
+
+$$\Lambda^\nu(k) = \frac{P^\nu(k)}{D_\mathrm{in}(k)}
+   + c\,(L_{UV} - \log D_\mathrm{in}(k))\,\gamma^\nu, \qquad
+  D_\mathrm{in} = D_0 + L(k) - \hat b\,k^2,$$
+
+with $\hat b = u(1-u)$, $L(k)$ linear in $k$,
+$D_0 = (u+v)^2 + (1-u-v)\lambda^2$ (the LO $\Delta$ with $z = u+v$), and
+is subtracted pointwise in $(u,v)$ by its on-shell value
+$L_a(u,v)\gamma^\nu/D_0 + c(L_{UV}-\log D_0)\gamma^\nu$ — the KK
+"reduced diagram" scheme, whose $(u,v)$ integral is $\delta F_1(0)$.
+$L_{UV}$ cancels pointwise (asserted). Three pieces go through the outer
+loop: the $1/D_\mathrm{in}$ part (an extra propagator of mass$^2$
+$\hat a/\hat b$), the $-L_a/D_0$ counterterm part (an LO-type loop), and
+the log-ratio part ($\xi$-representation as in IId). The whole
+derivation runs in under a minute; the F2 projection of each piece is
+UV finite by itself (checked by exact rational-point tests).
+
+**Numeric check** — `pixi run iic-fortran` (`code/g2_iic.f90`):
+
+       lam     mu_IIc + log(lam)    target = -0.5640214...
+      0.1000     -0.909584536420   a=    0.4915801 b=    0.9778715 c=   -0.0764511
+      0.0300     -0.790506365659   a=    0.6656544 b=    2.1330785 c=   -0.0826814
+      0.0100     -0.678130174632   a=    0.7326841 b=    3.2781476 c=   -0.0837916
+      0.0030     -0.608880599384   a=    0.7601970 b=    4.5240536 c=   -0.0839882
+      0.0010     -0.581254893833   a=    0.7680358 b=    5.6424758 c=   -0.0840112
+      0.0003     -0.570039754501   a=    0.7697160 b=    6.8559865 c=   -0.0840142
+    extrapolated lam->0:      -0.564226400079
+    target:                   -0.564020941345
+
+The $\lambda \to 0$ extrapolation agrees with Petermann's constant to
+$2\times10^{-4}$ and confirms the IR term $-\frac12\log\lambda^2$
+(cancelling IId's).
+
+**TODO**: analytic evaluation (the same sequential-integration program as
+IId; this is where $\zeta(3)$ and $\pi^2\log 2$ will appear), target
+$\mu_\mathrm{IIc} = -\frac{67}{24} + \frac{\pi^2}{18}
 - \frac12\zeta(3) + \frac13\pi^2\log 2 - \frac12\log\frac{\lambda^2}{m^2}$.
 
 ## Diagram I: crossed ladder — TODO
@@ -557,9 +595,9 @@ IIb/IIf and their renormalization counterterms.
    at LO~~ — **done**.
 4. ~~Diagram IId + $\delta m$ counterterm~~ — **done** (exact analytic
    value + Fortran numeric confirmation).
-5. Diagram IIc via Petermann 1958 (Fortran numerics of his integrands,
-   bounds, then analytic) — the pipeline (vertex subgraph insertion)
-   applies as in IId.
+5. Diagram IIc — **parametric integrands derived, value confirmed
+   numerically** (2e-4); analytic evaluation TODO, plus the comparison
+   with Petermann 1958's eqs. (2.3)-(2.4) integrands.
 6. Diagram IIa (same machinery as IIc).
 7. Diagram I (direct two-loop; no renormalization — but a genuine
    two-loop integral, since the crossed photons don't factorize into a
