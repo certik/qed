@@ -1,7 +1,8 @@
-# Magnetic moment of an electron
+# Magnetic moment of an electron (LO)
 
-In this section we derive the order-$\alpha$ correction to the magnetic
-moment of an electron.
+In this section we derive the leading order (LO) order-$\alpha$ correction to
+the magnetic moment of an electron. This has been first computed in 1948 by
+Schwinger.
 
 We start by computing the electron vertex function for the process
 $\gamma(q)\to e^+(p) + e^-(p')$:
