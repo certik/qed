@@ -7,6 +7,8 @@ version = "0.1.0"
 
 [tasks]
 start = "myst start"
+build = "myst build --html"
+
 figures = "python code/feynman_diagrams.py"
 lo-sympy = "python code/g2_lo.py"
 iie-sympy = "python code/g2_iie.py"
