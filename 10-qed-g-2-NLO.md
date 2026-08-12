@@ -468,7 +468,7 @@ insert into the outer LO-type loop. This and IIc are the genuinely
 hard two-loop parametric integrals (4–5 parameters).
 **Target**: $\mu_\mathrm{IIa} = \frac{11}{48} + \frac{\pi^2}{18}$.
 
-## Diagram IIc: corner (vertex part at an internal vertex) — numeric DONE, analytic TODO
+## Diagram IIc: corner (vertex part at an internal vertex) — numeric DONE, analytic nearly done
 
 ![Diagram IIc](figures/g2-nlo-IIc.svg)
 
@@ -542,10 +542,52 @@ The $\lambda \to 0$ extrapolation agrees with Petermann's constant to
 $2\times10^{-4}$ and confirms the IR term $-\frac12\log\lambda^2$
 (cancelling IId's).
 
-**TODO**: analytic evaluation (the same sequential-integration program as
-IId; this is where $\zeta(3)$ and $\pi^2\log 2$ will appear), target
-$\mu_\mathrm{IIc} = -\frac{67}{24} + \frac{\pi^2}{18}
-- \frac12\zeta(3) + \frac13\pi^2\log 2 - \frac12\log\frac{\lambda^2}{m^2}$.
+**Analytic evaluation** (in progress; `code/g2_iic_analytic.py`,
+`code/g2_iic_a_sint.py`, `code/g2_iic_a_quad.f90`):
+
+* **Piece (b)** (the $\delta F_1 \times$ LO cross term) factorizes into two
+  1-dim integrals over $u{+}v$ and $y{+}z$ and evaluates exactly to
+
+  $$\mu_b = -\log\lambda - \tfrac54 + O(\lambda\log\lambda),$$
+
+  so the whole IR log of IIc lives here, and
+  $A^* + C^* = -\frac{37}{24} + \frac{\pi^2}{18} - \frac{\zeta(3)}{2}
+  + \frac{\pi^2}{3}\log 2$ where $A^*, C^*$ are the $\lambda \to 0$
+  limits of pieces (a), (c) (both finite).
+
+* **Piece (a)**: the $z$, $\chi = u{+}v$, and $s = y{+}z$ integrations are
+  done exactly (the outer $\Delta$ is the positive-definite
+  $u(t(\chi-1)+s(u-1))^2 + t(1-u)\chi^2$, whose roots are rational in
+  $R = \sqrt{tu(1-u)}$; atans become complex-linear logs; the dilog
+  primitive is verified by differentiation; every step checked
+  numerically to 15-25 digits). The remaining 2-dim integral is computed
+  by a quad-precision (`real(16)`, gfortran) double-exponential
+  quadrature with a complex-dilogarithm implementation
+  (`g2_iic_a_quad.f90`), with the $u \to 1$ cancellation sliver handled
+  by a $\delta$-cut and pure-$\delta^2$ Richardson extrapolation:
+
+      A* = 0.769965610144859 (Richardson, ~14 digits)
+
+  A rational-lattice search (all coefficient denominators dividing the
+  ones appearing in Petermann's values) gives the **unique** hit at
+  $5\times10^{-13}$:
+
+  $$A^* = -\frac{29}{12} + \frac{\pi^2}{18} - \frac98\zeta(3)
+    + \frac{7}{12}\pi^2\log 2 = 0.7699656101448\ldots$$
+
+* **Piece (c)** (conjectured from the constraint, pending direct
+  computation):
+
+  $$C^* = \frac78 + \frac58\zeta(3) - \frac14\pi^2\log 2
+    = -0.083987\ldots$$
+
+  consistent with the Fortran c-column limit ($-0.08401$, whose
+  $\lambda$-extrapolation is only good to a few $10^{-5}$).
+
+The three pieces sum to Petermann's eq. (3) exactly. **TODO**: direct
+analytic/quad-precision computation of $C^*$ (the $\xi$-integration is
+rational and should be done first), which will complete the independent
+verification of $\mu_\mathrm{IIc}$.
 
 ## Diagram I: crossed ladder — TODO
 
