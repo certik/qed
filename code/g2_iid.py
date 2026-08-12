@@ -239,4 +239,9 @@ with open("g2_iid_flog.inc", "w") as f:
 import pickle as _p
 with open("g2_iid_final.pkl", "wb") as fh:
     _p.dump({"f_rat": f_rat, "f_log": f_log, "C_val": C_val}, fh)
-print("\nwrote g2_iid_frat.inc, g2_iid_flog.inc, g2_iid_final.pkl")
+import json as _json
+from sympy import srepr as _srepr
+with open("g2_iid_integrands.json", "w") as fh:
+    _json.dump({"f_rat": _srepr(f_rat), "f_log": _srepr(f_log),
+                "C_val": _srepr(C_val)}, fh)
+print("\nwrote g2_iid_frat.inc, g2_iid_flog.inc, g2_iid_integrands.json")

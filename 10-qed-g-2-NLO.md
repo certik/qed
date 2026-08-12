@@ -28,8 +28,7 @@ the diagram, whether/how it must be renormalized, the computation strategy,
 the known analytic value, and (once done) our own SymPy derivation
 cross-checked numerically in Fortran. Currently done: LO massive-photon
 kernel, the full two-loop pipeline (validated at LO), diagram IIe
-(analytic + numeric), diagram IId (parametric integrand derived, value
-confirmed numerically; analytic integration TODO).
+(analytic + numeric), diagram IId (analytic + numeric).
 
 As in the LO section, the anomalous moment is the on-shell form factor
 
@@ -333,7 +332,7 @@ $$\boxed{\mu_\mathrm{IIe} = \frac{119}{36} - \frac{\pi^2}{3}}$$
 
 in agreement with `petermann1957.pdf`, eq. (5).
 
-## Diagram IId: self-energy insertion on the internal electron line — numeric DONE, analytic TODO
+## Diagram IId: self-energy insertion on the internal electron line — DONE
 
 ![Diagram IId](figures/g2-nlo-IId.svg)
 
@@ -401,11 +400,54 @@ $\lambda$) agrees with Petermann's constant to $10^{-4}$, and the
 $\log\lambda$ coefficient is confirmed to be $+\frac12\log\lambda^2$
 (subtracted in the table).
 
-**TODO**: analytic evaluation of the two parametric integrals in the
-$\lambda \to 0$ limit (extract the $\log\lambda$ term, then integrate
-sequentially), target
-$\mu_\mathrm{IId} = \frac{11}{24} - \frac{\pi^2}{18}
-+ \frac12\log\frac{\lambda^2}{m^2}$ exactly.
+**Analytic evaluation** (`pixi run iid-analytic`,
+`code/g2_iid_analytic.py`, using the deterministic rational-function
+integrator `code/ratint.py`, since SymPy's `integrate` with symbolic
+parameters returns wrong results for exactly these integrals):
+
+* The rational piece *factorizes*:
+  $f_\mathrm{rat} = U'(u)\, S'(y,z)$, with the $(y,z)$-dependence only
+  through $s = y+z$ (times $z$), so
+  $\mu_\mathrm{rat}(\lambda) = U(\lambda) S(\lambda)$ with
+
+  $$U = \int_0^1 \frac{2u(u-2)(u-1)}{(1-u)^2 + \lambda^2 u}\,\mathrm{d}u,
+  \qquad
+  S = \int_0^1 \frac{\tfrac{s^2}{2}(s-1)\left(3s^3+s^2
+      - \lambda^2(4s-1)(s-1)\right)}{(s^2 + (1-s)\lambda^2)^2}\,
+      \mathrm{d}s,$$
+
+  both exact in $\lambda$; the product expands to
+  $\mu_\mathrm{rat} = \log\lambda + \frac12 + O(\lambda)$.
+
+* The log piece is finite at $\lambda = 0$. Its parameter $\xi$ is traded
+  for the spectral mass $C$
+  ($\mathrm{d}\xi/\xi = -\mathrm{d}C/(C-1)$, $C \in (1/u, \infty)$), and
+  the remaining integrals are done in the order $z$ (polynomial), $C$
+  (rational), $t$, $s$ (rational-times-log, stays elementary — no
+  dilogarithms until the very last step), $u$. The result is
+
+  $$\mu_\mathrm{log} = -\frac{1}{24} - \frac{\pi^2}{18}.$$
+
+Output:
+
+    [   0.7s] f_rat factorized form verified
+    [   1.3s] U, S exact in lam, checked numerically
+      mu_rat(lam->0) = log(lam) + 1/2
+    [   1.9s] z-integration done
+    [   2.1s] C-integration done, checked numerically
+    [   3.3s] t-integration done, checked numerically
+    [   4.0s] s-integration done, checked numerically
+    [   4.8s] u-integration done, checked numerically
+      mu_log(lam=0) = -pi**2/18 - 1/24
+
+    mu_IId = 11/24 - pi^2/18 + (1/2) log(lam^2)
+          == 11/24 - pi^2/18 + (1/2) log(lam^2/m^2)
+          (Petermann 1957, eq. (4));  constant = -0.08997802228274214
+
+$$\boxed{\mu_\mathrm{IId} = \frac{11}{24} - \frac{\pi^2}{18}
++ \frac12\log\frac{\lambda^2}{m^2}}$$
+
+in exact agreement with `petermann1957.pdf`, eq. (4).
 
 ## Diagram IIa: ladder (vertex part at the external vertex) — TODO
 
@@ -513,8 +555,8 @@ IIb/IIf and their renormalization counterterms.
 2. ~~Diagram IIe~~ — **done** (SymPy exact + Fortran numeric).
 3. ~~Two-loop pipeline (Dirac algebra, projector, loop tools) validated
    at LO~~ — **done**.
-4. Diagram IId + $\delta m$ counterterm — **parametric integrand derived,
-   value confirmed numerically**; analytic evaluation TODO.
+4. ~~Diagram IId + $\delta m$ counterterm~~ — **done** (exact analytic
+   value + Fortran numeric confirmation).
 5. Diagram IIc via Petermann 1958 (Fortran numerics of his integrands,
    bounds, then analytic) — the pipeline (vertex subgraph insertion)
    applies as in IId.
@@ -524,4 +566,4 @@ IIb/IIf and their renormalization counterterms.
    one-loop insertion; needs sequential two-loop integration in the
    pipeline).
 8. Assembly, IR-cancellation check, final $A_2$; analytic values for
-   IId/IIc/IIa/I.
+   IIc/IIa/I.
