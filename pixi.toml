@@ -11,6 +11,10 @@ figures = "python code/feynman_diagrams.py"
 lo-sympy = "python code/g2_lo.py"
 iie-sympy = "python code/g2_iie.py"
 iie-fortran = { cmd = "mkdir -p _build/fortran && flang -O3 -march=native -ffast-math code/g2_iie.f90 -o _build/fortran/g2_iie && _build/fortran/g2_iie" }
+lo-trace-sympy = "python code/g2_lo_trace.py"
+iid-sympy = { cmd = "python code/g2_iid.py", cwd = "code" }
+# add -fopenmp (plus -Wl,-rpath,<flang-install>/lib on macOS) to parallelize
+iid-fortran = { cmd = "mkdir -p ../_build/fortran && flang -O3 -march=native -ffast-math g2_iid.f90 -o ../_build/fortran/g2_iid && ../_build/fortran/g2_iid", cwd = "code" }
 g2-nlo = { depends-on = ["lo-sympy", "iie-sympy", "iie-fortran"] }
 
 [dependencies]

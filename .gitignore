@@ -1,2 +1,5 @@
 _build/
 .pixi/
+code/*.pkl
+__pycache__/
+*.mod

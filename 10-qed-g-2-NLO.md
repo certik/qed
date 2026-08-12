@@ -27,7 +27,9 @@ Code:
 the diagram, whether/how it must be renormalized, the computation strategy,
 the known analytic value, and (once done) our own SymPy derivation
 cross-checked numerically in Fortran. Currently done: LO massive-photon
-kernel, diagram IIe. Everything else is planned.
+kernel, the full two-loop pipeline (validated at LO), diagram IIe
+(analytic + numeric), diagram IId (parametric integrand derived, value
+confirmed numerically; analytic integration TODO).
 
 As in the LO section, the anomalous moment is the on-shell form factor
 
@@ -187,9 +189,9 @@ Master strategy for each diagram:
 
 Tooling (see `pixi.toml` tasks): `pixi run figures` regenerates the
 diagram SVGs (`code/feynman_diagrams.py`); `pixi run lo-sympy`,
-`pixi run iie-sympy` run the SymPy derivations (`code/g2_lo.py`,
-`code/g2_iie.py`); `pixi run iie-fortran` compiles and runs the Fortran
-check (`code/g2_iie.f90`); `pixi run g2-nlo` runs everything.
+`pixi run lo-trace-sympy`, `pixi run iie-sympy`, `pixi run iid-sympy`
+run the SymPy derivations; `pixi run iie-fortran`, `pixi run iid-fortran`
+compile and run the Fortran checks; `pixi run g2-nlo` runs the fast ones.
 
 A SymPy practicality discovered on the way, used throughout: definite
 `integrate()` with a free parameter in the integrand is slow and sometimes
@@ -198,6 +200,51 @@ photon kernel $K$ below, which is false. We therefore rationalize all
 square roots by substitution, take *indefinite* antiderivatives of
 partial-fractioned integrands, and evaluate the endpoint limits ourselves,
 checking every intermediate result numerically.
+
+## The pipeline (Dirac algebra, projector, loop integrals)
+
+All diagrams are computed by one mechanical pipeline
+(`code/dirac.py`, `code/loops.py`):
+
+* **Explicit Dirac algebra**: 4×4 gamma matrices in the Dirac
+  representation, explicit on-shell spinors, and explicit Breit-frame
+  kinematics $p = (E, 0, 0, w)$, $p' = (E, 0, 0, -w)$,
+  $q = (0,0,0,-2w)$, $q^2 = -4w^2$ — no abstract index gymnastics,
+  every step is a scalar polynomial identity that can be checked
+  numerically.
+* **Form-factor projection**: sandwiching $\Gamma^\mu$ between explicit
+  spinors and matching against $\gamma^\mu F_1 + i\sigma^{\mu\nu}q_\nu
+  F_2/2m$. The $\mu = 1$ spin-flip sandwich alone measures only the
+  magnetic combination $F_1 + F_2$ (its two basis values coincide), so it
+  is paired with the $\mu = 0$ no-flip sandwich; at $q^2 \to 0$,
+
+  $$F_2(0) = -\tfrac12\left(A_0\big|_{w=0}
+      + \partial_w A_1\big|_{w=0}\right), \qquad
+    A_\mu = \bar u(p')\,\Gamma^\mu\, u(p).$$
+
+* **Loop integration**: Feynman parametrization with automatic
+  completion of the square (`feynman_shift`), angular averaging of loop
+  momenta at the component level (`symmetrize`), and a table of
+  $\int \mathrm{d}^4 l\, (l^2)^a/(l^2-\Delta)^n$ with the log-divergent
+  cases carried as an explicit symbol $L_{UV} = \log\Lambda^2$
+  (Pauli–Villars) — every $F_2$ must be free of $L_{UV}$, which is
+  asserted.
+
+**Validation** (`pixi run lo-trace-sympy`, `code/g2_lo_trace.py`): the
+whole LO derivation from raw Feynman rules runs through the pipeline and
+reproduces both Schwinger's result and the massive-photon kernel:
+
+    Delta = -lam**2*y - lam**2*z + lam**2 + m**2*y**2 + 2*m**2*y*z + m**2*z**2   (at q^2 = 0)
+    UV structure OK: LUV in F1 only
+    F2 integrand (q^2=0, m=1): -e2*(y + z)*(y + z - 1)/(4*pi**2*(-lam**2*y - lam**2*z + lam**2 + y**2 + 2*y*z + z**2))
+    F2(0) = 2 * e2/(16 pi^2)  =>  a_e = alpha/(2 pi): True
+    K(8) from trace pipeline = 0.027280670780387366
+    K(8) direct              = 0.027280670780387367247
+    OK: massive-photon kernel reproduced
+
+(The parametric integrand looks different from the LO section because the
+Feynman parameters are assigned to different propagators, but it
+integrates to the same kernel.)
 
 ## Stage 0: LO vertex with a massive photon
 
@@ -286,15 +333,16 @@ $$\boxed{\mu_\mathrm{IIe} = \frac{119}{36} - \frac{\pi^2}{3}}$$
 
 in agreement with `petermann1957.pdf`, eq. (5).
 
-## Diagram IId: self-energy insertion on the internal electron line — TODO
+## Diagram IId: self-energy insertion on the internal electron line — numeric DONE, analytic TODO
 
 ![Diagram IId](figures/g2-nlo-IId.svg)
 
 **Topology**: the LO vertex diagram with the one-loop electron self-energy
 $\Sigma(p)$ inserted on one internal electron propagator. The mirror
-diagram contributes equally; $\mu_\mathrm{IId}$ includes both.
+diagram contributes equally; $\mu_\mathrm{IId}$ includes both (factor 2).
 
-**Renormalization**: $\Sigma$ is UV divergent; use the on-shell-subtracted
+**Renormalization**: $\Sigma$ is UV divergent; we use the fully
+on-shell-subtracted
 
 $$\Sigma_R(p) = \Sigma(p) - \delta m - (\not p - m)
    \left.\frac{\partial\Sigma}{\partial\not p}\right|_{\not p = m},$$
@@ -305,14 +353,59 @@ which is equivalent to adding the $\delta m$-insertion counterterm diagram
 
 and the $\delta Z_2$ piece. The on-shell subtraction is IR sensitive:
 $\mu_\mathrm{IId}$ keeps a $+\frac12\log(\lambda^2/m^2)$ that cancels
-against IIc.
+against IIc. The numerical agreement below confirms that this full
+on-shell subtraction *is* the KK/Petermann scheme for IId.
 
-**Plan**: write $\Sigma_R$ in one-parameter Feynman form as a spectral
-integral over an effective mass on the internal line; the outer loop is
-then an LO-type integral again (same trick as IIe). Expect a 3–4-fold
-parametric integral, integrable sequentially.
-**Target**: $\mu_\mathrm{IId} = \frac{11}{24} - \frac{\pi^2}{18}
-+ \frac12\log\frac{\lambda^2}{m^2}$.
+**Derivation** (`pixi run iid-sympy`, `code/g2_iid.py`): the pipeline
+derives the inner loop mechanically,
+
+$$\Sigma(k) = \frac{e^2}{16\pi^2}\,(4m - 2u\not k)
+   \left(L_{UV} - \log D_\mathrm{in}\right), \qquad
+  D_\mathrm{in} = a - b\,k^2,\quad
+  a = (1-u)m^2 + u\lambda^2,\quad b = u(1-u),$$
+
+with $u \in (0,1)$ the inner Feynman parameter. After the on-shell
+subtraction $L_{UV}$ cancels identically (asserted by the script), leaving
+a rational part and a $\log\!\big(D_\mathrm{in}(k^2)/D_\mathrm{in}(m^2)\big)$
+part. The log is made rational with one more parameter,
+$\log(X/Y) = \int_0^1 \mathrm{d}\xi\, (X-Y)/(Y + \xi(X-Y))$, which cancels
+one power of the doubled propagator $(k^2-m^2)^2$ and leaves a normal
+propagator of mass$^2$ $C = m^2 + (a - b m^2)/(\xi b) > m^2$ (kept as an
+opaque symbol during assembly to keep expressions small). The outer loop
+then runs through the same machinery as LO, giving
+
+$$\mu_\mathrm{IId} = \int f_\mathrm{rat}\,\mathrm{d}y\,\mathrm{d}z\,\mathrm{d}u
+   + \int f_\mathrm{log}\,\mathrm{d}y\,\mathrm{d}z\,\mathrm{d}t\,\mathrm{d}u\,\mathrm{d}\xi$$
+
+with $f_\mathrm{rat}$ printed by the script and $f_\mathrm{log}$ (a
+65-term rational expression) written, together with $f_\mathrm{rat}$, as
+generated Fortran into `code/g2_iid_frat.inc` / `code/g2_iid_flog.inc`.
+
+**Numeric check** — `pixi run iid-fortran` (`code/g2_iid.f90`,
+Gauss–Legendre with a smoothstep endpoint map to resolve the IR structure
+at parameter scale $\lambda$; compile with `-fopenmp` for speed):
+
+       lam     mu_IId - log(lam)    target = -0.0899780...
+      0.1000      0.304059789767   (rat =  -1.4642459, log =  -0.5342794)
+      0.0300      0.144669264714   (rat =  -2.7824431, log =  -0.5794456)
+      0.0100      0.025773149821   (rat =  -3.9913265, log =  -0.5880705)
+      0.0030     -0.043148094904   (rat =  -5.2625440, log =  -0.5897471)
+      0.0010     -0.070807985164   (rat =  -6.3885840, log =  -0.5899793)
+      0.0003     -0.083100856528   (rat =  -7.6048118, log =  -0.5900172)
+    extrapolated lam->0:      -0.090070136381
+    target 11/24-pi^2/18:     -0.089978022283
+
+The $\lambda \to 0$ extrapolation (fitting
+$c_0 + c_1\lambda + c_2\lambda\log\lambda$ to the three smallest
+$\lambda$) agrees with Petermann's constant to $10^{-4}$, and the
+$\log\lambda$ coefficient is confirmed to be $+\frac12\log\lambda^2$
+(subtracted in the table).
+
+**TODO**: analytic evaluation of the two parametric integrals in the
+$\lambda \to 0$ limit (extract the $\log\lambda$ term, then integrate
+sequentially), target
+$\mu_\mathrm{IId} = \frac{11}{24} - \frac{\pi^2}{18}
++ \frac12\log\frac{\lambda^2}{m^2}$ exactly.
 
 ## Diagram IIa: ladder (vertex part at the external vertex) — TODO
 
@@ -418,10 +511,17 @@ IIb/IIf and their renormalization counterterms.
 
 1. ~~Stage 0: LO pipeline + massive-photon kernel~~ — **done**.
 2. ~~Diagram IIe~~ — **done** (SymPy exact + Fortran numeric).
-3. Diagram IId + $\delta m$ counterterm (first real renormalization;
-   spectral-insertion method).
-4. Diagram IIc via Petermann 1958 (Fortran numerics of his integrands,
-   bounds, then analytic).
-5. Diagram IIa (same machinery as IIc).
-6. Diagram I (direct two-loop; no renormalization).
-7. Assembly, IR-cancellation check, final $A_2$.
+3. ~~Two-loop pipeline (Dirac algebra, projector, loop tools) validated
+   at LO~~ — **done**.
+4. Diagram IId + $\delta m$ counterterm — **parametric integrand derived,
+   value confirmed numerically**; analytic evaluation TODO.
+5. Diagram IIc via Petermann 1958 (Fortran numerics of his integrands,
+   bounds, then analytic) — the pipeline (vertex subgraph insertion)
+   applies as in IId.
+6. Diagram IIa (same machinery as IIc).
+7. Diagram I (direct two-loop; no renormalization — but a genuine
+   two-loop integral, since the crossed photons don't factorize into a
+   one-loop insertion; needs sequential two-loop integration in the
+   pipeline).
+8. Assembly, IR-cancellation check, final $A_2$; analytic values for
+   IId/IIc/IIa/I.
