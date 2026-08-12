@@ -12,16 +12,16 @@ The Dirac equation for an electron is:
 
 $$\L=\bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi$$
 
-Physical quantities like a charge density (\$barpsipsi\$) or a current
-(\$barpsigamma\^mupsi\$), are all invariant if we add a local phase
-\$Lambda(x)\$ to the field (this is called a local U(1) gauge
+Physical quantities like a charge density ($barpsipsi$) or a current
+($barpsigamma\^mupsi$), are all invariant if we add a local phase
+$Lambda(x)$ to the field (this is called a local U(1) gauge
 transformation):
 
 $$\psi(x) \to e^{iq\Lambda(x)/\hbar} \psi(x)$$$$\bar\psi(x) \to \bar \psi(x) e^{-iq\Lambda(x) / \hbar}$$
 
-Where \$q\$ is a parameter that measures the strength of the phase
+Where $q$ is a parameter that measures the strength of the phase
 transformation (this will be later interpreted as a charge, for example
-for electrons \$q=-\|e\|\$) and \$hbar\$ is the Planck constant. And so
+for electrons $q=-\|e\|$) and $hbar$ is the Planck constant. And so
 we require that the Lagrangian is also invariant under the local gauge
 transformation, because there is no experiment that would change if this
 local gauge transformation is applied on the wave functions. By putting
@@ -43,18 +43,18 @@ $$\bar\psi \partial_\mu \psi
 
 In order to make the derivative transform covariantly (and thus the
 Lagrangian gauge invariant), we have to introduce a gauge field, in this
-case a vector field \$A_mu(x)\$, as follows:
+case a vector field $A_mu(x)$, as follows:
 
 [$$D_\mu = \partial_\mu-{i\over \hbar}qA_\mu$$]{label="covariant-derivative"}
 
-and the field \$A_mu\$ must transform as \$A_mu to [A]()mu +
-partial_muLambda(x)\$. At this level, we are free to choose either plus
+and the field $A_mu$ must transform as $A_mu to [A]()mu +
+partial_muLambda(x)$. At this level, we are free to choose either plus
 or minus sign in `covariant-derivative`{.interpreted-text role="eq"},
-since the sign change can be absorbed in the definition of the \$A_mu\$
+since the sign change can be absorbed in the definition of the $A_mu$
 field without loss of generality (if we change the sign, the field
-transformation then changes to \$A_mu to [A]()mu -
-partial_muLambda(x)\$). In the +2 metric signature we chose a minus
-sign, so that \$A_mu\$ coincides with the usual definition of the
+transformation then changes to $A_mu to [A]()mu -
+partial_muLambda(x)$). In the +2 metric signature we chose a minus
+sign, so that $A_mu$ coincides with the usual definition of the
 electromagnetic 4-potential:
 
 $$D_\mu = \partial_\mu-{i\over \hbar}qA_\mu$$$$-i\hbar D_\mu = -i\hbar \partial_\mu - qA_\mu$$$$m\hat v_\mu = \hat p_\mu - qA_\mu$$$$m\hat{\bf v} = \hat {\bf p} - q{\bf A}$$
@@ -68,24 +68,24 @@ And we obtain the same final equation. So the kinematic momentum is
 equal to canonical momentum minus charge times the gauge field. The last
 expression is independent of a metric signature, and that is what is
 e.g. in the kinetic term of a Schrödinger or Pauli equation (with the
-minus sign in \$hat {bf p} - q{bf A}\$). We derive the non-relativistic
+minus sign in $hat {bf p} - q{bf A}$). We derive the non-relativistic
 limit rigorously later, but it gives the same result. At this level we
 just have to make sure we choose the correct sign in
 `covariant-derivative`{.interpreted-text role="eq"}, depending on the
 metric signature, otherwise we would get the electromagnetic 4-potential
-with the opposite sign (the sign of \$A_mu\$ is ultimately just a
+with the opposite sign (the sign of $A_mu$ is ultimately just a
 convention, but later we want to get the same equations as everybody
 else).
 
 Another unrelated convention is in choosing the sign of the parameter
-\$q\$. We have choosen it to coincide with an electric charge (negative
-for electrons). Some authors choose \$q\$ to be positive for electrons,
+$q$. We have choosen it to coincide with an electric charge (negative
+for electrons). Some authors choose $q$ to be positive for electrons,
 then one must flip the sign in `covariant-derivative`{.interpreted-text
 role="eq"}.
 
 We will continue using the +2 signature in the rest of the section.
 
-The operator \$D_mu = partial_mu-{iover hbar}qA_mu\$ is called a
+The operator $D_mu = partial_mu-{iover hbar}qA_mu$ is called a
 covariant derivative, because it does not change a form (is invariant)
 under a local gauge transformation:
 
@@ -117,26 +117,26 @@ $$\L=\bar\psi(i\hbar c\gamma^\mu (\partial_\mu-{i \over \hbar} qA_\mu)
     + qc\bar\psi\gamma^\mu \psi  A_\mu$$
 
 We can see that the condition of a local gauge invariance requires an
-interaction with a vector field \$A_mu\$. Now we need to add the kinetic
-term for the field \$A_mu\$:
+interaction with a vector field $A_mu$. Now we need to add the kinetic
+term for the field $A_mu$:
 
 $$-{1\over4}F_{\mu\nu}F^{\mu\nu}$$
 
-The mass term \$half m\^2 [A]()mu A\^mu\$ is not gauge invariant, and so
-we have to set \$m=0\$. Here is the full Lagrangian:
+The mass term $half m\^2 [A]()mu A\^mu$ is not gauge invariant, and so
+we have to set $m=0$. Here is the full Lagrangian:
 
 $$\L= \bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi
     + q c\bar\psi\gamma^\mu \psi  A_\mu -{1\over4}F_{\mu\nu}F^{\mu\nu}$$
 
 This is a Lagrangian for an electron and a massless vector boson
-(photon) of spin 1. We can introduce a current \$j\^mu =
-cbarpsigamma\^mu psi\$, then the Lagrangian density becomes:
+(photon) of spin 1. We can introduce a current $j\^mu =
+cbarpsigamma\^mu psi$, then the Lagrangian density becomes:
 
 $$\L= \bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi
     + q j^\mu  A_\mu -{1\over4}F_{\mu\nu}F^{\mu\nu}$$
 
-For an electron, we can set \$q=-e\$, where \$e\$ is the elementary
-charge (\$e\$ is positive).
+For an electron, we can set $q=-e$, where $e$ is the elementary
+charge ($e$ is positive).
 
 ## QED Lagrangian
 
@@ -158,13 +158,13 @@ signature:
 
 $$D_\mu=\partial_\mu+{i\over \hbar}eA_\mu$$
 
-\$e\$ is the charge (negative for electrons \$e=-\|e\|\$).
+$e$ is the charge (negative for electrons $e=-\|e\|$).
 
 $$F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu$$
 
 is the electromagnetic field tensor. It\'s astonishing, that this simple
 Lagrangian can account for all phenomena from macroscopic scales down to
-something like \$10\^{-13}rm,cm\$. So it\'s not a surprise that Feynman,
+something like $10\^{-13}rm,cm$. So it\'s not a surprise that Feynman,
 Schwinger and Tomonaga received the 1965 Nobel Prize in Physics for such
 a fantastic achievement.
 
@@ -176,47 +176,47 @@ $$(i\hbar c\gamma^\mu D_\mu-mc^2)\psi=0$$
 $$\partial_\nu F^{\nu\mu}=-ec\bar\psi\gamma^\mu\psi$$
 
 The first equation is the Dirac equation in the electromagnetic field
-and the second equation is a set of Maxwell equations (\$partial_nu
-F\^{numu}=-ej\^mu\$) with a source \$j\^mu=cbarpsigamma\^mupsi\$, which
+and the second equation is a set of Maxwell equations ($partial_nu
+F\^{numu}=-ej\^mu$) with a source $j\^mu=cbarpsigamma\^mupsi$, which
 is a 4-current comming from the Dirac equation.
 
 ## Magnetic moment of an electron
 
-In this section we derive the order-\$alpha\$ correction to the magnetic
+In this section we derive the order-$alpha$ correction to the magnetic
 moment of an electron.
 
 We start by computing the electron vertex function for the process
-\$gamma(q)to e\^+(p) + e\^-(p\')\$:
+$gamma(q)to e\^+(p) + e\^-(p\')$:
 
 $$i M = i e^2 \left(\bar u(p')\Gamma^\mu(p', p)u(p)\right) {1\over q^2}
     \left(\bar u(k') \gamma_\mu u(k)\right)$$
 
-where \$k\$ corresponds to some heavy target. If \$A_mu\^{rm cl}\$ is a
+where $k$ corresponds to some heavy target. If $A_mu\^{rm cl}$ is a
 fixed classical potential, we get:
 
 $$i M 2\pi \delta(p^{0'} - p^0) =
     -i e \bar u(p')\Gamma^\mu(p', p)u(p) A_\mu^{\rm cl}$$
 
 Using general arguments (Lorentz invariance, parity-conservation, Ward
-identity) we can always write \$Gamma\^mu\$ as:
+identity) we can always write $Gamma\^mu$ as:
 
 $$\Gamma^\mu(p', p) = \gamma^\mu F_1(q^2) + {i\sigma^{\mu\nu} q_\nu \over
     2m} F_2(q^2)$$
 
-where \$F_1\$ and \$F_2\$ ar unknown functions of \$q\^2 = (p\'-p)\^2 =
--2p\'cdot p + 2m\^2\$ called form factors. As we will see below, in the
-lowest order we get \$F_1 = 1\$ and \$F_2 = 0\$.
+where $F_1$ and $F_2$ ar unknown functions of $q\^2 = (p\'-p)\^2 =
+-2p\'cdot p + 2m\^2$ called form factors. As we will see below, in the
+lowest order we get $F_1 = 1$ and $F_2 = 0$.
 
 We can calculate the amplitude for elastic Coulomb scattering of a
 nonrelativistic electron from a region of nonzero electrostatic
-potential by setting \$A_mu\^{rm cl}(x)=(phi({bf x}), 0)\$, then:
+potential by setting $A_mu\^{rm cl}(x)=(phi({bf x}), 0)$, then:
 
 $$A_\mu^{\rm cl}(q)=(2\pi\delta(q^0)\tilde\phi({\bf q}), 0)$$$$i M 2\pi \delta(p^{0'} - p^0) =
     -i e \bar u(p')\Gamma^0(p', p)u(p) 2\pi\delta(q^0)\tilde\phi({\bf q})$$$$i M = -i e \bar u(p')\Gamma^0(p', p)u(p) \tilde\phi({\bf q})$$
 
 If the electrostatic field is very slowly varying over a large (even
-macroscopic) region, \$tildephi({bf q})\$ will be concentrated about
-\${bf q} = 0\$, then we can take the limit \${bf q}to 0\$:
+macroscopic) region, $tildephi({bf q})$ will be concentrated about
+${bf q} = 0$, then we can take the limit ${bf q}to 0$:
 
 $$i M = -i e \bar u(p')\Gamma^0(p', p)u(p) \tilde\phi({\bf q})$$$$i M = -i e \bar u(p')
     \left(\gamma^0 F_1(q^2) + {i\sigma^{0\nu} q_\nu \over 2m} F_2(q^2)
@@ -227,19 +227,19 @@ potential
 
 $$V({\bf x}) = e F_1(0) \phi({\bf x})$$
 
-Thus \$F_1(0)\$ is the electric charge of the electron, in units of
-\$e\$. Since \$F_1(0) = 1\$ already in the first order of perturbation
-theory, radiative corrections to \$F_1(q\^2)\$ must vanish at
-\$q\^2=0\$.
+Thus $F_1(0)$ is the electric charge of the electron, in units of
+$e$. Since $F_1(0) = 1$ already in the first order of perturbation
+theory, radiative corrections to $F_1(q\^2)$ must vanish at
+$q\^2=0$.
 
 Now we calculate the scattering from a static vector potential by
-setting \$A_mu\^{rm cl}(x)=(0, {bf A}\_mu\^{rm cl}({bf x}))\$, then:
+setting $A_mu\^{rm cl}(x)=(0, {bf A}\_mu\^{rm cl}({bf x}))$, then:
 
 $$A^\mu_{\rm cl}(q)=(0, 2\pi\delta(q^i)\tilde A^i_{\rm cl}({\bf q}))$$$$i M 2\pi \delta(p^{'i} - p^i) =
     i e \bar u(p')\Gamma^i(p', p)u(p) 2\pi\delta(q^i)\tilde A^i_{\rm cl}({\bf q})$$$$i M = i e \bar u(p')\Gamma^i(p', p)u(p) \tilde A^i_{\rm cl}({\bf q})$$$$i M = i e \bar u(p')\left(\gamma^i F_1(q^2) + {i\sigma^{i\nu} q_\nu \over 2m} F_2(q^2) \right)
 u(p) \tilde A^i_{\rm cl}({\bf q})$$
 
-In the limit \$qto0\$ this becomes:
+In the limit $qto0$ this becomes:
 
 $$i M = i e
     2m\xi^{'\dag}\left(-i\epsilon^{ijk}{q^j\sigma^k\over 2m}(F_1(0) + F_2(0)) \right)\xi
@@ -256,8 +256,8 @@ where
 $$\tilde B^k({\bf q}) =
 \left(-i\epsilon^{ijk}q^j\tilde A^i_{\rm cl}({\bf q})\right)$$
 
-is the Fourier transform of the magnetic field produced by \${bf A}\^{rm
-cl}({bf x})\$.
+is the Fourier transform of the magnetic field produced by ${bf A}\^{rm
+cl}({bf x})$.
 
 This corresponds to the Born approximation for scattering from a
 potential
@@ -275,9 +275,9 @@ where
 
 $$g = 2(F_1(0) + F_2(0))$$$${\bf S} = \xi^{'\dag}{\bsigma\over 2}\xi$$
 
-The coefficient \$g\$ is called the Landé g-factor, and since the
-leading order of perturbation theory gives \$F_2(0)=0\$ (and we know
-that \$F_1(0)=1\$ to all orders), we get:
+The coefficient $g$ is called the Landé g-factor, and since the
+leading order of perturbation theory gives $F_2(0)=0$ (and we know
+that $F_1(0)=1$ to all orders), we get:
 
 $$g = 2(F_1(0) + F_2(0)) = 2 + 2F_2(0) = 2 + O(\alpha)$$
 
@@ -288,7 +288,7 @@ $$a_e = {g - 2\over 2} = F_2(0)$$
 
 To calculate that, we need to evaluate the one-loop correction to the
 vertex function, so we start by deriving the appropriate Green function
-for the process \$gamma(q) + e\^+(p) to e\^+(p\')\$:
+for the process $gamma(q) + e\^+(p) to e\^+(p\')$:
 
 $$\ket{i} = a^{r\dag}_{\bf q} b^{t\dag}_{\bf p} \ket{\Omega}$$$$\ket{f} = b^{s\dag}_{\bf p'} \ket{\Omega}$$$$\braket{f|i} =\bra{\Omega} b^s_{\bf p'} a^{r\dag}_{\bf q}
      b^{t\dag}_{\bf p} \ket{\Omega} =$$$$=\bra{\Omega}T b^s_{\bf p'} a^{r\dag}_{\bf q}
@@ -313,8 +313,8 @@ $$\tilde G(p, p', q) = \bra{\Omega}T \tilde \psi(p') \tilde A^\mu(-q)
          \tilde{\bar\psi}(-p)
          \ket{\Omega}$$
 
-is the interacting Green function for the Lagrangian \$-lambda bar e
-gamma\^mu e [A]()mu\$. In the first order:
+is the interacting Green function for the Lagrangian $-lambda bar e
+gamma\^mu e [A]()mu$. In the first order:
 
 $$\tilde G(p, p', q) = \bra{\Omega}T \tilde\psi(p') \tilde A^\mu(-q)
          \tilde{\bar\psi}(-p)
@@ -343,7 +343,7 @@ $$\braket{f|i}=\bar u^s({\bf p'}){1\over\tilde S(p')}
      {1\over\tilde S(-p)}u^t({\bf p}) =$$$$=(-\lambda)(2\pi)^4\delta(p'-q-p)\epsilon_\mu^{r*}({\bf q})
         u^s({\bf p'})\gamma^\mu u^t({\bf p})$$
 
-and we got \$Gamma\^mu = gamma\^mu\$, so \$F_1=1\$ and \$F_2=0\$ in the
+and we got $Gamma\^mu = gamma\^mu$, so $F_1=1$ and $F_2=0$ in the
 lowest order. In the next order we get:
 
 $$\tilde G(p, p', q)
@@ -411,21 +411,21 @@ $$F_1(q^2) = 1 + {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
      \left[2m^2 z(1-z)\over m^2(1-z)^2 - q^2 xy \right]
         +O(\alpha^2)$$
 
-\$F_1\$ contains both ultraviolet and infrared divergencies. To cure the
-infrared divergence, we add a term \$mu\^2 z\$ to \$Delta\$. To cure the
+$F_1$ contains both ultraviolet and infrared divergencies. To cure the
+infrared divergence, we add a term $mu\^2 z$ to $Delta$. To cure the
 ultraviolet divergence, we make the substitution:
 
 $$F_1(q^2) \to F_1(q^2) - \delta F_1(0)$$
 
-where \$delta F_1\$ is the first order (in \$alpha\$) correction to
-\$F_1\$ (i.e. \$F_1 = 1 + delta F_1 + O(alpha\^2)\$):
+where $delta F_1$ is the first order (in $alpha$) correction to
+$F_1$ (i.e. $F_1 = 1 + delta F_1 + O(alpha\^2)$):
 
 $$\delta F_1(0) = {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
     \delta(x+y+z-1)
     \left[\log {z \Lambda^2\over\Delta (q^2=0)} + {1\over\Delta (q^2=0)}
         (1-4z+z^2)m^2\right]$$
 
-so the corrected \$F_1\$ is:
+so the corrected $F_1$ is:
 
 $$F_1(q^2) = 1 + {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
     \delta(x+y+z-1)
@@ -441,7 +441,7 @@ $$F_1(q^2) = 1 + {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
     +O(\alpha^2)$$
 
 Neither the ultraviolet nor the infrared divergence affects
-\$F_2(q\^2)\$, so we just set \$q=0\$:
+$F_2(q\^2)$, so we just set $q=0$:
 
 $$F_2(0) = {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
     \delta(x+y+z-1)
@@ -457,7 +457,7 @@ $$F_2(0) = {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
      {2 z\over 1-z} +O(\alpha^2) =$$$$={\alpha\over 2\pi} \int_0^1 \d z (1-z)
      {2 z\over 1-z} +O(\alpha^2) =$$$$={\alpha\over 2\pi} \int_0^1 \d z 2z + O(\alpha^2) =$$$$= {\alpha\over 2\pi} + O(\alpha^2)$$
 
-Thus we get the correction to the \$g\$-factor of the electron:
+Thus we get the correction to the $g$-factor of the electron:
 
 $$a_e = {g - 2\over 2} = F_2(0) = {\alpha\over 2\pi} \approx 0.0011614$$
 
@@ -469,7 +469,7 @@ Code:
     >>> a_e
     0.0011614097331824923
 
-Experiments give \$a_e = 0.00115965218073pm0.00000000000028\$
+Experiments give $a_e = 0.00115965218073pm0.00000000000028$
 ([arXiv:1412.8284](http://arxiv.org/abs/1412.8284), eq. (1)).
 
 Higher order corrections from QED can also be calculated:
@@ -479,9 +479,9 @@ $$a_e = A_1 \left({\alpha\over \pi}\right) +
       A_3 \left({\alpha\over \pi}\right)^3 +
       A_4 \left({\alpha\over \pi}\right)^4 + \cdots$$
 
-we already know that \$A_1 = half\$. See for example
+we already know that $A_1 = half$. See for example
 [hep-ph/9410248](http://arxiv.org/abs/hep-ph/9410248) for the expression
-for \$A_2\$:
+for $A_2$:
 
 $$A_2 = \frac{197}{144} + \frac{3}{4} \zeta\left(3\right) - \frac{1}{2}
     \pi^{2} \operatorname{log}\left(2\right) + \frac{1}{12} \pi^{2} =$$$$= -0.328478965579\dots$$
@@ -494,7 +494,7 @@ Code:
     -0.328478965579194
 
 See [hep-ph/9602417](http://arxiv.org/abs/hep-ph/9602417) for the
-\$A_3\$ term:
+$A_3$ term:
 
 $$A_3 = \frac{28259}{5184} - \frac{215}{24} \zeta\left(5\right)
 + \frac{100}{3} \left(\sum_{n=1}^{\infty} \frac{1}{2^{n} n^{4}} -
@@ -518,12 +518,12 @@ Code:
     >>> A_3.n()
     1.18124145658720
 
-Higher terms are only known numerically. The \$A_4\$ and \$A_5\$ terms
+Higher terms are only known numerically. The $A_4$ and $A_5$ terms
 can be found in [arXiv:1412.8284](http://arxiv.org/abs/1412.8284):
 
 $$A_4 = -1.912 98 (84)$$$$A_5 = 7.795 (336)$$
 
-We can now sum \$a_e\$ up to a given order by the following script:
+We can now sum $a_e$ up to a given order by the following script:
 
     from sympy import pi, zeta, S, log, summation, var, oo
     var("n")
@@ -558,7 +558,7 @@ We can now sum \$a_e\$ up to a given order by the following script:
 
 and obtain the following table:
 
-  Order        \$a_e\$
+  Order        $a_e$
   ------------ ------------------
   1            0.00116140973318
   2            0.00115963742812
@@ -579,6 +579,6 @@ line is the difference from the theory (the \"Total\" line) and
 experiment. The \"Exp. err\" line is the experimental error.
 
 At this level of accuracy, the uncertainty of the exact value of
-\$alpha\$ is the primary cause of the difference from experiment, and
-one can use this result to predict a more accurate value for \$alpha\$,
+$alpha$ is the primary cause of the difference from experiment, and
+one can use this result to predict a more accurate value for $alpha$,
 assuming that QED and the standard model are valid.
