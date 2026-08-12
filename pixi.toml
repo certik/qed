@@ -7,6 +7,14 @@ version = "0.1.0"
 
 [tasks]
 start = "myst start"
+figures = "python code/feynman_diagrams.py"
+lo-sympy = "python code/g2_lo.py"
+iie-sympy = "python code/g2_iie.py"
+iie-fortran = { cmd = "mkdir -p _build/fortran && flang -O3 -march=native -ffast-math code/g2_iie.f90 -o _build/fortran/g2_iie && _build/fortran/g2_iie" }
+g2-nlo = { depends-on = ["lo-sympy", "iie-sympy", "iie-fortran"] }
 
 [dependencies]
 mystmd = ">=1.10.1,<2"
+sympy = ">=1.14.0,<2"
+mpmath = ">=1.4.1,<2"
+matplotlib = ">=3.11.1,<4"
