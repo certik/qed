@@ -10,14 +10,16 @@ We use a metric with signature +2 in this section.
 
 The Dirac equation for an electron is:
 
-$$\L=\bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi$$
+$$\mathcal{L}=\bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi$$
 
 Physical quantities like a charge density ($barpsipsi$) or a current
-($barpsigamma\^mupsi$), are all invariant if we add a local phase
+($barpsigamma^mupsi$), are all invariant if we add a local phase
 $Lambda(x)$ to the field (this is called a local U(1) gauge
 transformation):
 
-$$\psi(x) \to e^{iq\Lambda(x)/\hbar} \psi(x)$$$$\bar\psi(x) \to \bar \psi(x) e^{-iq\Lambda(x) / \hbar}$$
+$$\psi(x) \to e^{iq\Lambda(x)/\hbar} \psi(x)$$
+
+$$\bar\psi(x) \to \bar \psi(x) e^{-iq\Lambda(x) / \hbar}$$
 
 Where $q$ is a parameter that measures the strength of the phase
 transformation (this will be later interpreted as a charge, for example
@@ -27,9 +29,11 @@ transformation, because there is no experiment that would change if this
 local gauge transformation is applied on the wave functions. By putting
 this gauge transformation into the Lagrangian density, we otain:
 
-$$\L \to \bar\psi e^{-iq\Lambda(x) / \hbar}
+$$\mathcal{L} \to \bar\psi e^{-iq\Lambda(x) / \hbar}
     (i\hbar c\gamma^\mu \partial_\mu-mc^2)
-e^{iq\Lambda(x) / \hbar} \psi =$$$$= \bar\psi(i\hbar c\gamma^\mu (\partial_\mu + iq\partial_\mu\Lambda(x) /
+e^{iq\Lambda(x) / \hbar} \psi =$$
+
+$$= \bar\psi(i\hbar c\gamma^\mu (\partial_\mu + iq\partial_\mu\Lambda(x) /
     \hbar) -mc^2)\psi$$
 
 The reason the Lagrangian is not invariant is due to the derivative,
@@ -38,7 +42,9 @@ which does not transform covariantly under a local gauge transformation:
 $$\bar\psi \partial_\mu \psi
 \to
 \bar\psi e^{-iq\Lambda(x) / \hbar} \partial_\mu
-    e^{iq\Lambda(x) / \hbar} \psi =$$$$= \bar\psi (\partial_\mu
+    e^{iq\Lambda(x) / \hbar} \psi =$$
+
+$$= \bar\psi (\partial_\mu
     + iq\partial_\mu\Lambda(x) / \hbar) \psi \neq \bar\psi \partial_\mu \psi$$
 
 In order to make the derivative transform covariantly (and thus the
@@ -57,18 +63,30 @@ partial_muLambda(x)$). In the +2 metric signature we chose a minus
 sign, so that $A_mu$ coincides with the usual definition of the
 electromagnetic 4-potential:
 
-$$D_\mu = \partial_\mu-{i\over \hbar}qA_\mu$$$$-i\hbar D_\mu = -i\hbar \partial_\mu - qA_\mu$$$$m\hat v_\mu = \hat p_\mu - qA_\mu$$$$m\hat{\bf v} = \hat {\bf p} - q{\bf A}$$
+$$D_\mu = \partial_\mu-{i\over \hbar}qA_\mu$$
+
+$$-i\hbar D_\mu = -i\hbar \partial_\mu - qA_\mu$$
+
+$$m\hat v_\mu = \hat p_\mu - qA_\mu$$
+
+$$m\hat{\mathbf{v}} = \hat {\mathbf{p}} - q{\mathbf{A}}$$
 
 With signature -2, we must choose a plus sign and the identification
 goes as follows:
 
-$$D_\mu = \partial_\mu+{i\over \hbar}qA_\mu$$$$i\hbar D_\mu = i\hbar \partial_\mu - qA_\mu$$$$m\hat v_\mu = \hat p_\mu - qA_\mu$$$$m\hat{\bf v} = \hat {\bf p} - q{\bf A}$$
+$$D_\mu = \partial_\mu+{i\over \hbar}qA_\mu$$
+
+$$i\hbar D_\mu = i\hbar \partial_\mu - qA_\mu$$
+
+$$m\hat v_\mu = \hat p_\mu - qA_\mu$$
+
+$$m\hat{\mathbf{v}} = \hat {\mathbf{p}} - q{\mathbf{A}}$$
 
 And we obtain the same final equation. So the kinematic momentum is
 equal to canonical momentum minus charge times the gauge field. The last
 expression is independent of a metric signature, and that is what is
 e.g. in the kinetic term of a Schrödinger or Pauli equation (with the
-minus sign in $hat {bf p} - q{bf A}$). We derive the non-relativistic
+minus sign in $hat \mathbf{p} - q\mathbf{A}$). We derive the non-relativistic
 limit rigorously later, but it gives the same result. At this level we
 just have to make sure we choose the correct sign in
 `covariant-derivative`{.interpreted-text role="eq"}, depending on the
@@ -89,31 +107,43 @@ The operator $D_mu = partial_mu-{iover hbar}qA_mu$ is called a
 covariant derivative, because it does not change a form (is invariant)
 under a local gauge transformation:
 
-$$\bar\psi D_\mu \psi = \bar\psi (\partial_\mu-{i\over \hbar}qA_\mu) \psi$$$$\to
+$$\bar\psi D_\mu \psi = \bar\psi (\partial_\mu-{i\over \hbar}qA_\mu) \psi$$
+
+$$\to
 \bar\psi e^{-iq\Lambda(x) / \hbar} (\partial_\mu-{i\over \hbar}q(A_\mu
-    + \partial_\mu \Lambda(x))) e^{iq\Lambda(x) / \hbar} \psi =$$$$= \bar\psi (\partial_\mu
+    + \partial_\mu \Lambda(x))) e^{iq\Lambda(x) / \hbar} \psi =$$
+
+$$= \bar\psi (\partial_\mu
     - {i\over \hbar}q A_\mu - {i\over \hbar}q \partial_\mu \Lambda(x)
-    + iq\partial_\mu\Lambda(x) / \hbar) \psi =$$$$= \bar\psi (\partial_\mu - {i\over \hbar}qA_\mu) \psi
+    + iq\partial_\mu\Lambda(x) / \hbar) \psi =$$
+
+$$= \bar\psi (\partial_\mu - {i\over \hbar}qA_\mu) \psi
 = \bar\psi D_\mu \psi$$
 
 Then the Lagrangian
 
-[$$\L=\bar\psi(i\hbar c\gamma^\mu (\partial_\mu-iqA_\mu / \hbar)-mc^2)\psi$$]{label="lag_inv"}
+[$$\mathcal{L}=\bar\psi(i\hbar c\gamma^\mu (\partial_\mu-iqA_\mu / \hbar)-mc^2)\psi$$]{label="lag_inv"}
 
 is also gauge invariant:
 
-$$\L \to \bar\psi e^{-iq\Lambda(x) / \hbar}
+$$\mathcal{L} \to \bar\psi e^{-iq\Lambda(x) / \hbar}
     (i\hbar c\gamma^\mu (\partial_\mu-iqA_\mu / \hbar
         -iq\partial_\mu\Lambda(x) / \hbar)
-    -mc^2) e^{iq\Lambda(x) / \hbar} \psi =$$$$= \bar\psi(i\hbar c\gamma^\mu (\partial_\mu -iqA_\mu / \hbar
+    -mc^2) e^{iq\Lambda(x) / \hbar} \psi =$$
+
+$$= \bar\psi(i\hbar c\gamma^\mu (\partial_\mu -iqA_\mu / \hbar
     -iq\partial_\mu\Lambda(x) / \hbar + iq\partial_\mu\Lambda(x) / \hbar)
-    -mc^2)\psi =$$$$= \bar\psi(i\hbar c\gamma^\mu (\partial_\mu -iqA_\mu / \hbar) -mc^2)\psi$$
+    -mc^2)\psi =$$
+
+$$= \bar\psi(i\hbar c\gamma^\mu (\partial_\mu -iqA_\mu / \hbar) -mc^2)\psi$$
 
 The Lagrangian `lag_inv`{.interpreted-text role="eq"} can also be
 written as:
 
-$$\L=\bar\psi(i\hbar c\gamma^\mu (\partial_\mu-{i \over \hbar} qA_\mu)
-    -mc^2)\psi =$$$$= \bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi
+$$\mathcal{L}=\bar\psi(i\hbar c\gamma^\mu (\partial_\mu-{i \over \hbar} qA_\mu)
+    -mc^2)\psi =$$
+
+$$= \bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi
     + qc\bar\psi\gamma^\mu \psi  A_\mu$$
 
 We can see that the condition of a local gauge invariance requires an
@@ -122,17 +152,17 @@ term for the field $A_mu$:
 
 $$-{1\over4}F_{\mu\nu}F^{\mu\nu}$$
 
-The mass term $half m\^2 [A]()mu A\^mu$ is not gauge invariant, and so
+The mass term $half m^2 [A]()mu A^mu$ is not gauge invariant, and so
 we have to set $m=0$. Here is the full Lagrangian:
 
-$$\L= \bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi
+$$\mathcal{L}= \bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi
     + q c\bar\psi\gamma^\mu \psi  A_\mu -{1\over4}F_{\mu\nu}F^{\mu\nu}$$
 
 This is a Lagrangian for an electron and a massless vector boson
-(photon) of spin 1. We can introduce a current $j\^mu =
-cbarpsigamma\^mu psi$, then the Lagrangian density becomes:
+(photon) of spin 1. We can introduce a current $j^mu =
+cbarpsigamma^mu psi$, then the Lagrangian density becomes:
 
-$$\L= \bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi
+$$\mathcal{L}= \bar\psi(i\hbar c\gamma^\mu \partial_\mu-mc^2)\psi
     + q j^\mu  A_\mu -{1\over4}F_{\mu\nu}F^{\mu\nu}$$
 
 For an electron, we can set $q=-e$, where $e$ is the elementary
@@ -144,7 +174,7 @@ We use a metric with signature -2 in this section.
 
 The QED Lagrangian density is
 
-$$\L=\bar\psi(i\hbar c\gamma^\mu D_\mu-mc^2)\psi-{1\over4}F_{\mu\nu}F^{\mu\nu}$$
+$$\mathcal{L}=\bar\psi(i\hbar c\gamma^\mu D_\mu-mc^2)\psi-{1\over4}F_{\mu\nu}F^{\mu\nu}$$
 
 where
 
@@ -162,9 +192,9 @@ $e$ is the charge (negative for electrons $e=-\|e\|$).
 
 $$F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu$$
 
-is the electromagnetic field tensor. It\'s astonishing, that this simple
+is the electromagnetic field tensor. It's astonishing, that this simple
 Lagrangian can account for all phenomena from macroscopic scales down to
-something like $10\^{-13}rm,cm$. So it\'s not a surprise that Feynman,
+something like $10^{-13}rm,cm$. So it's not a surprise that Feynman,
 Schwinger and Tomonaga received the 1965 Nobel Prize in Physics for such
 a fantastic achievement.
 
@@ -177,7 +207,7 @@ $$\partial_\nu F^{\nu\mu}=-ec\bar\psi\gamma^\mu\psi$$
 
 The first equation is the Dirac equation in the electromagnetic field
 and the second equation is a set of Maxwell equations ($partial_nu
-F\^{numu}=-ej\^mu$) with a source $j\^mu=cbarpsigamma\^mupsi$, which
+F^{numu}=-ej^mu$) with a source $j^mu=cbarpsigamma^mupsi$, which
 is a 4-current comming from the Dirac equation.
 
 ## Magnetic moment of an electron
@@ -186,94 +216,126 @@ In this section we derive the order-$alpha$ correction to the magnetic
 moment of an electron.
 
 We start by computing the electron vertex function for the process
-$gamma(q)to e\^+(p) + e\^-(p\')$:
+$gamma(q)to e^+(p) + e^-(p')$:
 
 $$i M = i e^2 \left(\bar u(p')\Gamma^\mu(p', p)u(p)\right) {1\over q^2}
     \left(\bar u(k') \gamma_\mu u(k)\right)$$
 
-where $k$ corresponds to some heavy target. If $A_mu\^{rm cl}$ is a
+where $k$ corresponds to some heavy target. If $A_mu^{rm cl}$ is a
 fixed classical potential, we get:
 
 $$i M 2\pi \delta(p^{0'} - p^0) =
     -i e \bar u(p')\Gamma^\mu(p', p)u(p) A_\mu^{\rm cl}$$
 
 Using general arguments (Lorentz invariance, parity-conservation, Ward
-identity) we can always write $Gamma\^mu$ as:
+identity) we can always write $Gamma^mu$ as:
 
 $$\Gamma^\mu(p', p) = \gamma^\mu F_1(q^2) + {i\sigma^{\mu\nu} q_\nu \over
     2m} F_2(q^2)$$
 
-where $F_1$ and $F_2$ ar unknown functions of $q\^2 = (p\'-p)\^2 =
--2p\'cdot p + 2m\^2$ called form factors. As we will see below, in the
+where $F_1$ and $F_2$ ar unknown functions of $q^2 = (p'-p)^2 =
+-2p'cdot p + 2m^2$ called form factors. As we will see below, in the
 lowest order we get $F_1 = 1$ and $F_2 = 0$.
 
 We can calculate the amplitude for elastic Coulomb scattering of a
 nonrelativistic electron from a region of nonzero electrostatic
-potential by setting $A_mu\^{rm cl}(x)=(phi({bf x}), 0)$, then:
+potential by setting $A_mu^{rm cl}(x)=(phi(\mathbf{x}), 0)$, then:
 
-$$A_\mu^{\rm cl}(q)=(2\pi\delta(q^0)\tilde\phi({\bf q}), 0)$$$$i M 2\pi \delta(p^{0'} - p^0) =
-    -i e \bar u(p')\Gamma^0(p', p)u(p) 2\pi\delta(q^0)\tilde\phi({\bf q})$$$$i M = -i e \bar u(p')\Gamma^0(p', p)u(p) \tilde\phi({\bf q})$$
+$$A_\mu^{\rm cl}(q)=(2\pi\delta(q^0)\tilde\phi({\mathbf{q}}), 0)$$
+
+$$i M 2\pi \delta(p^{0'} - p^0) =
+    -i e \bar u(p')\Gamma^0(p', p)u(p) 2\pi\delta(q^0)\tilde\phi({\mathbf{q}})$$
+
+$$i M = -i e \bar u(p')\Gamma^0(p', p)u(p) \tilde\phi({\mathbf{q}})$$
 
 If the electrostatic field is very slowly varying over a large (even
-macroscopic) region, $tildephi({bf q})$ will be concentrated about
-${bf q} = 0$, then we can take the limit ${bf q}to 0$:
+macroscopic) region, $tildephi(\mathbf{q})$ will be concentrated about
+$\mathbf{q} = 0$, then we can take the limit $\mathbf{q}to 0$:
 
-$$i M = -i e \bar u(p')\Gamma^0(p', p)u(p) \tilde\phi({\bf q})$$$$i M = -i e \bar u(p')
+$$i M = -i e \bar u(p')\Gamma^0(p', p)u(p) \tilde\phi({\mathbf{q}})$$
+
+$$i M = -i e \bar u(p')
     \left(\gamma^0 F_1(q^2) + {i\sigma^{0\nu} q_\nu \over 2m} F_2(q^2)
-        \right)u(p) \tilde\phi({\bf q})$$$$i M = -i e \bar u(p') \gamma^0 u(p) F_1(0) \tilde\phi({\bf q})$$$$i M = -i e 2m\xi^{'\dag}\xi F_1(0) \tilde\phi({\bf q})$$$$i M = -i \left( e F_1(0) \tilde\phi({\bf q})\right) 2m\xi^{'\dag}\xi$$
+        \right)u(p) \tilde\phi({\mathbf{q}})$$
+
+$$i M = -i e \bar u(p') \gamma^0 u(p) F_1(0) \tilde\phi({\mathbf{q}})$$
+
+$$i M = -i e 2m\xi^{'\dag}\xi F_1(0) \tilde\phi({\mathbf{q}})$$
+
+$$i M = -i \left( e F_1(0) \tilde\phi({\mathbf{q}})\right) 2m\xi^{'\dag}\xi$$
 
 This corresponds to the Born approximation for scattering from a
 potential
 
-$$V({\bf x}) = e F_1(0) \phi({\bf x})$$
+$$V({\mathbf{x}}) = e F_1(0) \phi({\mathbf{x}})$$
 
 Thus $F_1(0)$ is the electric charge of the electron, in units of
 $e$. Since $F_1(0) = 1$ already in the first order of perturbation
-theory, radiative corrections to $F_1(q\^2)$ must vanish at
-$q\^2=0$.
+theory, radiative corrections to $F_1(q^2)$ must vanish at
+$q^2=0$.
 
 Now we calculate the scattering from a static vector potential by
-setting $A_mu\^{rm cl}(x)=(0, {bf A}\_mu\^{rm cl}({bf x}))$, then:
+setting $A_mu^{rm cl}(x)=(0, \mathbf{A}\_mu^{rm cl}(\mathbf{x}))$, then:
 
-$$A^\mu_{\rm cl}(q)=(0, 2\pi\delta(q^i)\tilde A^i_{\rm cl}({\bf q}))$$$$i M 2\pi \delta(p^{'i} - p^i) =
-    i e \bar u(p')\Gamma^i(p', p)u(p) 2\pi\delta(q^i)\tilde A^i_{\rm cl}({\bf q})$$$$i M = i e \bar u(p')\Gamma^i(p', p)u(p) \tilde A^i_{\rm cl}({\bf q})$$$$i M = i e \bar u(p')\left(\gamma^i F_1(q^2) + {i\sigma^{i\nu} q_\nu \over 2m} F_2(q^2) \right)
-u(p) \tilde A^i_{\rm cl}({\bf q})$$
+$$A^\mu_{\rm cl}(q)=(0, 2\pi\delta(q^i)\tilde A^i_{\rm cl}({\mathbf{q}}))$$
+
+$$i M 2\pi \delta(p^{'i} - p^i) =
+    i e \bar u(p')\Gamma^i(p', p)u(p) 2\pi\delta(q^i)\tilde A^i_{\rm cl}({\mathbf{q}})$$
+
+$$i M = i e \bar u(p')\Gamma^i(p', p)u(p) \tilde A^i_{\rm cl}({\mathbf{q}})$$
+
+$$i M = i e \bar u(p')\left(\gamma^i F_1(q^2) + {i\sigma^{i\nu} q_\nu \over 2m} F_2(q^2) \right)
+u(p) \tilde A^i_{\rm cl}({\mathbf{q}})$$
 
 In the limit $qto0$ this becomes:
 
 $$i M = i e
     2m\xi^{'\dag}\left(-i\epsilon^{ijk}{q^j\sigma^k\over 2m}(F_1(0) + F_2(0)) \right)\xi
-\tilde A^i_{\rm cl}({\bf q})$$$$i M = -i e
+\tilde A^i_{\rm cl}({\mathbf{q}})$$
+
+$$i M = -i e
     2m\xi^{'\dag}\left(-{\sigma^k\over 2m}(F_1(0) + F_2(0)) \right)\xi
-\left(-i\epsilon^{ijk}q^j\tilde A^i_{\rm cl}({\bf q})\right)$$$$i M = -i e
+\left(-i\epsilon^{ijk}q^j\tilde A^i_{\rm cl}({\mathbf{q}})\right)$$
+
+$$i M = -i e
     2m\xi^{'\dag}\left(-{\sigma^k\over 2m}(F_1(0) + F_2(0)) \right)\xi
-    \tilde B^k({\bf q})$$$$i M = -i \left(-{e\over m} (F_1(0) + F_2(0))
+    \tilde B^k({\mathbf{q}})$$
+
+$$i M = -i \left(-{e\over m} (F_1(0) + F_2(0))
     2m\xi^{'\dag}{\sigma^k\over 2}\xi
-    \tilde B^k({\bf q})\right)$$
+    \tilde B^k({\mathbf{q}})\right)$$
 
 where
 
-$$\tilde B^k({\bf q}) =
-\left(-i\epsilon^{ijk}q^j\tilde A^i_{\rm cl}({\bf q})\right)$$
+$$\tilde B^k({\mathbf{q}}) =
+\left(-i\epsilon^{ijk}q^j\tilde A^i_{\rm cl}({\mathbf{q}})\right)$$
 
-is the Fourier transform of the magnetic field produced by ${bf A}\^{rm
-cl}({bf x})$.
+is the Fourier transform of the magnetic field produced by $\mathbf{A}^{rm
+cl}(\mathbf{x})$.
 
 This corresponds to the Born approximation for scattering from a
 potential
 
-$$V({\bf x}) = -{e\over m} (F_1(0) + F_2(0))
+$$V({\mathbf{x}}) = -{e\over m} (F_1(0) + F_2(0))
     \xi^{'\dag}{\sigma^k\over 2}\xi
-    B^k({\bf x})$$$$V({\bf x}) = -{e\over m} (F_1(0) + F_2(0))
-    \xi^{'\dag}{\bsigma\over 2}\xi\cdot {\bf B}({\bf x})$$$$V({\bf x}) = -<{\bmu}>\cdot {\bf B}({\bf x})$$
+    B^k({\mathbf{x}})$$
+
+$$V({\mathbf{x}}) = -{e\over m} (F_1(0) + F_2(0))
+    \xi^{'\dag}{\boldsymbol{\sigma}\over 2}\xi\cdot {\mathbf{B}}({\mathbf{x}})$$
+
+$$V({\mathbf{x}}) = -<{\boldsymbol{\mu}}>\cdot {\mathbf{B}}({\mathbf{x}})$$
 
 where
 
-$$<{\bmu}> = {e\over m} (F_1(0) + F_2(0)) \xi^{'\dag}{\bsigma\over 2}\xi$$$$<{\bmu}> = g {e\over 2m} {\bf S}$$
+$$<{\boldsymbol{\mu}}> = {e\over m} (F_1(0) + F_2(0)) \xi^{'\dag}{\boldsymbol{\sigma}\over 2}\xi$$
+
+$$<{\boldsymbol{\mu}}> = g {e\over 2m} {\mathbf{S}}$$
 
 where
 
-$$g = 2(F_1(0) + F_2(0))$$$${\bf S} = \xi^{'\dag}{\bsigma\over 2}\xi$$
+$$g = 2(F_1(0) + F_2(0))$$
+
+$${\mathbf{S}} = \xi^{'\dag}{\boldsymbol{\sigma}\over 2}\xi$$
 
 The coefficient $g$ is called the Landé g-factor, and since the
 leading order of perturbation theory gives $F_2(0)=0$ (and we know
@@ -288,68 +350,92 @@ $$a_e = {g - 2\over 2} = F_2(0)$$
 
 To calculate that, we need to evaluate the one-loop correction to the
 vertex function, so we start by deriving the appropriate Green function
-for the process $gamma(q) + e\^+(p) to e\^+(p\')$:
+for the process $gamma(q) + e^+(p) to e^+(p')$:
 
-$$\ket{i} = a^{r\dag}_{\bf q} b^{t\dag}_{\bf p} \ket{\Omega}$$$$\ket{f} = b^{s\dag}_{\bf p'} \ket{\Omega}$$$$\braket{f|i} =\bra{\Omega} b^s_{\bf p'} a^{r\dag}_{\bf q}
-     b^{t\dag}_{\bf p} \ket{\Omega} =$$$$=\bra{\Omega}T b^s_{\bf p'} a^{r\dag}_{\bf q}
-         b^{t\dag}_{\bf p} \ket{\Omega} =$$$$=\bra{\Omega}T
-         \bar u^s({\bf p'}){1\over\tilde S(p')}\tilde \psi(p')
-         \epsilon_\mu^{r*}({\bf q}){q^2\over i} \tilde A^\mu(-q)
-         \tilde{\bar\psi}(-p){1\over\tilde S(-p)}u^t({\bf p})
-         \ket{\Omega} =$$$$=\bar u^s({\bf p'}){1\over\tilde S(p')}
-        \epsilon_\mu^{r*}({\bf q}){q^2\over i}
-         \bra{\Omega}T
+$$|i\rangle = a^{r\dag}_{\mathbf{q}} b^{t\dag}_{\mathbf{p}} |\Omega\rangle$$
+
+$$|f\rangle = b^{s\dag}_{\mathbf{p}'} |\Omega\rangle$$
+
+$$\langle f|i \rangle =\langle\Omega| b^s_{\mathbf{p}'} a^{r\dag}_{\mathbf{q}}
+     b^{t\dag}_{\mathbf{p}} |\Omega\rangle =$$
+
+$$=\langle\Omega|T b^s_{\mathbf{p}'} a^{r\dag}_{\mathbf{q}}
+         b^{t\dag}_{\mathbf{p}} |\Omega\rangle =$$
+
+$$=\langle\Omega|T
+         \bar u^s({\mathbf{p}'}){1\over\tilde S(p')}\tilde \psi(p')
+         \epsilon_\mu^{r*}({\mathbf{q}}){q^2\over i} \tilde A^\mu(-q)
+         \tilde{\bar\psi}(-p){1\over\tilde S(-p)}u^t({\mathbf{p}})
+         |\Omega\rangle =$$
+
+$$=\bar u^s({\mathbf{p}'}){1\over\tilde S(p')}
+        \epsilon_\mu^{r*}({\mathbf{q}}){q^2\over i}
+         \langle\Omega|T
          \tilde \psi(p')
          \tilde A^\mu(-q)
          \tilde{\bar\psi}(-p)
-         \ket{\Omega}{1\over\tilde S(-p)}u^t({\bf p}) =$$$$=\bar u^s({\bf p'}){1\over\tilde S(p')}
-        \epsilon_\mu^{r*}({\bf q}){q^2\over i}
+         |\Omega\rangle{1\over\tilde S(-p)}u^t({\mathbf{p}}) =$$
+
+$$=\bar u^s({\mathbf{p}'}){1\over\tilde S(p')}
+        \epsilon_\mu^{r*}({\mathbf{q}}){q^2\over i}
          \tilde G(p, p', q)
-         {1\over\tilde S(-p)}u^t({\bf p}) =$$
+         {1\over\tilde S(-p)}u^t({\mathbf{p}}) =$$
 
 where:
 
-$$\tilde G(p, p', q) = \bra{\Omega}T \tilde \psi(p') \tilde A^\mu(-q)
+$$\tilde G(p, p', q) = \langle\Omega|T \tilde \psi(p') \tilde A^\mu(-q)
          \tilde{\bar\psi}(-p)
-         \ket{\Omega}$$
+         |\Omega\rangle$$
 
 is the interacting Green function for the Lagrangian $-lambda bar e
-gamma\^mu e [A]()mu$. In the first order:
+gamma^mu e [A]()mu$. In the first order:
 
-$$\tilde G(p, p', q) = \bra{\Omega}T \tilde\psi(p') \tilde A^\mu(-q)
+$$\tilde G(p, p', q) = \langle\Omega|T \tilde\psi(p') \tilde A^\mu(-q)
          \tilde{\bar\psi}(-p)
-         \ket{\Omega} =$$$$= \int \d^4 x \bra{0}T \tilde\psi(p') \tilde A^\mu(-q)
+         |\Omega\rangle =$$
+
+$$= \int \mathrm{d}^4 x \langle0|T \tilde\psi(p') \tilde A^\mu(-q)
          \tilde{\bar\psi}(-p)
          (-\lambda)\bar e(x) \gamma^\rho e(x) A_\rho(x)
-         \ket{0} =$$$$= (-\lambda)\int \d^4 x \d\hat p'\d\hat q\d\hat p
+         |0\rangle =$$
+
+$$= (-\lambda)\int \mathrm{d}^4 x \mathrm{d}\hat p'\mathrm{d}\hat q\mathrm{d}\hat p
         e^{i\hat p'p' - \hat q q
         -\hat pp}
-        \bra{0}T \psi(\hat p') A^\mu(\hat q)
+        \langle0|T \psi(\hat p') A^\mu(\hat q)
          {\bar\psi}(\hat p)
          \bar e(x) \gamma^\rho e(x) A_\rho(x)
-         \ket{0} =$$$$= (-\lambda)\int \d^4 x \d\hat p'\d\hat q\d\hat p
+         |0\rangle =$$
+
+$$= (-\lambda)\int \mathrm{d}^4 x \mathrm{d}\hat p'\mathrm{d}\hat q\mathrm{d}\hat p
         e^{i\hat p'p' - \hat q q
         -\hat pp}
         D^\mu_\rho(\hat q-x) S(\hat p' - x)\gamma^\rho S(\hat p-x)
-        =$$$$= (-\lambda)(2\pi)^4\delta(p'-q-p)
+        =$$
+
+$$= (-\lambda)(2\pi)^4\delta(p'-q-p)
         \tilde D^\mu_\rho(q) \tilde S(p')\gamma^\rho \tilde S(p)$$
 
 so the amplitude is:
 
-$$\braket{f|i}=\bar u^s({\bf p'}){1\over\tilde S(p')}
-    \epsilon_\mu^{r*}({\bf q}){q^2\over i}
+$$\langle f|i \rangle=\bar u^s({\mathbf{p}'}){1\over\tilde S(p')}
+    \epsilon_\mu^{r*}({\mathbf{q}}){q^2\over i}
  (-\lambda)(2\pi)^4\delta(p'-q-p)
     \tilde D^\mu_\rho(q) \tilde S(p')\gamma^\rho \tilde S(p)
-     {1\over\tilde S(-p)}u^t({\bf p}) =$$$$=(-\lambda)(2\pi)^4\delta(p'-q-p)\epsilon_\mu^{r*}({\bf q})
-        u^s({\bf p'})\gamma^\mu u^t({\bf p})$$
+     {1\over\tilde S(-p)}u^t({\mathbf{p}}) =$$
 
-and we got $Gamma\^mu = gamma\^mu$, so $F_1=1$ and $F_2=0$ in the
+$$=(-\lambda)(2\pi)^4\delta(p'-q-p)\epsilon_\mu^{r*}({\mathbf{q}})
+        u^s({\mathbf{p}'})\gamma^\mu u^t({\mathbf{p}})$$
+
+and we got $Gamma^mu = gamma^mu$, so $F_1=1$ and $F_2=0$ in the
 lowest order. In the next order we get:
 
 $$\tilde G(p, p', q)
     = (-\lambda)(2\pi)^4\delta(p'-q-p)
-        \tilde D^\mu_\rho(q) \tilde S(p')\delta\Gamma^\rho \tilde S(p)$$$$\delta\Gamma^\mu =
-    \int {\d^4 k\over (2\pi)^4} \tilde D_{\nu\rho}(k-p)
+        \tilde D^\mu_\rho(q) \tilde S(p')\delta\Gamma^\rho \tilde S(p)$$
+
+$$\delta\Gamma^\mu =
+    \int {\mathrm{d}^4 k\over (2\pi)^4} \tilde D_{\nu\rho}(k-p)
         (-ie\gamma^\nu)
         \tilde S(k')
         \gamma^\mu
@@ -359,33 +445,45 @@ $$\tilde G(p, p', q)
 Now we can write:
 
 $$\bar u(p')\Gamma^\mu(p', p) u(p) =
-    \bar u(p')(\gamma^\mu + \delta\Gamma^\mu) u(p)$$$$\bar u(p')\delta\Gamma^\mu(p', p) u(p) =
-    \int {\d^4 k\over (2\pi)^4} \tilde D_{\nu\rho}(k-p)
+    \bar u(p')(\gamma^\mu + \delta\Gamma^\mu) u(p)$$
+
+$$\bar u(p')\delta\Gamma^\mu(p', p) u(p) =
+    \int {\mathrm{d}^4 k\over (2\pi)^4} \tilde D_{\nu\rho}(k-p)
         \bar u(p')
         (-ie\gamma^\nu)
         \tilde S(k')
         \gamma^\mu
         \tilde S(k)
         (-ie\gamma^\rho)
-        u(p) =$$$$=
-    \int {\d^4 k\over (2\pi)^4} {-ig_{\nu\rho}\over (k-p)^2 +i\epsilon}
+        u(p) =$$
+
+$$=
+    \int {\mathrm{d}^4 k\over (2\pi)^4} {-ig_{\nu\rho}\over (k-p)^2 +i\epsilon}
         \bar u(p')
         (-ie\gamma^\nu)
-        {i(\fslash k' + m)\over k'^2-m^2 +i\epsilon}
+        {i(\not{k}' + m)\over k'^2-m^2 +i\epsilon}
         \gamma^\mu
-        {i(\fslash k + m)\over k^2-m^2 +i\epsilon}
+        {i(\not{k} + m)\over k^2-m^2 +i\epsilon}
         (-ie\gamma^\rho)
-        u(p) =$$$$= 2ie^2\int {\d^4 k\over (2\pi)^4}
+        u(p) =$$
+
+$$= 2ie^2\int {\mathrm{d}^4 k\over (2\pi)^4}
     {\bar u(p') \left(
-        \fslash k \gamma^mu \fslash k' + m^2\gamma^\mu - 2m(k+k')^\mu
+        \not{k} \gamma^mu \not{k}' + m^2\gamma^\mu - 2m(k+k')^\mu
         \right) u(p) \over
     ((k-p)^2 + i\epsilon)(k'^2 - m^2 + i\epsilon)(k^2-m^2+i\epsilon)
-        }=$$$$= \cdots =$$$$= 2i e^2 \int {\d^4 l\over (2\pi)^4} \int_0^1 \d x \,\d y \,\d z\,
+        }=$$
+
+$$= \cdots =$$
+
+$$= 2i e^2 \int {\mathrm{d}^4 l\over (2\pi)^4} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
     {2\over D^3} \bar u(p') \left(
-    \gamma^\mu (-\half l^2+ (1-x)(1-y)q^2 + (1-4z+z^2)m^2)
+    \gamma^\mu (-\frac{1}{2} l^2+ (1-x)(1-y)q^2 + (1-4z+z^2)m^2)
         + {i\sigma^{\mu\nu}q_\nu\over 2m} (2m^2 z(1-z))
-    \right)u(p) =$$$$= {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
+    \right)u(p) =$$
+
+$$= {\alpha\over 2\pi} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
     \bar u(p') \left(
     \gamma^\mu \left[\log {z \Lambda^2\over\Delta} + {1\over\Delta}
@@ -395,67 +493,97 @@ $$\bar u(p')\Gamma^\mu(p', p) u(p) =
 
 where
 
-$$k' = k + q$$$$D = l^2 - \Delta + i\epsilon$$$$\Delta = -xyq^2 + (1-z)^2 m^2 > 0$$
+$$k' = k + q$$
+
+$$D = l^2 - \Delta + i\epsilon$$
+
+$$\Delta = -xyq^2 + (1-z)^2 m^2 > 0$$
 
 So the expressions for the form factors are:
 
-$$F_1(q^2) = 1 + {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
+$$F_1(q^2) = 1 + {\alpha\over 2\pi} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
     \left[\log {z \Lambda^2\over\Delta} + {1\over\Delta}
         \left((1-x)(1-y)q^2 + (1-4z+z^2)m^2\right)\right]
-        +O(\alpha^2)$$$$F_2(q^2) = {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
+        +O(\alpha^2)$$
+
+$$F_2(q^2) = {\alpha\over 2\pi} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
      \left[{1\over\Delta}2m^2 z(1-z) \right]
-        +O(\alpha^2) =$$$$= {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
+        +O(\alpha^2) =$$
+
+$$= {\alpha\over 2\pi} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
      \left[2m^2 z(1-z)\over m^2(1-z)^2 - q^2 xy \right]
         +O(\alpha^2)$$
 
 $F_1$ contains both ultraviolet and infrared divergencies. To cure the
-infrared divergence, we add a term $mu\^2 z$ to $Delta$. To cure the
+infrared divergence, we add a term $mu^2 z$ to $Delta$. To cure the
 ultraviolet divergence, we make the substitution:
 
 $$F_1(q^2) \to F_1(q^2) - \delta F_1(0)$$
 
 where $delta F_1$ is the first order (in $alpha$) correction to
-$F_1$ (i.e. $F_1 = 1 + delta F_1 + O(alpha\^2)$):
+$F_1$ (i.e. $F_1 = 1 + delta F_1 + O(alpha^2)$):
 
-$$\delta F_1(0) = {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
+$$\delta F_1(0) = {\alpha\over 2\pi} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
     \left[\log {z \Lambda^2\over\Delta (q^2=0)} + {1\over\Delta (q^2=0)}
         (1-4z+z^2)m^2\right]$$
 
 so the corrected $F_1$ is:
 
-$$F_1(q^2) = 1 + {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
+$$F_1(q^2) = 1 + {\alpha\over 2\pi} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
     \left[\log {z \Lambda^2\over\Delta} + {1\over\Delta}
-        \left((1-x)(1-y)q^2 + (1-4z+z^2)m^2\right)+\right.$$$$\left.-\log {z \Lambda^2\over\Delta (q^2=0)} - {1\over\Delta (q^2=0)}
+        \left((1-x)(1-y)q^2 + (1-4z+z^2)m^2\right)+\right.$$
+
+$$\left.-\log {z \Lambda^2\over\Delta (q^2=0)} - {1\over\Delta (q^2=0)}
     (1-4z+z^2)m^2\right]
-    +O(\alpha^2) =$$$$= 1 + {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
+    +O(\alpha^2) =$$
+
+$$= 1 + {\alpha\over 2\pi} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
     \left[\log {m^2 (1-z)^2\over m^2(1-z)^2 - q^2 x y} +
         \left((1-x)(1-y)q^2 + (1-4z+z^2)m^2\over
         m^2(1-z)^2 - q^2 x y +\mu^2z
-        \right)+\right.$$$$\left.-{(1-4z+z^2)m^2\over m^2 (1-z)^2 + \mu^2 z}\right]
+        \right)+\right.$$
+
+$$\left.-{(1-4z+z^2)m^2\over m^2 (1-z)^2 + \mu^2 z}\right]
     +O(\alpha^2)$$
 
 Neither the ultraviolet nor the infrared divergence affects
-$F_2(q\^2)$, so we just set $q=0$:
+$F_2(q^2)$, so we just set $q=0$:
 
-$$F_2(0) = {\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
+$$F_2(0) = {\alpha\over 2\pi} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
-     \left[2m^2 z(1-z)\over m^2(1-z)^2 \right] +O(\alpha^2) =$$$$={\alpha\over 2\pi} \int_0^1 \d x \,\d y \,\d z\,
+     \left[2m^2 z(1-z)\over m^2(1-z)^2 \right] +O(\alpha^2) =$$
+
+$$={\alpha\over 2\pi} \int_0^1 \mathrm{d} x \,\mathrm{d} y \,\mathrm{d} z\,
     \delta(x+y+z-1)
-     {2 z\over 1-z} +O(\alpha^2) =$$$$={\alpha\over 2\pi} \int_0^1 \d y \int_0^1 \,\d z\,
+     {2 z\over 1-z} +O(\alpha^2) =$$
+
+$$={\alpha\over 2\pi} \int_0^1 \mathrm{d} y \int_0^1 \,\mathrm{d} z\,
     \theta(1-(1-y-z))\theta((1-y-z)-0)
-     {2 z\over 1-z} +O(\alpha^2) =$$$$={\alpha\over 2\pi} \int_0^1 \d y \int_0^1 \,\d z\,
+     {2 z\over 1-z} +O(\alpha^2) =$$
+
+$$={\alpha\over 2\pi} \int_0^1 \mathrm{d} y \int_0^1 \,\mathrm{d} z\,
     \theta(y+z)\theta(1-y-z)
-     {2 z\over 1-z} +O(\alpha^2) =$$$$={\alpha\over 2\pi} \int_0^1 \d y \int_0^1 \,\d z\,
+     {2 z\over 1-z} +O(\alpha^2) =$$
+
+$$={\alpha\over 2\pi} \int_0^1 \mathrm{d} y \int_0^1 \,\mathrm{d} z\,
     \theta(1-y-z)
-     {2 z\over 1-z} +O(\alpha^2) =$$$$={\alpha\over 2\pi} \int_0^1 \d z \int_0^{1-z} \,\d y
-     {2 z\over 1-z} +O(\alpha^2) =$$$$={\alpha\over 2\pi} \int_0^1 \d z (1-z)
-     {2 z\over 1-z} +O(\alpha^2) =$$$$={\alpha\over 2\pi} \int_0^1 \d z 2z + O(\alpha^2) =$$$$= {\alpha\over 2\pi} + O(\alpha^2)$$
+     {2 z\over 1-z} +O(\alpha^2) =$$
+
+$$={\alpha\over 2\pi} \int_0^1 \mathrm{d} z \int_0^{1-z} \,\mathrm{d} y
+     {2 z\over 1-z} +O(\alpha^2) =$$
+
+$$={\alpha\over 2\pi} \int_0^1 \mathrm{d} z (1-z)
+     {2 z\over 1-z} +O(\alpha^2) =$$
+
+$$={\alpha\over 2\pi} \int_0^1 \mathrm{d} z 2z + O(\alpha^2) =$$
+
+$$= {\alpha\over 2\pi} + O(\alpha^2)$$
 
 Thus we get the correction to the $g$-factor of the electron:
 
@@ -484,7 +612,9 @@ we already know that $A_1 = half$. See for example
 for $A_2$:
 
 $$A_2 = \frac{197}{144} + \frac{3}{4} \zeta\left(3\right) - \frac{1}{2}
-    \pi^{2} \operatorname{log}\left(2\right) + \frac{1}{12} \pi^{2} =$$$$= -0.328478965579\dots$$
+    \pi^{2} \operatorname{log}\left(2\right) + \frac{1}{12} \pi^{2} =$$
+
+$$= -0.328478965579\dots$$
 
 Code:
 
@@ -499,11 +629,15 @@ $A_3$ term:
 $$A_3 = \frac{28259}{5184} - \frac{215}{24} \zeta\left(5\right)
 + \frac{100}{3} \left(\sum_{n=1}^{\infty} \frac{1}{2^{n} n^{4}} -
   \frac{1}{24} \pi^{2} \operatorname{log}^{2}\left(2\right) + \frac{1}{24}
-  \operatorname{log}^{4}\left(2\right)\right) +$$$$+\frac{139}{18}
+  \operatorname{log}^{4}\left(2\right)\right) +$$
+
+$$+\frac{139}{18}
 \zeta\left(3\right) - \frac{298}{9} \pi^{2}
 \operatorname{log}\left(2\right) + \frac{83}{72} \pi^{2}
 \zeta\left(3\right) + \frac{17101}{810} \pi^{2} -
-\frac{239}{2160} \pi^{4} =$$$$= 1.181241456\dots$$
+\frac{239}{2160} \pi^{4} =$$
+
+$$= 1.181241456\dots$$
 
 Code:
 
@@ -521,7 +655,9 @@ Code:
 Higher terms are only known numerically. The $A_4$ and $A_5$ terms
 can be found in [arXiv:1412.8284](http://arxiv.org/abs/1412.8284):
 
-$$A_4 = -1.912 98 (84)$$$$A_5 = 7.795 (336)$$
+$$A_4 = -1.912 98 (84)$$
+
+$$A_5 = 7.795 (336)$$
 
 We can now sum $a_e$ up to a given order by the following script:
 
