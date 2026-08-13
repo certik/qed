@@ -1663,7 +1663,7 @@ $$\slashed{a}\slashed{a} = a^2 .$$
 
 The pipeline never uses any of these as *rules* — it multiplies the
 explicit $4\times4$ matrices of `code/dirac.py` — but they are what make
-the hand-derivations of §8 and §10 short, and the explicit matrices do
+the hand-derivations of §8 and §11 short, and the explicit matrices do
 satisfy them:
 
     >>> import sys; sys.path.insert(0, 'code')
@@ -3028,7 +3028,7 @@ which would be a disaster. It is not one, and the reason is exactly the
 mass counterterm: $\Sigma_\mathrm{loop}(k)$ does not vanish at
 $\slashed k = m$, but $\Sigma_\mathrm{loop} - \delta m$ does, and a
 factor that vanishes on shell cancels one power of the pole. We will see
-this happen algebraically in §10.1.
+this happen algebraically in §11.1.
 
 Second, this expression is **not yet the diagram we want**: it uses the
 unrenormalized $\Sigma_\mathrm{loop}$, which is ultraviolet divergent.
@@ -3364,7 +3364,7 @@ here precisely because the $L_{UV}$ coefficient vanishes *pointwise*.
 
 ## 9. The counterterm diagrams
 
-Section 7 derived the subtraction $\Sigma_\mathrm{loop}\to\Sigma_R$
+Section 8 derived the subtraction $\Sigma_\mathrm{loop}\to\Sigma_R$
 algebraically. It is worth seeing that this *is* the addition of
 counterterm diagrams, since that is the form in which renormalization is
 usually stated.
@@ -3471,7 +3471,270 @@ constant and changes some other diagram by the negative of it.
 
 We compute in the KK scheme, so as to compare with Petermann.
 
-## 10. The covariant reduction
+## 10. What the counterterms are, and how much of this is forced
+
+We have now built two counterterms explicitly and watched them do their
+job. This is the right moment to stand back and answer four questions
+that the mechanics tend to bury: whether the counterterms are finite
+numbers or infinite ones, which half of the Lagrangian is the divergent
+one, which diagrams need counterterms at all, and how much of the
+procedure is forced on us as opposed to chosen.
+
+### 10.1 The counterterms are finite; the limit is what diverges
+
+At any finite value of the regulator the counterterms are perfectly
+ordinary numbers. Section 8.3 computed
+
+$$\frac{\delta m}{c} = 3L_{UV} + 5,\qquad
+  L_{UV} = \log\Lambda^2 + \text{scheme constant},$$
+
+and for a finite Pauli–Villars mass $\Lambda$ that is a definite real
+number. It grows without bound as $\Lambda\to\infty$, and *that* is what
+the phrase "infinite counterterm" abbreviates. No step of the calculation
+ever manipulates an actual infinity: the regulator is removed only at the
+end, from expressions in which $L_{UV}$ has already cancelled.
+
+It is worth appreciating how mild the divergence is. Restoring $m$, the
+mass counterterm is proportional to $m$ — it must be, because $m\to0$ is
+a chiral symmetry of the Lagrangian, and a symmetry not broken by the
+regulator cannot be broken by loop corrections. Hence
+$\delta m\propto m\log\Lambda^2$ rather than $\Lambda$ or $\Lambda^2$,
+and even a cutoff at the Planck mass gives only
+
+    log(Lambda^2/m^2) = 103.1
+    delta_m/m         = 0.182
+
+    >>> from math import log, pi
+    >>> alpha = 1/137.035999084
+    >>> m, Lam = 0.51099895e-3, 1.220890e19     # GeV
+    >>> LUV = 2*log(Lam/m)
+    >>> round(LUV, 1)
+    103.1
+    >>> round(alpha/(4*pi)*(3*LUV + 5), 3)
+    0.182
+
+An 18% correction, with the cutoff at the highest scale anyone proposes.
+"Infinite" is a statement about a limit, not about a magnitude.
+
+The finite parts are equally unphysical, and for a sharper reason. In
+§8.5 we found that dimensional regularization and Pauli–Villars give
+self-energies differing by $c(2u\slashed k - 2m)$ — a perfectly finite
+amount — so $\delta m$ and $\delta Z_2$ differ between the two schemes
+even after the divergence is stripped. And $\delta Z_2$ is not purely a
+short-distance object at all: from §8.3,
+
+$$\frac{\delta Z_2}{c} = -L_{UV} - 2\log\lambda^2 - 5,$$
+
+which diverges at *both* ends, ultraviolet through $L_{UV}$ and infrared
+through $\log\lambda^2$.
+
+The moral is that no counterterm has a meaning on its own. What has
+meaning is $\Sigma_R$, which §8.5 showed is identical in the two schemes,
+and the physical quantities built from it.
+
+### 10.2 Which half of the Lagrangian is divergent?
+
+It is tempting to read the split of §1.2 as two infinite pieces whose sum
+is finite. It is not symmetric like that:
+
+* the first piece contains the **measured** $m$ and $e$, and is finite by
+  construction — that is the whole point of writing it that way;
+* the counterterm piece has coefficients
+  $\delta_2,\delta_3,\delta_m,\delta_1$ that diverge as the regulator is
+  removed.
+
+What *is* divergent when written honestly is the original bare
+Lagrangian: expressed in terms of $m_0 = m + \delta m'$ and $e_0$, its
+coefficients are the ones without a finite limit. The renormalized split
+is a reorganization of that same object, chosen so that the divergent
+part is isolated in terms that can be treated as vertices.
+
+The cancellation, moreover, is not between the two halves of the
+Lagrangian directly. It is between **loop integrals** generated by the
+first half and **tree-level insertions** of the second, order by order in
+$\alpha$. Diagram IId shows this as concretely as one could wish: §9.1
+exhibits the renormalized diagram as a sum of three Feynman diagrams,
+
+$$\underbrace{\text{IId raw}}_{\text{one loop, divergent}}
+  \;+\;\underbrace{\delta m\ \text{insertion}}_{\text{tree, divergent}}
+  \;+\;\underbrace{\delta Z_2\ \text{insertion}}_{\text{tree, divergent}}
+  \;=\;\underbrace{\text{IId with }\Sigma_R}_{\text{finite}},$$
+
+none of which is finite by itself. The counterterms count as order
+$\alpha$ even though they are tree-level, because their coefficients are
+themselves one-loop quantities; that is what makes the reorganized series
+an expansion in the renormalized coupling.
+
+### 10.3 Which diagrams need counterterms: power counting
+
+Not every diagram needs one. The ones that do are those containing a
+**superficially divergent one-particle-irreducible subgraph**, and the
+list of such subgraphs is short and — crucially — does not grow with the
+loop order.
+
+Count powers of loop momentum in a diagram with $L$ loops, $I_e$ internal
+fermion lines, $I_\gamma$ internal photon lines, $V$ vertices, and
+$N_e, N_\gamma$ external fermion and photon lines. Each loop integration
+supplies $d^4k$, each internal fermion propagator falls off like $1/k$,
+each internal photon propagator like $1/k^2$, so the **superficial degree
+of divergence** — the power of $\Lambda$ obtained by scaling all loop
+momenta up together — is
+
+$$D = 4L - I_e - 2I_\gamma .$$
+
+Three identities relate these counts. Every vertex has two fermion ends
+and one photon end, and every internal line uses two ends while every
+external line uses one:
+
+$$2I_e + N_e = 2V,\qquad 2I_\gamma + N_\gamma = V,$$
+
+and the number of independent loops is the number of internal lines minus
+the number of momentum conservation constraints, one per vertex, less the
+overall one:
+
+$$L = I_e + I_\gamma - V + 1 .$$
+
+Solve the first two for $I_e = V - \tfrac12 N_e$ and
+$I_\gamma = \tfrac12\left(V - N_\gamma\right)$, substitute into the third
+to get $L = \tfrac12 V - \tfrac12 N_e - \tfrac12 N_\gamma + 1$, and then
+into $D$:
+
+$$D = 4\left(\frac{V}{2}-\frac{N_e}{2}-\frac{N_\gamma}{2}+1\right)
+  - \left(V-\frac{N_e}{2}\right)
+  - 2\cdot\frac{V-N_\gamma}{2}$$
+
+$$= \left(2V - V - V\right)
+  + \left(-2N_e+\frac{N_e}{2}\right)
+  + \left(-2N_\gamma+N_\gamma\right) + 4,$$
+
+$$\boxed{\;D = 4 - \frac32 N_e - N_\gamma\;}$$
+
+**The number of vertices has cancelled.** Whether a given amplitude
+diverges depends only on how many external lines it has, not on how many
+loops were used to compute it. That single fact is what "QED is
+renormalizable" means, and it is why a fixed, finite set of counterterms
+suffices to all orders. (Contrast a theory whose coupling has negative
+mass dimension, such as the four-fermion Fermi interaction: there
+$D = 4 - \tfrac32 N_e + 2V$ grows with every vertex, so new counterterms
+are needed at every order and the programme never closes.)
+
+Now enumerate. $D\ge0$ requires
+
+| $N_e$ | $N_\gamma$ | $D$ | amplitude | what happens |
+| --- | --- | --- | --- | --- |
+| 0 | 1 | 3 | photon tadpole | vanishes by Furry's theorem |
+| 0 | 2 | 2 | photon self-energy | transversality $\Rightarrow$ only logarithmic; needs $\delta_3$ |
+| 0 | 3 | 1 | three photons | vanishes by Furry's theorem |
+| 0 | 4 | 0 | light-by-light | gauge invariance $\Rightarrow$ finite |
+| 2 | 0 | 1 | electron self-energy | chiral symmetry $\Rightarrow$ only logarithmic; needs $\delta_m,\delta_2$ |
+| 2 | 1 | 0 | vertex | logarithmic; needs $\delta_1$ |
+
+Everything else has $D<0$: four external fermions gives $D=-2$, Compton
+scattering ($N_e=2,N_\gamma=2$) gives $D=-1$, and so on. Two of the
+surviving entries are further reduced by symmetries — this is the
+recurring theme that a symmetry can make an amplitude less divergent than
+power counting suggests, and it is why the regulator must not break the
+symmetry (§10.4).
+
+So there are exactly **four** counterterms, $\delta_3$, $\delta_2$,
+$\delta_m$, $\delta_1$, and the Ward identity $Z_1 = Z_2$ makes one of
+them dependent, leaving **three** independent constants — which is what
+one expects, since there are three things to fix: the pole of the
+electron propagator (mass), its residue (field normalization, a
+convention), and the residue of the photon pole (charge). The Ward
+identity also gives
+
+$$e_0 = \frac{e\,Z_1}{Z_2\sqrt{Z_3}} = \frac{e}{\sqrt{Z_3}},$$
+
+so charge renormalization comes *entirely* from the photon field. That is
+why every charged particle, whatever its mass or spin, is renormalized by
+the same factor and the observed charges stay in exact integer ratios.
+
+For the five diagrams of this calculation:
+
+| diagram | divergent subgraph | counterterm needed |
+| --- | --- | --- |
+| I (crossed ladder) | none | none |
+| IIa (ladder) | vertex | $\delta_1$ |
+| IIc (corner) | vertex | $\delta_1$ |
+| IId (self-energy) | electron self-energy | $\delta_m$ and $\delta_2$ |
+| IIe (vacuum polarization) | photon self-energy | $\delta_3$ |
+
+There is one more thing to say, and it is a gift specific to the quantity
+we are computing. Every one of the five *does* have an overall
+logarithmic divergence, since the whole diagram is a vertex function with
+$D=0$; that overall divergence is removed by $\delta_1$. But the vertex
+counterterm is $-ie\,\delta_1\gamma^\mu$ — pure $\gamma^\mu$ structure —
+so it contributes only to $F_1$ and cannot touch $F_2$. This is the same
+statement §11.6 reaches by counting powers of $\ell^2$ in the numerator:
+$F_1$ diverges diagram by diagram and $F_2$ does not. **The anomalous
+moment needs no overall ultraviolet renormalization of its own**; only
+the subgraph subtractions matter, which is why diagram I can be computed
+with no counterterm at all.
+
+### 10.4 What is forced, and what is chosen
+
+It is natural to ask why any of this needs judgment — why one cannot
+simply generate all contractions, as in §4, and let the algebra sort
+itself out. Most of it can be automated, and it is worth being precise
+about which part cannot.
+
+**The structure is algorithmic.** Which subgraphs must be subtracted
+follows from the power counting above, with no choices. For nested
+divergences (a divergent subgraph inside a divergent graph, which is
+exactly IId's situation) and for overlapping ones, Zimmermann's forest
+formula prescribes mechanically which subtractions to make and in which
+combinations, and the BPHZ theorem guarantees the result is finite to all
+orders. This part is implemented in automated multi-loop programs and
+requires no human input.
+
+**The finite part is a genuine choice.** Power counting says the vertex
+subgraph needs *a* subtraction; it does not say which one. On-shell,
+minimal subtraction, modified minimal subtraction and momentum
+subtraction at a scale $\mu$ are all legitimate, give different
+counterterms, and give different values for individual diagrams. Section
+9.3 showed this concretely for IId: moving $\delta Z_2$ between the
+diagram and the external legs shifts $\mu_\mathrm{IId}$ by
+$L_{UV}/4 + \log\lambda + 5/4$ while leaving $A_2$ untouched. No amount
+of algebra selects among these; you must choose, and then be consistent.
+
+**The regulator must respect the symmetries, and checking that is not
+automatic.** This is the sharpest point, and our own warm-up demonstrates
+it. Section 6.2 computed the photon self-energy with a naive momentum
+cutoff and found a non-transverse remainder — a photon mass proportional
+to $\alpha\Lambda^2$, which is gauge-violating nonsense that no
+subsequent subtraction can repair, since a photon mass term is not
+available as a counterterm in a gauge theory. Pauli–Villars removes it
+precisely because the conditions $\sum_i c_i = 0$ and
+$\sum_i c_i M_i^2 = 0$ are engineered to. An algorithm that blindly
+subtracted every divergence it found, without knowing that transversality
+had to survive, would produce a wrong theory and no error message. The
+same issue recurs elsewhere: dimensional regularization is superb for
+gauge symmetry and awkward for chiral symmetry, because $\gamma_5$ has no
+clean $d$-dimensional definition.
+
+**Matching someone else's convention is archaeology, not physics.** Our
+per-diagram numbers agree with Petermann's only because we reproduced the
+Karplus–Kroll prescription, in which the vertex subgraph is subtracted
+*pointwise in the subgraph's Feynman parameters* rather than after
+integration. Nothing forces that choice; it is simply what they did, and
+comparing diagram by diagram requires doing the same. Had we only wanted
+$A_2$, any consistent scheme would have served.
+
+**Where to implement the subtraction is an engineering choice.** One may
+subtract at the level of the integrated amplitude, or — as our scripts do
+— pointwise in the parametric integrand, so that every intermediate
+expression is finite term by term and $L_{UV}$ cancels before any
+integration. Both give the same answer; the second is enormously more
+convenient numerically, and it is what makes the assertion "$L_{UV}$
+cancels pointwise in $u$" (§8.4) available as a check.
+
+So the honest summary is that the *structure* of renormalization is
+forced and mechanizable, while the *scheme* is a convention, and the
+choice of regulator is constrained by which symmetries you cannot afford
+to break.
+
+## 11. The covariant reduction
 
 We now do the algebra of §7.1 with $\Sigma_R$ inserted. The pipeline
 (`code/g2_iid.py`) does this with explicit $4\times4$ matrices in the
@@ -3482,7 +3745,7 @@ verified by `pixi run iid-covariant` (`code/g2_iid_covariant.py`),
 including the Dirac identities, which are checked against the explicit
 matrices of `code/dirac.py` at random momenta.
 
-### 10.1 The insertion sandwich
+### 11.1 The insertion sandwich
 
 Whatever $\Sigma_R$ is, it has the form $f + g\slashed k$ with scalar
 $f,g$, so the object appearing in the numerator is
@@ -3533,7 +3796,7 @@ $$\left(\slashed k+m\right)\kappa\left(\slashed k-m\right)
 explicit.** The factor $(k^2-m^2)$ cancels one power of $[k^2-m^2]^2$,
 and what is left is an ordinary single propagator.
 
-### 10.2 The rational piece is the LO diagram times a constant
+### 11.2 The rational piece is the LO diagram times a constant
 
 Put the cancellation back into §7.1. The rational piece of IId is
 
@@ -3594,7 +3857,7 @@ through the arctangent branch bookkeeping. Note also that SymPy's naive
 no logarithms at all — the second wrong answer of this section, and the
 one `code/g2_lo.py` warns about.)
 
-### 10.3 The log piece: the $\xi$ representation
+### 11.3 The log piece: the $\xi$ representation
 
 The second half of $\Sigma_R$ is
 $-c(4m-2u\slashed k)\log\left(D/D_0\right)$, and a logarithm of the loop
@@ -3632,7 +3895,7 @@ $$\left[\left(k-p\right)^2-\lambda^2\right]\left[k'^2-m^2\right]
 
 and an overall factor $1/\xi$.
 
-### 10.4 The numerator, contracted
+### 11.4 The numerator, contracted
 
 For both pieces the outer numerator has the same shape,
 $\gamma^\nu(\slashed k'+m)\gamma^\mu(P+Q\slashed k)\gamma_\nu$, and the
@@ -3673,13 +3936,13 @@ these, $4k'^\mu$ and $4mk^\mu$ are already of the $(p+p')^\mu$ type that
 $F_2$ lives in (once the loop momentum is averaged away), $-2m\gamma^\mu$
 is pure $F_1$, and $-2\slashed k\gamma^\mu\slashed k'$ contains both.
 
-For the log piece, $P$ and $Q$ follow from §10.1 with $f = -4mc$,
+For the log piece, $P$ and $Q$ follow from §11.1 with $f = -4mc$,
 $g = 2uc$ (the $\log$ having been traded for the $\xi$ propagator):
 
 $$P = -4mc\left[\left(1-u\right)k^2 + m^2\right],\qquad
   Q = 2c\left[u\left(k^2+m^2\right) - 4m^2\right].$$
 
-### 10.5 Feynman parameters, shift, and $\Delta$
+### 11.5 Feynman parameters, shift, and $\Delta$
 
 Combine the four denominators with parameters $x,y,z,t$ summing to one
 ($x$ on the photon, $y$ on the $k'$ line, $z$ on the $k$ line, $t$ on the
@@ -3712,9 +3975,9 @@ $$\Delta = m^2\left(1-x\right)^2 - q^2yz + x\lambda^2
   \quad\xrightarrow{q^2\to0}\quad m^2\left(1-x\right)^2 + x\lambda^2,$$
 
 which is the leading-order denominator with a massive photon — as it must
-be, since §10.2 showed the rational piece *is* the leading-order diagram.
+be, since §11.2 showed the rational piece *is* the leading-order diagram.
 
-### 10.6 Extracting $F_2$
+### 11.6 Extracting $F_2$
 
 What remains is bookkeeping: substitute $k = \ell+s$ into $N^\mu$, drop
 terms odd in $\ell$, replace $\ell^{a}\ell^{b}\to g^{ab}\ell^2/4$
@@ -3747,12 +4010,12 @@ to `code/g2_iid_flog.inc`. It is not enlightening to display, and this
 is the honest place to hand over to the machine: the algebra is
 mechanical, the pipeline does it, and the check that it was done right is
 that the final number agrees with Petermann. What we have gained by
-doing §10.1–§10.5 by hand is everything that is *not* mechanical: why the
+doing §11.1–§11.5 by hand is everything that is *not* mechanical: why the
 double pole is harmless, why the rational piece is the leading-order
 diagram in disguise, where the fictitious mass $C$ comes from, and why
 $F_2$ is finite.
 
-## 11. The parameter integrals
+## 12. The parameter integrals
 
 At this point
 
@@ -3765,10 +4028,10 @@ and only the second integral is left. It is done by
 integration is chosen so that nothing worse than a logarithm appears
 until the very last step.
 
-### 11.1 Trading $\xi$ for the fictitious mass
+### 12.1 Trading $\xi$ for the fictitious mass
 
 The parameter $\xi$ enters only through $C(\xi)$, so change variables
-from $\xi$ to $C$ itself. From §10.3,
+from $\xi$ to $C$ itself. From §11.3,
 
 $$C = m^2 + \frac{a-bm^2}{\xi b} = m^2 + \frac{D_0}{\xi b}
   \quad\Longrightarrow\quad
@@ -3776,9 +4039,9 @@ $$C = m^2 + \frac{a-bm^2}{\xi b} = m^2 + \frac{D_0}{\xi b}
 
 and as $\xi$ runs over $(0,1)$, $C$ runs over $(m^2 + D_0/b, \infty)$,
 which at $m=1$ is $(1/u,\infty)$ — a genuine spectral variable. The
-$1/\xi$ prefactor of §10.3 is absorbed exactly by this Jacobian.
+$1/\xi$ prefactor of §11.3 is absorbed exactly by this Jacobian.
 
-### 11.2 The order of integration
+### 12.2 The order of integration
 
 The integrations are then done in the order $z$, $C$, $t$, $s=y+z$, $u$:
 
@@ -3809,10 +4072,10 @@ the entire infrared divergence in $\delta Z_2$ — and equals
 
 $$\mu_\mathrm{log} = -\frac1{24} - \frac{\pi^2}{18}.$$
 
-### 11.3 The answer
+### 12.3 The answer
 
 Adding the two pieces, with $\mu_\mathrm{rat} = \log\lambda + \frac12$
-from §10.2:
+from §11.2:
 
 $$\mu_\mathrm{IId} = \left(\log\lambda + \frac12\right)
   + \left(-\frac1{24}-\frac{\pi^2}{18}\right)
@@ -3830,7 +4093,7 @@ $$\boxed{\;\mu_\mathrm{IId} = \frac{11}{24} - \frac{\pi^2}{18}
 in exact agreement with Petermann, Helv. Phys. Acta 30 (1957) 407,
 eq. (4).
 
-## 12. Independent checks
+## 13. Independent checks
 
 **Numerical.** `pixi run iid-fortran` integrates the same parametric
 integrands by Gauss–Legendre quadrature in Fortran, with a smoothstep
@@ -3856,9 +4119,9 @@ way, and each would have caught an error:
 
 1. $L_{UV}$ cancels in $\Sigma_R$ *pointwise in $u$* (§8.4).
 2. The infrared logarithm predicted from $\delta Z_2$ alone (§8.3)
-   matches the one the full calculation produces (§11.3).
+   matches the one the full calculation produces (§12.3).
 3. The covariant rational piece reproduces the pipeline's independently
-   derived factorization, $S(\lambda) = -K(\lambda^2)$ (§10.2).
+   derived factorization, $S(\lambda) = -K(\lambda^2)$ (§11.2).
 
 **Where the infrared logarithm goes.** $\mu_\mathrm{IId}$ is not by
 itself physical; its $+\frac12\log(\lambda^2/m^2)$ cancels against the
@@ -3866,7 +4129,7 @@ $-\frac12\log(\lambda^2/m^2)$ of diagram IIc. That cancellation, and the
 vanishing of the whole $\log\lambda$ dependence of $A_2$, is verified in
 the assembly of the NLO section.
 
-## 13. The same calculation, for any other diagram
+## 14. The same calculation, for any other diagram
 
 The point of doing one diagram completely is to be able to do the others.
 Here is the procedure, with a note on what changes.
@@ -3879,20 +4142,24 @@ Here is the procedure, with a note on what changes.
    prefactor by counting $(-ie)$ per vertex, $i$ per fermion propagator,
    $-i$ per photon propagator, and $(-1)$ and a trace per closed fermion
    loop.
-3. **Identify the divergent subgraph and subtract it on shell.** This is
-   the only step requiring judgment. A self-energy subgraph needs
-   $\delta m$ and $\delta Z_2$ (this section); a vertex subgraph needs
-   $\delta F_1(0)$, subtracted *pointwise in the subgraph's Feynman
-   parameters* — that is the KK "reduced diagram" prescription, and it is
-   what IIa and IIc require; a vacuum-polarization subgraph needs
-   $\Pi(0)$ (the warm-up). Diagram I has no subgraph and needs nothing.
-   In every case check that $L_{UV}$ cancels *pointwise* before
-   proceeding.
+3. **Identify the divergent subgraph and subtract it on shell.** *Which*
+   subgraph needs subtracting is not a judgment call — it follows from
+   the power counting of §10.3, and for nested or overlapping cases from
+   the forest formula. A self-energy subgraph needs $\delta m$ and
+   $\delta Z_2$ (this section); a vertex subgraph needs $\delta F_1(0)$;
+   a vacuum-polarization subgraph needs $\Pi(0)$ (the warm-up); diagram I
+   has no subgraph and needs nothing. What *is* a choice is the finite
+   part left behind — the scheme — and to match Petermann's per-diagram
+   numbers we must use the KK prescription, in which the vertex subgraph
+   is subtracted *pointwise in the subgraph's Feynman parameters* rather
+   than after integration. That is what IIa and IIc require. See §10.4
+   for what is forced and what is convention. In every case check that
+   $L_{UV}$ cancels *pointwise* before proceeding.
 4. **Look for a factor that vanishes on shell.** If the subtracted
    subgraph is proportional to $(\slashed k - m)$, as the rational part
    was here, it will cancel a propagator and may collapse the diagram to
    a lower-order one. This is worth checking before doing any integral.
-5. **Rationalize any logarithm** with the $\xi$ representation of §10.3,
+5. **Rationalize any logarithm** with the $\xi$ representation of §11.3,
    which costs one parameter and buys one propagator.
 6. **Contract the Dirac string**, using §5.7 to reduce
    $\gamma^\nu\ldots\gamma_\nu$.
