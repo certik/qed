@@ -93,7 +93,7 @@ contains
 
 end module
 
-module ga_mod
+module gc_mod
    use dli2_mod
    implicit none
    interface logc
@@ -102,7 +102,6 @@ module ga_mod
 contains
 
    complex(dp) function logc_r(x)
-      ! complex-promoting log: log(negative real) = log|x| + i pi
       real(dp), intent(in) :: x
       logc_r = log(cmplx(x, 0.0_dp, dp))
    end function
@@ -112,89 +111,67 @@ contains
       logc_c = log(z)
    end function
 
-   real(dp) function gafun(t, u)
-      real(dp), intent(in) :: t, u
+   real(dp) function gcfun(s, t, u)
+      real(dp), intent(in) :: s, t, u
       real(dp) :: R
-      complex(dp) :: gaval
+      complex(dp) :: gcval
       complex(dp), parameter :: CI = (0.0_dp, 1.0_dp)
       R = sqrt(t*u*(1 - u))
-      include "g2_iic_a_ga.inc"
-      gafun = real(gaval, dp)
+      include "g2_iic_c_gc.inc"
+      gcfun = real(gcval, dp)
    end function
 
 end module
 
-program g2_iic_a_quad
-   use ga_mod
+program g2_iic_c_quad
+   use gc_mod
    implicit none
-   ! Ga has catastrophic cancellation for 1-u < ~1e-4 (double precision);
-   ! integrate u over [0, 1-delta] for several delta and extrapolate
-   ! delta -> 0 with A(delta) = A0 + a d^2 + b d^2 log d + c d^3 + e d^3 log d
-   integer, parameter :: ND = 5
+   ! C* = int_0^1 dt int_0^{1-t} ds int_0^1 du Gc(s,t,u)
+   ! u -> 1 sliver cut at delta, extrapolated (as for piece (a))
+   integer, parameter :: ND = 4
    real(dp), parameter :: d0 = 8.0e-6_dp
-   real(dp) :: h, res(ND), deltas(ND), m(5,5), rhs(5), A0
+   real(dp) :: h, res(ND), deltas(ND), A0
    integer :: lev, k
 
-   do lev = 8, 8
+   do lev = 6, 7
       h = 1.0_dp/2**lev
       do k = 1, ND
          deltas(k) = d0*2**(k-1)
-         res(k) = de2d(h, deltas(k))
+         res(k) = de3d(h, deltas(k))
       end do
+      ! pure delta^2 Richardson from the first pair; report ladder
+      A0 = (4*res(1) - res(2))/3
+      print "(a, i2, a, f38.32)", "level ", lev, ": C* (Richardson) = ", A0
       do k = 1, ND
-         m(k,:) = [1.0_dp, deltas(k)**2, deltas(k)**2*log(deltas(k)), &
-                   deltas(k)**3, deltas(k)**3*log(deltas(k))]
-         rhs(k) = res(k)
-      end do
-      call solve5(m, rhs)
-      A0 = rhs(1)
-      print "(a, i2, a, f38.32)", "level ", lev, ": A* (extrap) = ", A0
-      do k = 1, ND
-         print "(a, es9.2, a, f38.32)", "   delta=", deltas(k), "  A=", res(k)
+         print "(a, es9.2, a, f38.32)", "   delta=", deltas(k), "  C=", res(k)
       end do
    end do
 
 contains
 
-   subroutine solve5(a, b)
-      real(dp), intent(inout) :: a(5,5), b(5)
-      integer :: i, j, p
-      real(dp) :: f
-      do i = 1, 5
-         p = maxloc(abs(a(i:5,i)), 1) + i - 1
-         if (p /= i) then
-            a([i,p],:) = a([p,i],:)
-            b([i,p]) = b([p,i])
-         end if
-         do j = i+1, 5
-            f = a(j,i)/a(i,i)
-            a(j,:) = a(j,:) - f*a(i,:)
-            b(j) = b(j) - f*b(i)
-         end do
-      end do
-      do i = 5, 1, -1
-         b(i) = (b(i) - sum(a(i,i+1:5)*b(i+1:5)))/a(i,i)
-      end do
-   end subroutine
-
-   real(dp) function de2d(h, delta)
-      ! int_0^1 dt int_0^{1-delta} du Ga(t,u)
+   real(dp) function de3d(h, delta)
       real(dp), intent(in) :: h, delta
       real(dp), allocatable :: xs(:), ws(:)
-      real(dp) :: acc, ti, sc
-      integer :: n, i, j
+      real(dp) :: acc, ti, tj, sc, tv, sv
+      integer :: n, i, j, k2
       call de_nodes(h, xs, ws, n)
       sc = 1 - delta
       acc = 0
-      !$omp parallel do private(i,j,ti) reduction(+:acc)
+      !$omp parallel do private(i,j,k2,ti,tj,tv,sv) reduction(+:acc) schedule(dynamic)
       do i = 1, n
+         tv = xs(i)
          ti = 0
          do j = 1, n
-            ti = ti + ws(j)*gafun(xs(i), sc*xs(j))
+            sv = (1 - tv)*xs(j)
+            tj = 0
+            do k2 = 1, n
+               tj = tj + ws(k2)*gcfun(sv, tv, sc*xs(k2))
+            end do
+            ti = ti + ws(j)*(1 - tv)*tj
          end do
          acc = acc + ws(i)*ti
       end do
-      de2d = acc*sc
+      de3d = acc*sc
    end function
 
    subroutine de_nodes(h, xs, ws, n)
