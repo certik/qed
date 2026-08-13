@@ -33,6 +33,9 @@ i-sympy = { cmd = "python g2_i.py && python g2_i_split.py", cwd = "code" }
 i-fortran = { cmd = "mkdir -p ../_build/fortran && pixi exec --spec gfortran -- gfortran -O2 -fopenmp -I. g2_i_qmc.f90 -o ../_build/fortran/g2_i_qmc && ../_build/fortran/g2_i_qmc", cwd = "code" }
 i-calibrate = { cmd = "pixi exec --spec gfortran -- gfortran -O2 -I. g2_i_cal.f90 -o ../_build/fortran/g2_i_cal && ../_build/fortran/g2_i_cal", cwd = "code" }
 assembly = { cmd = "python g2_assembly.py", cwd = "code" }
+# worked-example chapter (diagram IId, step by step)
+iid-selfenergy = { cmd = "python g2_iid_selfenergy.py", cwd = "code" }
+iid-covariant = { cmd = "python g2_iid_covariant.py", cwd = "code" }
 g2-nlo = { depends-on = ["lo-sympy", "iie-sympy", "iie-fortran"] }
 
 [dependencies]
