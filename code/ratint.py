@@ -13,8 +13,12 @@ from sympy import (Add, S, Poly, fraction, together, factor_list, apart,
                    integrate, log, atan, sqrt, diff, simplify, limit)
 
 
-def anti_rational(expr, x):
-    """Antiderivative in x of a rational expr; verified by diff()."""
+def anti_rational(expr, x, verify="sym"):
+    """Antiderivative in x of a rational expr; verified by diff().
+
+    verify="sym": symbolic zero-check (default);
+    verify="numeric": exact rational-point checks (for coefficient fields
+    where simplify() is too slow, e.g. extra symbolic parameters)."""
     terms = Add.make_args(apart(together(expr), x, full=False))
     F = S(0)
     for tm in terms:
@@ -59,8 +63,18 @@ def anti_rational(expr, x):
             F += alpha * J2 + beta * I2
         else:
             raise NotImplementedError(f"power {k} over quadratic")
-    assert simplify(together(diff(F, x) - expr)) == 0, \
-        "antiderivative check failed"
+    check = together(diff(F, x) - expr)
+    if verify == "sym":
+        assert simplify(check) == 0, "antiderivative check failed"
+    else:
+        import random
+        from sympy import Rational as _R
+        random.seed(3)
+        free = sorted(check.free_symbols, key=str)
+        for _ in range(3):
+            pt = {sym: _R(random.randint(5, 89), 97) for sym in free}
+            val = check.subs(pt, simultaneous=True)
+            assert simplify(val) == 0, "antiderivative check failed (num)"
     return F
 
 
