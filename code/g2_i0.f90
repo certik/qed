@@ -28,14 +28,19 @@ end module
 program g2_i0
    use i_integrands
    implicit none
-   integer, parameter :: n = NGRID
-   real(dp) :: xg(n), wg(n), lam, acc, pi, target
+   integer :: n
+   real(dp), allocatable :: xg(:), wg(:)
+   real(dp) :: lam, acc, pi, target
+   character(len=8) :: argbuf
    real(dp) :: u, v, r, y, t, jac
    real(dp), parameter :: lams(1) = [0.0_dp]
    real(dp), parameter :: zeta3 = 1.2020569031595942854_dp
    real(dp) :: epsg
    integer :: nbad = 0
    integer :: i1, i2, i3, i4, i5, il
+   call get_command_argument(1, argbuf)
+   read(argbuf, *) n
+   allocate(xg(n), wg(n))
    pi = 4*atan(1.0_dp)
    target = 1.0_dp/6 + 13*pi**2/36 + 5*zeta3/4 - 5*pi**2*log(2.0_dp)/6
    call gl01(n, xg, wg)

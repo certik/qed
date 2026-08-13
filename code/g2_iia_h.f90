@@ -44,6 +44,7 @@ program g2_iia_h
    real(dp), parameter :: lams(4) = [1e-2_dp, 5e-3_dp, 2e-3_dp, 1e-3_dp]
    real(dp) :: lam, res(3), R1
    integer :: il, lev, k
+   integer :: nbad = 0
    do lev = 6, 6
       print "(a,i2)", "level ", lev
       do il = 1, size(lams)
@@ -70,7 +71,19 @@ contains
          do j = 1, n
             sv = (1 - tv)*xs(j)
             if (min(sv, tv, 1 - tv, 1 - tv - sv) < 1e-14_dp) cycle
-            ti = ti + ws(j)*(1 - tv)*hfun(sv, tv, lam)
+            block
+               real(dp) :: gg
+               gg = hfun(sv, tv, lam)
+               if (gg /= gg) then
+                  !$omp critical
+                  nbad = nbad + 1
+                  if (nbad <= 5) print "(a,3es13.4)", "bad s,t,lam:", &
+                     sv, tv, lam
+                  !$omp end critical
+                  gg = 0
+               end if
+               ti = ti + ws(j)*(1 - tv)*gg
+            end block
          end do
          acc = acc + ws(i)*ti
       end do

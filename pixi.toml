@@ -23,6 +23,16 @@ iic-fortran = { cmd = "mkdir -p ../_build/fortran && flang -O3 -march=native -ff
 iic-analytic = { cmd = "python g2_iic_analytic.py && python g2_iic_a_sint.py && python g2_iic_c_red.py", cwd = "code" }
 # the quad-precision A*/C* integrators need gfortran (real(16)):
 #   pixi exec --spec gfortran -- gfortran -O2 -fopenmp g2_iic_a_quad.f90 ...
+iia-sympy = { cmd = "python g2_iia.py", cwd = "code" }
+# quad-precision (gfortran) checks of IIa pieces (a) and (c):
+#   pixi exec --spec gfortran -- gfortran -O1 -fopenmp g2_iia_a3.f90 ...
+#   pixi exec --spec gfortran -- gfortran -O1 -fopenmp g2_iia_cq.f90 ...
+iia-fit = { cmd = "python g2_iia_fit.py", cwd = "code" }
+i-sympy = { cmd = "python g2_i.py && python g2_i_split.py", cwd = "code" }
+# mixed double/quad precision => gfortran (flang has no real(16) here)
+i-fortran = { cmd = "mkdir -p ../_build/fortran && pixi exec --spec gfortran -- gfortran -O2 -fopenmp -I. g2_i_qmc.f90 -o ../_build/fortran/g2_i_qmc && ../_build/fortran/g2_i_qmc", cwd = "code" }
+i-calibrate = { cmd = "pixi exec --spec gfortran -- gfortran -O2 -I. g2_i_cal.f90 -o ../_build/fortran/g2_i_cal && ../_build/fortran/g2_i_cal", cwd = "code" }
+assembly = { cmd = "python g2_assembly.py", cwd = "code" }
 g2-nlo = { depends-on = ["lo-sympy", "iie-sympy", "iie-fortran"] }
 
 [dependencies]

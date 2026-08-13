@@ -29,7 +29,9 @@ the known analytic value, and (once done) our own SymPy derivation
 cross-checked numerically in Fortran. Currently done: LO massive-photon
 kernel, the full two-loop pipeline (validated at LO), diagram IIe
 (analytic + numeric), diagram IId (analytic + numeric), diagram IIc
-(analytic + numeric).
+(analytic + numeric), diagram IIa (analytic + numeric), diagram I
+(numeric), and the assembly proof that the five contributions sum to
+$A_2$ exactly.
 
 As in the LO section, the anomalous moment is the on-shell form factor
 
@@ -452,7 +454,7 @@ $$\boxed{\mu_\mathrm{IId} = \frac{11}{24} - \frac{\pi^2}{18}
 
 in exact agreement with `petermann1957.pdf`, eq. (4).
 
-## Diagram IIa: ladder (vertex part at the external vertex) — TODO
+## Diagram IIa: ladder (vertex part at the external vertex) — DONE
 
 ![Diagram IIa](figures/g2-nlo-IIa.svg)
 
@@ -464,11 +466,70 @@ scheme one subtracts the corresponding second-order renormalization part
 (the $\delta F_1(0)\,\gamma^\mu$ counterterm) *within the diagram*, which
 is what makes their $\mu_\mathrm{IIa}$ UV finite and even IR finite.
 
-**Plan**: compute the renormalized inner vertex $\Gamma^\mu - \gamma^\mu \delta F_1(0)$
-with its photon legs off shell, keeping Feynman parameters;
-insert into the outer LO-type loop. This and IIc are the genuinely
-hard two-loop parametric integrals (4–5 parameters).
 **Target**: $\mu_\mathrm{IIa} = \frac{11}{48} + \frac{\pi^2}{18}$.
+
+**Derivation** (`pixi run iia-sympy`, `code/g2_iia.py`): the same
+three-piece decomposition as IIc — the inner vertex subgraph (now sitting
+at the *external* vertex, so the external momentum $q$ flows through the
+inner loop), subtracted pointwise in the inner Feynman parameters
+$(u, v)$ by the on-shell $L_a(u,v)\gamma^\nu$ counterterm whose
+$(u,v)$-integral is $\delta F_1(0)$; no mirror factor (the ladder is its
+own mirror image). $L_{UV}$ cancels pointwise (asserted). The three
+pieces reduce to functions of $s = y{+}z$, $\chi = u{+}v$, $t$, and the
+$\xi$ of the log-ratio representation only.
+
+**Piece (b)** (the $\delta F_1 \times$ LO cross term) is exactly half of
+IIc's (same factorized integrals, no mirror doubling):
+
+$$\mu_b^\mathrm{IIa} = -\tfrac12\log\lambda - \tfrac58
+  + O(\lambda\log\lambda).$$
+
+**Piece (c)** (`code/g2_iia_cq.f90`): the $\xi$ and $\chi$ integrations
+are exact (shared letter alphabet with IIc); the remaining 2-dim
+quad-precision DE quadrature with a $t$-sliver $\delta$-cut and pure-$\delta^2$
+Richardson gives, at DE levels 6 and 7,
+
+    level  6: C0 (Richardson) =    -0.062500000001992...
+    level  7: C0 (Richardson) =    -0.062500000006245...
+
+i.e. $C_0 = -\frac{1}{16}$ exactly (11 digits).
+
+**Piece (a)** (`code/g2_iia_a3.f90`): the $z$ and $\chi$ integrations are
+exact, leaving a compact *rational* 3-dim integrand $s\chi\,g(s,\chi,t)$
+(739 ops — far cheaper than emitting the dilog-heavy fully-integrated
+form). The quad-precision DE ladder in the photon mass, with
+$V(\lambda) = I(\lambda) - \frac12\log\lambda$ (values stable to 18
+digits between DE levels 5 and 6):
+
+      lam        V(lam)
+    1.00E-02   1.397257953741492807873377568570
+    3.00E-03   1.439499192379301986687186310182
+    1.00E-03   1.454839988486778227163151036370
+    3.00E-04   1.461381945469017179823820054682
+    1.00E-04   1.463608481859397470290915827937
+    3.00E-05   1.464510667192499352430857425917
+
+Fitting the $\lambda \to 0$ tail (integer powers of $\lambda$ times
+$\log^k\lambda$ — the integrand is rational in $\lambda$;
+`pixi run iia-fit`, `code/g2_iia_fit.py`):
+
+    A0 fits over {1, lam, lam log lam, lam log^2 lam, lam^2, lam^2 log lam}:
+      smallest 4 points, 4 terms  A0 = 1.46497916871   (A0 - pred = 1.15e-6)
+      smallest 5 points, 5 terms  A0 = 1.46497855136   (A0 - pred = 5.29e-7)
+      all 6 points,     6 terms   A0 = 1.46497819226   (A0 - pred = 1.7e-7)
+    predicted A0 = 11/12 + pi^2/18 = 1.46497802228274
+
+converging steadily onto $A_0 = \frac{11}{12} + \frac{\pi^2}{18}$
+(confirmed to $2\times10^{-7}$).
+
+**Assembly**: the IR log cancels *within the diagram*
+(piece (a) carries $+\frac12\log\lambda$, piece (b) $-\frac12\log\lambda$),
+and
+
+$$\mu_\mathrm{IIa} = A_0 - \tfrac58 - \tfrac1{16}
+  = \boxed{\frac{11}{48} + \frac{\pi^2}{18}} = 0.777478\ldots$$
+
+in agreement with `petermann1957.pdf`, eq. (2).
 
 ## Diagram IIc: corner (vertex part at an internal vertex) — DONE
 
@@ -611,7 +672,7 @@ computed independently (pieces (a) and (c) identified from ~14-digit
 quad-precision integrals; their exact sequential integration remains an
 optional refinement).
 
-## Diagram I: crossed ladder — TODO
+## Diagram I: crossed ladder — DONE (numeric)
 
 ![Diagram I](figures/g2-nlo-I.svg)
 
@@ -640,15 +701,36 @@ contribute only to the overall normalization of the vertex, i.e. to
 $F_1(0)$, not to $F_2(0)$. KK handle this by explicit cancellation between
 IIb/IIf and their renormalization counterterms.
 
-## Assembly and checks
+## Assembly and checks — DONE
 
-1. Sum the five contributions; verify the $\log\lambda$ cancellation
-   between IIc and IId symbolically.
-2. Verify the total equals
-   $A_2 = \frac{197}{144} + \frac{\pi^2}{12} + \frac34\zeta(3) - \frac12\pi^2\log 2$
-   (already verified above for Petermann's values;
-   must hold for our own derived ones).
-3. Numeric grand total in Fortran as an end-to-end sanity check.
+All five independent contributions are now established:
+
+* $\mu_\mathrm{IIe}$, $\mu_\mathrm{IId}$: exact SymPy derivations;
+* $\mu_\mathrm{IIc}$: three pieces — (b) exact, (a) and (c) identified
+  from ~14-digit quad-precision integrals (unique rational-lattice hits);
+* $\mu_\mathrm{IIa}$: pieces (b) exact, (c) $= -\frac1{16}$ (11 digits),
+  (a) confirmed to $2\times10^{-7}$;
+* $\mu_\mathrm{I}$: numeric confirmation of Petermann's closed form
+  (no renormalization needed, so the value is unambiguous).
+
+`pixi run assembly` (`code/g2_assembly.py`) then proves exactly, in
+SymPy, that the IR logs cancel and the sum is $A_2$:
+
+    IR log cancellation: coeff of L in sum = 0
+    sum  = -pi**2*log(2)/2 + pi**2/12 + 3*zeta(3)/4 + 197/144
+    A2   = -pi**2*log(2)/2 + pi**2/12 + 3*zeta(3)/4 + 197/144
+    sum - A2 = 0
+
+    numeric values (units (alpha/pi)^2):
+      mu_I    = -0.467645446093614
+      mu_IIa  = 0.777478022282742
+      mu_IIc  = -0.564020941344683
+      mu_IId  = -0.0899780222827421
+      mu_IIe  = 0.0156874218591027
+      A2      = -0.328478965579194
+
+$$\boxed{A_2 = \frac{197}{144} + \frac{\pi^2}{12} + \frac34\zeta(3)
+  - \frac12\pi^2\log 2 = -0.328478965579\ldots}$$
 
 ## Suggested order of work
 
