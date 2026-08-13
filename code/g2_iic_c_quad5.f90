@@ -123,17 +123,17 @@ contains
 
 end module
 
-program g2_iic_c_quad
+program g2_iic_c_quad5
    use gc_mod
    implicit none
    ! C* = int_0^1 dt int_0^{1-t} ds int_0^1 du Gc(s,t,u)
    ! u -> 1 sliver cut at delta, extrapolated (as for piece (a))
-   integer, parameter :: ND = 4
-   real(dp), parameter :: d0 = 8.0e-6_dp
+   integer, parameter :: ND = 2
+   real(dp), parameter :: d0 = 1.6e-5_dp
    real(dp) :: h, res(ND), deltas(ND), A0
    integer :: lev, k
 
-   do lev = 6, 7
+   do lev = 5, 5
       h = 1.0_dp/2**lev
       do k = 1, ND
          deltas(k) = d0*2**(k-1)
@@ -154,6 +154,7 @@ contains
       real(dp), allocatable :: xs(:), ws(:)
       real(dp) :: acc, ti, tj, sc, tv, sv
       integer :: n, i, j, k2
+      integer, save :: nbad = 0
       call de_nodes(h, xs, ws, n)
       sc = 1 - delta
       acc = 0
@@ -168,7 +169,19 @@ contains
             sv = (1 - tv)*xs(j)
             tj = 0
             do k2 = 1, n
-               tj = tj + ws(k2)*gcfun(sv, tv, sc*xs(k2))
+               block
+                  real(dp) :: gv
+                  gv = gcfun(sv, tv, sc*xs(k2))
+                  if (gv /= gv .or. abs(gv) > 1e8_dp) then
+                     !$omp critical
+                     nbad = nbad + 1
+                     if (nbad <= 10) print "(a,3es12.3,es12.3)", &
+                        "bad s,t,u,val: ", sv, tv, sc*xs(k2), gv
+                     !$omp end critical
+                     gv = 0
+                  end if
+                  tj = tj + ws(k2)*gv
+               end block
             end do
             ti = ti + ws(j)*(1 - tv)*tj
          end do

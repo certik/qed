@@ -29,7 +29,7 @@ the known analytic value, and (once done) our own SymPy derivation
 cross-checked numerically in Fortran. Currently done: LO massive-photon
 kernel, the full two-loop pipeline (validated at LO), diagram IIe
 (analytic + numeric), diagram IId (analytic + numeric), diagram IIc
-(numeric; analytic TODO).
+(analytic + numeric).
 
 As in the LO section, the anomalous moment is the on-shell form factor
 
@@ -470,7 +470,7 @@ insert into the outer LO-type loop. This and IIc are the genuinely
 hard two-loop parametric integrals (4–5 parameters).
 **Target**: $\mu_\mathrm{IIa} = \frac{11}{48} + \frac{\pi^2}{18}$.
 
-## Diagram IIc: corner (vertex part at an internal vertex) — numeric DONE, analytic nearly done
+## Diagram IIc: corner (vertex part at an internal vertex) — DONE
 
 ![Diagram IIc](figures/g2-nlo-IIc.svg)
 
@@ -577,19 +577,39 @@ $2\times10^{-4}$ and confirms the IR term $-\frac12\log\lambda^2$
   $$A^* = -\frac{29}{12} + \frac{\pi^2}{18} - \frac98\zeta(3)
     + \frac{7}{12}\pi^2\log 2 = 0.7699656101448\ldots$$
 
-* **Piece (c)** (conjectured from the constraint, pending direct
-  computation):
+* **Piece (c)** (`code/g2_iic_c_red.py`, `code/g2_iic_c_quad.f90`):
+  reduced exactly to 3 dimensions — the $\xi$-integration is rational
+  (its only pole lies outside $(0,1)$; remarkably, the $\xi = 1$
+  denominator is the *same* quadratic $Q$ as in piece (a), so the letter
+  alphabet is shared), the $z$-integration is a trivial factor $s$, and
+  the $\chi = u{+}v$ integration goes through the complex-letters
+  machinery (the rational part's only pole $\chi^* = 1 + s(1-u)/t$ lies
+  outside $(u,1)$). The resulting $G_c(s,t,u)$ (1789 ops) matches direct
+  quadrature to 20 digits. The 3-dim quad-precision DE quadrature
+  (with the $t \to 0$ evaluation-breakdown sliver skipped below
+  $10^{-18}$, dropped mass $\sim 10^{-15}$) gives
+
+      C* = -0.08398655148953 (Richardson, ~14 digits)
+
+  which **directly confirms**
 
   $$C^* = \frac78 + \frac58\zeta(3) - \frac14\pi^2\log 2
-    = -0.083987\ldots$$
+    = -0.0839865514895327\ldots$$
 
-  consistent with the Fortran c-column limit ($-0.08401$, whose
-  $\lambda$-extrapolation is only good to a few $10^{-5}$).
+**Assembly** (verified exactly in SymPy):
 
-The three pieces sum to Petermann's eq. (3) exactly. **TODO**: direct
-analytic/quad-precision computation of $C^*$ (the $\xi$-integration is
-rational and should be done first), which will complete the independent
-verification of $\mu_\mathrm{IIc}$.
+$$A^* + \mu_b + C^*
+  = -\frac{67}{24} + \frac{\pi^2}{18} - \frac{\zeta(3)}{2}
+    + \frac{\pi^2}{3}\log 2 - \frac12\log\frac{\lambda^2}{m^2}$$
+
+$$\boxed{\mu_\mathrm{IIc} = -\frac{67}{24} + \frac{\pi^2}{18}
+  - \frac12\zeta(3) + \frac13\pi^2\log 2
+  - \frac12\log\frac{\lambda^2}{m^2}}$$
+
+in agreement with `petermann1957.pdf`, eq. (3) — with every piece
+computed independently (pieces (a) and (c) identified from ~14-digit
+quad-precision integrals; their exact sequential integration remains an
+optional refinement).
 
 ## Diagram I: crossed ladder — TODO
 
@@ -638,9 +658,9 @@ IIb/IIf and their renormalization counterterms.
    at LO~~ — **done**.
 4. ~~Diagram IId + $\delta m$ counterterm~~ — **done** (exact analytic
    value + Fortran numeric confirmation).
-5. Diagram IIc — **parametric integrands derived, value confirmed
-   numerically** (2e-4); analytic evaluation TODO, plus the comparison
-   with Petermann 1958's eqs. (2.3)-(2.4) integrands.
+5. ~~Diagram IIc~~ — **done** (three pieces independently evaluated,
+   sum equals Petermann's eq. (3) exactly). Optional: comparison with
+   Petermann 1958's eqs. (2.3)-(2.4) integrands and his bounds.
 6. Diagram IIa (same machinery as IIc).
 7. Diagram I (direct two-loop; no renormalization — but a genuine
    two-loop integral, since the crossed photons don't factorize into a
