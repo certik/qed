@@ -3516,6 +3516,39 @@ and even a cutoff at the Planck mass gives only
 An 18% correction, with the cutoff at the highest scale anyone proposes.
 "Infinite" is a statement about a limit, not about a magnitude.
 
+Be careful about what that number *is*. It is $\delta m/m$: the fraction
+of the electron's measured mass that is electromagnetic self-energy, if
+the theory is cut off at the Planck scale. It is emphatically **not** an
+uncertainty in any prediction, and not a residual $20\%$ ambiguity in the
+answer. No observable carries it — $a_e$ least of all, for the reason
+§10.5 gives. It is a statement about the relation between a parameter in
+the Lagrangian and a number you measure, and nothing else.
+
+Two remarks make it worth quoting anyway.
+
+The first is the reason it is so small, which is the chiral symmetry
+already invoked: $\delta m \propto m$, so the correction is proportional
+to the very quantity it corrects, and a small mass stays small. Run the
+same argument for a scalar and there is no such protection. Nothing
+becomes symmetric as a scalar mass goes to zero, so its counterterm is
+free to grow as $\delta m^2 \propto \Lambda^2$, and at the Planck scale
+that exceeds the physical mass squared by some thirty orders of
+magnitude. The difference between $\log\Lambda$ and $\Lambda^2$ is the
+whole of the hierarchy problem; the electron sits on the comfortable side
+of it, and it does so because of a symmetry, not by luck.
+
+The second is that the Planck scale here is rhetorical. QED on its own
+stops being the right description far below it: above roughly $100$ GeV
+the photon mixes with the $Z$ and one needs the full electroweak theory,
+so QED is a low-energy limb of the Standard Model, not a theory valid to
+$10^{19}$ GeV. It also has an internal ceiling of its own — the Landau
+pole where the coupling formally diverges, at some $10^{277}$ GeV for
+pure electron QED, absurdly far above the Planck mass and therefore never
+the binding constraint. The number $103$ is thus not a calculation of
+anything. It is an illustration of how weak a logarithm is: *even*
+stretching a theory we know fails at $100$ GeV all the way to where
+gravity must take over buys only a factor of one hundred.
+
 The finite parts are equally unphysical, and for a sharper reason. In
 §8.5 we found that dimensional regularization and Pauli–Villars give
 self-energies differing by $c(2u\slashed k - 2m)$ — a perfectly finite
@@ -3564,6 +3597,26 @@ none of which is finite by itself. The counterterms count as order
 $\alpha$ even though they are tree-level, because their coefficients are
 themselves one-loop quantities; that is what makes the reorganized series
 an expansion in the renormalized coupling.
+
+Is either half *physical*, then? Neither, separately. The counterterms
+are not fake or added by hand — §4.11 derived their Feynman rule from the
+Lagrangian exactly as it derived every other rule — but their values
+depend on the regulator and on the scheme, and §8.5 exhibits two
+different $\delta m$'s obtained from the same physics by two different
+regularizations. A quantity that changes when you change a convention
+cannot be measured. The categories are therefore:
+
+* the **bare** Lagrangian is the theory, but its parameters are not
+  observable;
+* the **renormalized** parameters $m$ and $\alpha$ are observable, but
+  they are *inputs* — taken from experiment, not predicted;
+* the **split** between the two halves is bookkeeping, chosen to make
+  perturbation theory in the measured coupling convenient, and different
+  schemes split differently with no physical consequence.
+
+What the theory predicts is neither half but the *relations among
+observables* it implies — $a_e$ as a function of $\alpha$, which is
+precisely what $A_2$ is.
 
 ### 10.3 Which diagrams need counterterms: power counting
 
@@ -3733,6 +3786,149 @@ So the honest summary is that the *structure* of renormalization is
 forced and mechanizable, while the *scheme* is a convention, and the
 choice of regulator is constrained by which symmetries you cannot afford
 to break.
+
+### 10.5 Does the answer depend on the cutoff?
+
+No. The number this whole calculation is aimed at,
+
+$$A_2 = \frac{197}{144} + \frac{\pi^2}{12} + \frac34\zeta(3)
+  - \frac12\pi^2\log2 = -0.328478965579\ldots,$$
+
+contains no $\Lambda$ and no $\lambda$. It is a pure number, and this is
+not an assertion but something the calculation checks twice. The
+ultraviolet regulator cancels *pointwise in the Feynman parameter* inside
+$\Sigma_R$, before any integration is done (§8.4). The infrared regulator
+survives in the individual diagrams and cancels only in the sum, where
+the assembly script confirms that the coefficient of
+$\log(\lambda^2/m^2)$ is exactly zero:
+
+    IR log cancellation: coeff of L in sum = 0
+
+So where did $\Lambda$ go? Into the definitions of $m$ and $\alpha$. The
+cutoff dependence has not been destroyed; it has been moved into the
+relation between the parameters of the Lagrangian and the two numbers we
+take from experiment. Once those two are fixed by measurement, everything
+else — including $A_2$ — is a prediction with no residual freedom.
+
+The effective-field-theory reading makes this sharper, and is worth
+stating because it is the modern way to think about it. Suppose we do not
+take $\Lambda\to\infty$ at all, but regard it as a real scale at which
+new physics appears. Then the low-energy theory is an effective one, and
+the unknown short-distance physics can influence $a_e$ in only two ways:
+by shifting the parameters we measure anyway, and through
+higher-dimension operators suppressed by powers of $1/\Lambda$. The
+leading such contribution to a magnetic moment is chirality-flipping and
+of higher dimension, so it scales as
+
+$$\Delta a_e \;\sim\; \frac{m_e^2}{\Lambda^2}$$
+
+with order-one couplings — a *power*, not a logarithm. Numerically:
+
+    >>> m_e, MPl = 0.51099895e-3, 1.220890e19        # GeV
+    >>> '%.1e' % (m_e/MPl)**2
+    '1.8e-45'
+    >>> round(m_e/2.8e-13**0.5)                      # GeV
+    966
+
+New physics at the Planck scale would shift $a_e$ by about $10^{-45}$,
+which is beyond hopeless: the measurement quoted in the LO section is
+uncertain by $2.8\times10^{-13}$. Turned around, that same sensitivity
+probes new physics up to roughly a TeV.
+
+The moral is worth stating plainly, because it is the reason the whole
+enterprise works. **The anomalous moment is exquisitely sensitive to
+physics at the weak scale and completely blind to physics at the Planck
+scale.** That insensitivity of low-energy observables to unknown
+short-distance details is not a peculiarity of QED; it is what
+renormalizability buys, and it is why one can do physics at all without
+first knowing everything.
+
+### 10.6 Ultraviolet and infrared: two divergences, two different cures
+
+Both kinds of divergence were regulated in this chapter — $\Lambda$ for
+one, $\lambda$ for the other — and both are absent from the final answer,
+which makes it easy to assume they are the same phenomenon handled the
+same way. They are not. Regularization is only bookkeeping; it makes
+intermediate expressions well defined and settles nothing. The cures are
+entirely different, and the difference is worth being precise about.
+
+**The ultraviolet divergence is absorbed.** It does not cancel between
+diagrams — no amount of summing removes it. It is disposed of by
+admitting that the parameters in the Lagrangian are not the ones we
+measure, and reparametrizing. The cost is real: two numbers, $m$ and
+$\alpha$, must be handed to the theory from experiment rather than
+predicted. In exchange, everything else becomes predictable.
+
+**The infrared divergence cancels.** Nothing is reparametrized, no
+constant is measured, no predictive power is lost. For $F_2(0)$ the
+cancellation happens among the virtual diagrams themselves: IId carries
+$+\frac12\log(\lambda^2/m^2)$, IIc carries $-\frac12\log(\lambda^2/m^2)$,
+and the sum is finite. We needed $\lambda$ only because we chose to
+compute diagram by diagram, and the individual diagrams are not
+observables.
+
+That last point deserves an important qualification. $F_2(0)$ is special:
+it is infrared finite all by itself. $F_1$ is not, and neither is any
+scattering cross section. There the $\log\lambda$ does *not* cancel among
+virtual diagrams; it cancels only when one adds the processes with extra
+soft photons in the final state (Bloch–Nordsieck), and the answer then
+depends on the detector's energy resolution $\Delta E$ — a dependence
+which is physical and measurable. In that case the divergence was
+telling us the question was badly posed: the probability of scattering
+with *exactly* zero photons emitted really is zero, because emitting
+arbitrarily soft photons is arbitrarily likely.
+
+**The analogy with Schwarzschild.** The comparison is a good one, and
+mostly right, but it needs splitting in two.
+
+The infrared divergence in $F_2$ is very much like the *coordinate*
+singularity at $r = 2M$. In Schwarzschild coordinates the metric
+components blow up at the horizon although nothing physical happens
+there; the curvature invariants stay finite, an infalling observer
+notices nothing, and changing to Kruskal–Szekeres coordinates removes the
+singularity entirely. In our case the photon mass $\lambda$ plays the
+role of the chart: individual diagrams blow up as $\lambda\to0$ although
+$F_2(0)$ is perfectly finite, and summing the diagrams removes the
+divergence entirely. In both cases the singularity lives in the
+*description* — the coordinate chart there, the diagram-by-diagram split
+here — and not in the thing being described.
+
+But the infrared divergence of a cross section is not of that kind. It is
+not removable by any reorganization, because the quantity being asked for
+genuinely does not exist. That is less like a bad chart and more like
+asking for the proper time elapsed along a photon's worldline: not an
+artifact to be transformed away, but a question with no answer. The cure
+is to ask a better question, and the improved question retains a real
+$\log\Delta E$.
+
+The ultraviolet divergence is the closer analogue of the curvature
+singularity at $r=0$: irremovable within the theory, and a signal that
+the theory is being pushed past its domain of validity. But the parallel
+should not be pushed into thinking of it as a pathology that we conceal.
+Saying "we hide the infinity in the counterterms" is the old framing, and
+it is the least useful way to see it. In the effective-field-theory
+picture nothing is hidden and nothing is infinite: $\Lambda$ is finite,
+the counterterms are finite, and they encode the boundary condition
+handed down by whatever completes the theory at short distance. The
+statement is not "QED is sick" but "QED does not predict its own
+short-distance behaviour, so that behaviour must be supplied as input" —
+in relativistic language, closer to *needing boundary conditions to solve
+the field equations* than to a curvature singularity.
+
+There is, however, a place where the $r=0$ analogy does bite. If one
+insists that QED is complete at all scales, the Landau pole of §10.1 is a
+genuine breakdown rather than a bad chart, and signals a real
+incompleteness of the theory. It simply lies so far beyond the scale at
+which QED is superseded that it never matters in practice.
+
+To summarize:
+
+| | infrared, in $F_2(0)$ | infrared, in a cross section | ultraviolet |
+| --- | --- | --- | --- |
+| cured by | summing diagrams | summing over final states | redefining parameters |
+| what it costs | nothing | nothing; answer depends on $\Delta E$ | two measured inputs |
+| what it was | artifact of splitting into diagrams | an ill-posed question | short-distance physics not predicted by the theory |
+| Schwarzschild analogue | coordinate singularity at the horizon | asking for a photon's proper time | needing boundary conditions (and, at the Landau pole, $r=0$) |
 
 ## 11. The covariant reduction
 
