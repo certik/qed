@@ -388,7 +388,428 @@ Most of the 10800 contractions never reach $\Gamma^\mu$:
 
 What remains is the five 1PI vertex cores, of which IId is one.
 
-## 4. The loop-integration toolkit
+## 4. Where the Feynman rules come from: one contraction, done by hand
+
+Section 1.3 listed the Feynman rules and §3 said which contraction we
+want, but between those two statements there is a real calculation:
+Wick's theorem produces a sum of position-space products of propagators,
+and turning one of those products into a momentum-space integral is what
+*defines* the rules. This section does that calculation once, completely,
+on the simplest nontrivial case — the one-loop vertex correction at order
+$e^3$ — and then adds the one rule that cannot be seen at that order, the
+closed fermion loop, which is exactly the ingredient diagram IIe needs.
+
+Nothing here is quoted. We start from the Dyson series and end with
+
+$$\bar u(p')\,\delta\Gamma^\mu_\mathrm{LO}\,u(p) =
+  \int\frac{\mathrm{d}^4k}{(2\pi)^4}\;
+  \bar u(p')\,(-ie\gamma^\nu)\,
+  \frac{i(\slashed{k}'+m)}{k'^2-m^2}\,\gamma^\mu\,
+  \frac{i(\slashed{k}+m)}{k^2-m^2}\,(-ie\gamma^\rho)\,u(p)\;
+  \frac{-ig_{\nu\rho}}{k_\gamma^2-\lambda^2},$$
+
+which is the formula §6.1 takes as its starting point. Once it has been
+obtained this way, the "rules" are visible as a pattern in the answer,
+and no further contraction ever has to be done by hand.
+
+### 4.1 The two propagators
+
+Wick's theorem expresses a time-ordered vacuum expectation value as a sum
+over complete pairings, each pairing contributing a product of
+*contractions*, and a contraction of two free fields is by definition the
+free two-point function. For the two fields we have:
+
+$$\overline{\psi_a(x)\,\bar\psi_b(y)} \equiv
+  \langle0|T\,\psi_a(x)\bar\psi_b(y)|0\rangle = S_{ab}(x-y),$$
+
+$$\overline{A_\alpha(x)\,A_\beta(y)} \equiv
+  \langle0|T\,A_\alpha(x)A_\beta(y)|0\rangle = D_{\alpha\beta}(x-y).$$
+
+Both are Green functions of the corresponding free wave operator, which
+fixes them without any further work. The Dirac field satisfies
+$(i\slashed\partial - m)\psi = 0$, and the time-ordering step function
+produces a contact term, giving
+
+$$\left(i\slashed\partial_x - m\right)S(x-y) = i\,\delta^4(x-y).$$
+
+Writing $S(x-y) = \int\frac{d^4k}{(2\pi)^4}e^{-ik\cdot(x-y)}\tilde S(k)$
+and using $i\slashed\partial_x e^{-ikx} = \slashed k\,e^{-ikx}$,
+
+$$\left(\slashed k - m\right)\tilde S(k) = i
+  \quad\Longrightarrow\quad
+  \tilde S(k) = \frac{i}{\slashed k - m}
+  = \frac{i\left(\slashed k+m\right)}{k^2-m^2},$$
+
+where the last step multiplies numerator and denominator by
+$\slashed k+m$ and uses $\slashed k\slashed k = k^2$. The $+i\epsilon$
+that selects the Feynman contour is understood. The same argument for
+the photon in Feynman gauge, where the wave operator is
+$-g_{\alpha\beta}\,\partial^2$ (plus the mass term $\lambda^2$), gives
+
+$$\tilde D_{\alpha\beta}(k) = \frac{-ig_{\alpha\beta}}{k^2-\lambda^2}.$$
+
+**These two expressions are the entire input.** Everything else below is
+combinatorics and Fourier transforms.
+
+### 4.2 The Dyson series at order $e^3$, written out
+
+From §3.1, the term of the Green function with three interaction
+vertices is
+
+$$G^{\mu,(3)}(x',y,x) = \frac{i^3}{3!}\int d^4z_1\,d^4z_2\,d^4z_3\;
+  \langle0|T\,\psi(x')A^\mu(y)\bar\psi(x)\,
+  \mathcal{L}_\mathrm{int}(z_1)\mathcal{L}_\mathrm{int}(z_2)
+  \mathcal{L}_\mathrm{int}(z_3)|0\rangle,$$
+
+and with
+$\mathcal{L}_\mathrm{int}(z) = -e\,\bar\psi(z)\gamma^\alpha\psi(z)A_\alpha(z)$
+each factor $i\mathcal{L}_\mathrm{int}$ carries $i\cdot(-e) = -ie$:
+
+$$G^{\mu,(3)} = \frac{\left(-ie\right)^3}{3!}
+  \int d^4z_1\,d^4z_2\,d^4z_3\;
+  \langle0|T\,\psi(x')A^\mu(y)\bar\psi(x)\,
+  \left(\bar\psi\gamma^{\alpha_1}\psi A_{\alpha_1}\right)(z_1)
+  \left(\bar\psi\gamma^{\alpha_2}\psi A_{\alpha_2}\right)(z_2)
+  \left(\bar\psi\gamma^{\alpha_3}\psi A_{\alpha_3}\right)(z_3)|0\rangle.$$
+
+**There is the first Feynman rule already**: the factor $-ie$ per vertex
+is nothing but $i$ from the Dyson exponential times the coupling $-e$
+from the Lagrangian. The $\gamma^{\alpha_i}$ that accompanies it is the
+Dirac structure of the interaction term.
+
+### 4.3 Counting the contractions
+
+The fields to be paired are, on the fermion side,
+
+$$\psi(x'),\ \psi(z_1),\ \psi(z_2),\ \psi(z_3)
+  \qquad\text{and}\qquad
+  \bar\psi(x),\ \bar\psi(z_1),\ \bar\psi(z_2),\ \bar\psi(z_3),$$
+
+four of each, hence $4! = 24$ ways to pair them; and on the photon side
+
+$$A^\mu(y),\ A_{\alpha_1}(z_1),\ A_{\alpha_2}(z_2),\ A_{\alpha_3}(z_3),$$
+
+four fields, hence $3$ perfect matchings ($4$ objects pair up in
+$3!! = 3$ ways). In total $24\times3 = 72$ complete contractions, which
+is exactly what `code/wick_enum.py` reports:
+
+    order e^3:  72 complete contractions (3 photon matchings x 4! fermion pairings)
+
+Its classification of those 72 is
+
+    topology class                                                      count  /n! sign
+      tadpole loop  tr[gamma S(0)] = 0                                       39    - +1/-1
+      external-leg corrections only (tree vertex)                            12    2 +1
+      III: VP on the external-potential line x tree vertex                    6    1 -1
+      LO one-loop vertex correction                                           6    1 +1
+      forward line x (rest): no scattering / disconnected                     6    1 -1
+      disconnected (vacuum bubble or detached blob)                           3    - -1
+      total                                                                  72   12
+
+and we now take the fourth row apart.
+
+### 4.4 The contraction we want
+
+Choose the pairing in which the fermion line runs
+$x\to z_1\to z_2\to z_3\to x'$, the external photon at $y$ attaches to
+the middle vertex $z_2$, and the photons at $z_1$ and $z_3$ contract with
+each other:
+
+$$\overline{\psi(x')\bar\psi(z_3)},\quad
+  \overline{\psi(z_3)\bar\psi(z_2)},\quad
+  \overline{\psi(z_2)\bar\psi(z_1)},\quad
+  \overline{\psi(z_1)\bar\psi(x)},$$
+
+$$\overline{A^\mu(y)A_{\alpha_2}(z_2)},\qquad
+  \overline{A_{\alpha_1}(z_1)A_{\alpha_3}(z_3)}.$$
+
+Because the internal photon connects $z_1$ and $z_3$ while the external
+photon sits at $z_2$ *between* them, this photon spans the external
+vertex: it is the one-loop vertex correction.
+
+### 4.5 The Dirac indices chain into a matrix product
+
+Write the vertex bilinears with explicit spinor indices, so that
+everything is a product of anticommuting numbers with $c$-number
+$\gamma$'s in between:
+
+$$\left(\bar\psi\gamma^{\alpha}\psi\right)(z)
+  = \bar\psi_i(z)\left(\gamma^{\alpha}\right)_{ij}\psi_j(z).$$
+
+Each bilinear contains two fermion fields, so it is Grassmann-*even* and
+commutes with everything: we may reorder the three vertex factors at
+will, without any sign. Choose the order $z_3,z_2,z_1$ and write the
+whole fermion string as
+
+$$\psi_a(x')\;
+  \left[\bar\psi_{i_3}(z_3)\gamma^{\alpha_3}_{i_3j_3}\psi_{j_3}(z_3)\right]
+  \left[\bar\psi_{i_2}(z_2)\gamma^{\alpha_2}_{i_2j_2}\psi_{j_2}(z_2)\right]
+  \left[\bar\psi_{i_1}(z_1)\gamma^{\alpha_1}_{i_1j_1}\psi_{j_1}(z_1)\right]
+  \bar\psi_b(x).$$
+
+Now read the fields left to right:
+
+$$\psi_a(x'),\ \bar\psi_{i_3}(z_3),\ \psi_{j_3}(z_3),\
+  \bar\psi_{i_2}(z_2),\ \psi_{j_2}(z_2),\
+  \bar\psi_{i_1}(z_1),\ \psi_{j_1}(z_1),\ \bar\psi_b(x).$$
+
+**Every contraction we want is between neighbours**: the 1st with the
+2nd, the 3rd with the 4th, the 5th with the 6th, the 7th with the 8th.
+No field has to be moved past any other, so
+
+$$\boxed{\ \text{the fermion sign of an open line is } +1.\ }$$
+
+This is not an accident of this diagram. Any open fermion line can be
+brought to this form by reordering the (even) bilinears along the line,
+so *every* diagram without a closed loop has sign $+1$; the signs that
+matter are the relative ones between diagrams that exchange external
+legs, and the $(-1)$ per closed loop derived in §4.10.
+
+The spinor indices now chain automatically:
+
+$$S_{a i_3}(x'-z_3)\,\gamma^{\alpha_3}_{i_3 j_3}\,
+  S_{j_3 i_2}(z_3-z_2)\,\gamma^{\alpha_2}_{i_2 j_2}\,
+  S_{j_2 i_1}(z_2-z_1)\,\gamma^{\alpha_1}_{i_1 j_1}\,
+  S_{j_1 b}(z_1-x),$$
+
+each repeated index summed with its neighbour. **This is a matrix
+product**, read from the outgoing end to the incoming end — which is why
+Feynman diagrams are written right-to-left along the fermion line. That
+convention is a consequence of the index bookkeeping, not a choice.
+
+Including the photon contractions, the contribution of this one pairing
+to $G^{\mu,(3)}$ is
+
+$$\frac{\left(-ie\right)^3}{3!}\int d^4z_1d^4z_2d^4z_3\;
+  \left[S(x'-z_3)\gamma^{\alpha_3}S(z_3-z_2)\gamma^{\alpha_2}
+  S(z_2-z_1)\gamma^{\alpha_1}S(z_1-x)\right]$$
+
+$$\times\;D^{\mu}{}_{\alpha_2}(y-z_2)\;
+  D_{\alpha_1\alpha_3}(z_1-z_3).$$
+
+### 4.6 Why the $1/3!$ disappears
+
+The pairing above is one of the 72. But five others give *exactly the
+same* expression: the three labels $z_1,z_2,z_3$ can be assigned to the
+three roles (first vertex on the line, external-photon vertex, last
+vertex) in $3! = 6$ ways, and since $z_1,z_2,z_3$ are integration
+variables, relabelling them turns any one of those six into any other.
+They are six distinct terms of Wick's theorem with identical values.
+
+That is the count `wick_enum.py` reports for this class, and it cancels
+the Dyson denominator exactly:
+
+$$\frac{1}{3!}\times 6 = 1 .$$
+
+The same argument works at every order — the $n!$ ways of relabelling
+$n$ vertices cancel the $1/n!$ — which is why the rules carry no
+factorials. (The classes whose count is *not* $n!$ are the ones with a
+genuine symmetry factor; `wick_enum.py`'s "/n!" column is exactly this
+weight, and it is $1$ here.) So
+
+$$G^{\mu,(3)}_\mathrm{vertex} = \left(-ie\right)^3
+  \int d^4z_1d^4z_2d^4z_3\;
+  \left[S\gamma S\gamma S\gamma S\right]\,D\,D$$
+
+with the arguments as above.
+
+### 4.7 To momentum space
+
+Substitute the Fourier representation of every propagator. Give each one
+a momentum flowing in the direction of its first argument minus its
+second, i.e. write $S(a-b) = \int_k e^{-ik\cdot(a-b)}\tilde S(k)$ with
+$\int_k \equiv \int d^4k/(2\pi)^4$, so that $k$ flows from $b$ to $a$.
+Name the momenta
+
+$$k_0:\ x\to z_1,\qquad k:\ z_1\to z_2,\qquad k':\ z_2\to z_3,\qquad
+  k_4:\ z_3\to x',$$
+
+$$\ell:\ z_1\to z_3\ \text{(internal photon)},\qquad
+  q:\ y\to z_2\ \text{(external photon)},$$
+
+which means writing the two photon contractions as
+$D_{\alpha_3\alpha_1}(z_3-z_1)$ and $D_{\alpha_2}{}^{\mu}(z_2-y)$ — both
+allowed, since $D_{\alpha\beta}(a-b) = D_{\beta\alpha}(b-a)$ because the
+photon propagator is even in its momentum.
+
+Now every $z_i$ appears only in exponentials, and each $z$ integral is a
+delta function. Collect the phases at $z_1$: the propagator $S(z_1-x)$
+contributes $e^{-ik_0z_1}$, the propagator $S(z_2-z_1)$ contributes
+$e^{+ikz_1}$, and $D(z_3-z_1)$ contributes $e^{+i\ell z_1}$, so
+
+$$\int d^4z_1\;e^{i\left(k+\ell-k_0\right)z_1}
+  = \left(2\pi\right)^4\delta^4\left(k+\ell-k_0\right)
+  \quad\Longrightarrow\quad k_0 = k+\ell .$$
+
+Likewise at $z_2$ (phases $e^{-ikz_2}$, $e^{+ik'z_2}$, $e^{-iqz_2}$) and
+at $z_3$ (phases $e^{-ik'z_3}$, $e^{+ik_4z_3}$, $e^{-i\ell z_3}$):
+
+$$\int d^4z_2 \;\Rightarrow\; k' = k+q,
+  \qquad
+  \int d^4z_3 \;\Rightarrow\; k_4 = k'+\ell .$$
+
+**This is the rule "momentum is conserved at every vertex"**, and it
+comes from nothing but the $z$ integration of plane waves. Three delta
+functions against four propagator momenta plus the external ones leave
+exactly one momentum unfixed — the loop momentum — with its
+$\int d^4k/(2\pi)^4$ left over. **That is the rule "one unconstrained
+integration per loop."**
+
+### 4.8 Amputation, and the answer
+
+The external legs carry $k_0$ and $k_4$ and the external photon carries
+$q$. LSZ instructs us to Fourier transform in $x,x',y$, put the external
+momenta on shell, strip the three external propagators, and replace the
+external fermion legs by the spinors $u(p)$ and $\bar u(p')$. So we set
+
+$$k_0 = p,\qquad k_4 = p',$$
+
+and drop $\tilde S(p)$, $\tilde S(p')$ and the external photon
+propagator, leaving its index $\mu$ at the vertex $z_2$. From
+$k_0 = k+\ell$,
+
+$$\ell = p - k,$$
+
+so the internal photon carries $p-k$; since it enters only through
+$\ell^2 = (p-k)^2 = (k-p)^2$, this is the $k_\gamma = k-p$ of §6.1. And
+from $k' = k+q$ the second fermion propagator carries $k+q$, as
+advertised. The one remaining integration is over $k$.
+
+Finally, $\Gamma^\mu$ was defined in §2.1 with the external-vertex factor
+$-ie$ stripped off, so the vertex at $z_2$ contributes a bare
+$\gamma^\mu$ and only two factors of $-ie$ survive. Putting it together,
+and renaming $\alpha_3\to\nu$, $\alpha_1\to\rho$:
+
+$$\boxed{\;\bar u(p')\,\delta\Gamma^\mu_\mathrm{LO}\,u(p) =
+  \int\frac{\mathrm{d}^4k}{(2\pi)^4}\;
+  \bar u(p')\,(-ie\gamma^\nu)\,
+  \frac{i(\slashed{k}'+m)}{k'^2-m^2}\,\gamma^\mu\,
+  \frac{i(\slashed{k}+m)}{k^2-m^2}\,(-ie\gamma^\rho)\,u(p)\;
+  \frac{-ig_{\nu\rho}}{k_\gamma^2-\lambda^2}\;}$$
+
+which is precisely the expression §6.1 starts from — now derived rather
+than quoted.
+
+### 4.9 Reading off the rules
+
+Look at what the derivation produced, and where each piece came from:
+
+| in the answer | came from |
+| --- | --- |
+| $-ie\gamma^\alpha$ per vertex | $i$ from the Dyson exponential $\times$ $-e\gamma^\alpha$ from $\mathcal{L}_\mathrm{int}$ (§4.2) |
+| $i(\slashed k+m)/(k^2-m^2)$ per internal fermion line | the contraction $\tilde S(k)$, i.e. the Dirac Green function (§4.1) |
+| $-ig_{\alpha\beta}/(k^2-\lambda^2)$ per internal photon line | the contraction $\tilde D(k)$ (§4.1) |
+| matrices multiplied against the fermion arrow | the chaining of spinor indices (§4.5) |
+| no $1/n!$ | cancelled by the $n!$ vertex relabellings (§4.6) |
+| momentum conserved at each vertex | the $\int d^4z$ of plane waves (§4.7) |
+| $\int d^4k/(2\pi)^4$ per loop | the momentum left unfixed by those deltas (§4.7) |
+| $\bar u(p')\ldots u(p)$, no external propagators | LSZ amputation (§4.8) |
+| overall sign $+1$ | open fermion line, all contractions adjacent (§4.5) |
+
+That table *is* §1.3. From here on we use it as a shortcut, having seen
+that it is a shortcut and not an axiom.
+
+### 4.10 The rule that needs order $e^5$: closed fermion loops
+
+One rule cannot be seen at order $e^3$ in a vertex diagram, and it is the
+one diagram IIe depends on. Consider a contraction in which two vertices
+$z_a$ and $z_b$ have their fermion fields paired *with each other* in
+both directions,
+
+$$\overline{\psi(z_a)\bar\psi(z_b)}\quad\text{and}\quad
+  \overline{\psi(z_b)\bar\psi(z_a)},$$
+
+so that the fermion line closes on itself. Write the two bilinears with
+indices, in the order they appear:
+
+$$\left[\bar\psi_i(z_a)\Gamma^{(a)}_{ij}\psi_j(z_a)\right]
+  \left[\bar\psi_k(z_b)\Gamma^{(b)}_{kl}\psi_l(z_b)\right],$$
+
+so the fields in order are
+$\bar\psi_i(z_a),\ \psi_j(z_a),\ \bar\psi_k(z_b),\ \psi_l(z_b)$.
+
+The first contraction, $\psi_j(z_a)$ with $\bar\psi_k(z_b)$, is between
+neighbours (positions 2 and 3): no sign, and it gives
+$S_{jk}(z_a-z_b)$.
+
+The second is the problem. What is left is
+$\bar\psi_i(z_a)\,\psi_l(z_b)$ — in that order — whereas the contraction
+is *defined* as $\langle0|T\,\psi_l(z_b)\bar\psi_i(z_a)|0\rangle
+= S_{li}(z_b-z_a)$, with $\psi$ to the *left* of $\bar\psi$. Since these
+are anticommuting fields, exchanging them costs a minus sign:
+
+$$\bar\psi_i(z_a)\,\psi_l(z_b)
+  = -\,\psi_l(z_b)\,\bar\psi_i(z_a)
+  \quad\Longrightarrow\quad
+  \overline{\bar\psi_i(z_a)\,\psi_l(z_b)} = -\,S_{li}(z_b-z_a).$$
+
+One transposition, one minus sign. Collecting the two contractions with
+the $\gamma$'s:
+
+$$-\,\Gamma^{(a)}_{ij}\,S_{jk}(z_a-z_b)\,\Gamma^{(b)}_{kl}\,
+  S_{li}(z_b-z_a),$$
+
+and now note the index pattern: $i$ starts the chain and $i$ also ends
+it. The chain closes, and a matrix product whose first and last index are
+summed together is a trace:
+
+$$\boxed{\;= -\,\mathrm{tr}\left[\Gamma^{(a)}\,S(z_a-z_b)\,
+  \Gamma^{(b)}\,S(z_b-z_a)\right].\;}$$
+
+**Both special features of a closed fermion loop — the overall $(-1)$ and
+the Dirac trace — come from this single reordering.** The minus sign is
+the anticommutativity of the fields; the trace is the fact that a closed
+line has no free spinor index. The argument generalizes to a loop with
+any number $n$ of vertices: $n-1$ of the contractions are between
+neighbours and the last one closes the cycle at the cost of one
+transposition, so the sign is $(-1)$ per loop regardless of its size.
+
+Applying this to two vertices joined to the rest of the diagram by
+photons of indices $\mu,\nu$, going to momentum space exactly as in §4.7,
+and calling the loop momentum $l$ and the photon momentum $k$:
+
+$$i\Pi^{\mu\nu}(k) = \left(-1\right)\int\frac{\mathrm{d}^4l}{(2\pi)^4}\;
+  \mathrm{tr}\left[\left(-ie\gamma^\mu\right)
+  \frac{i\left(\slashed l+m\right)}{l^2-m^2}
+  \left(-ie\gamma^\nu\right)
+  \frac{i\left(\slashed l-\slashed k+m\right)}
+  {\left(l-k\right)^2-m^2}\right],$$
+
+which is the definition §6.1 uses. Its two internal fermion lines are the
+two contractions above; its $(-1)$ and its trace are what we just
+derived; and its $(-ie\gamma)$'s, its propagators and its single loop
+integration are the rules of §4.9.
+
+Diagram IIe is then the contraction, at order $e^5$, in which the
+internal photon of §4.4 is cut and this loop inserted between the two
+halves — which in momentum space is exactly the replacement
+
+$$\frac{-ig_{\nu\rho}}{k_\gamma^2-\lambda^2}\;\longrightarrow\;
+  \frac{-ig_{\nu\alpha}}{k_\gamma^2-\lambda^2}\;
+  \left[i\Pi^{\alpha\beta}(k_\gamma)\right]\;
+  \frac{-ig_{\beta\rho}}{k_\gamma^2-\lambda^2}$$
+
+that §6.1 performs. Nothing else about IIe requires a new rule.
+
+### 4.11 The counterterm vertices
+
+The counterterm terms of §1.2 are ordinary interaction terms, so they go
+through the identical derivation. From
+
+$$\mathcal{L}_\mathrm{ct} \supset
+  \bar\psi\left(i\delta_2\slashed\partial - \delta_m\right)\psi,$$
+
+the same $i$ from the Dyson exponential and the same Fourier transform
+$i\slashed\partial\to\slashed k$ give a two-point vertex
+
+$$i\left(\slashed k\,\delta_2 - \delta_m\right),$$
+
+which is the rule quoted in §1.3 and the one that will be inserted on an
+electron line in §9.1. Its value is not fixed by this construction — it
+is fixed by the renormalization conditions of §8.2, which is the whole
+content of renormalization.
+
+## 5. The loop-integration toolkit
 
 Both diagrams below arrive in the same shape: a polynomial
 numerator divided by a product of propagator denominators,
@@ -405,17 +826,17 @@ Nothing in this section depends on which diagram produced the
 expression.
 
 There are five mechanical steps: merge the denominators into a single
-quadratic in $k$ (§4.1), complete the square and shift (§4.2), rotate
-the contour to Euclidean space (§4.3), do the radial integral (§4.4,
-with the divergent case in §4.5), and use rotational invariance to
-strip the loop momentum out of the numerator (§4.6). They are exactly
+quadratic in $k$ (§5.1), complete the square and shift (§5.2), rotate
+the contour to Euclidean space (§5.3), do the radial integral (§5.4,
+with the divergent case in §5.5), and use rotational invariance to
+strip the loop momentum out of the numerator (§5.6). They are exactly
 the contents of `code/loops.py`, and each formula below is quoted
-together with the function that implements it. §4.7 collects the
+together with the function that implements it. §5.7 collects the
 $\gamma$-matrix contraction identities that make the numerator algebra
-short by hand, and §4.8 sets up just enough dimensional regularization
+short by hand, and §5.8 sets up just enough dimensional regularization
 to redo the one divergent case independently.
 
-### 4.1 Feynman parameters
+### 5.1 Feynman parameters
 
 **Two denominators.** Let $A$ and $B$ be two nonzero complex numbers
 such that the straight segment joining them does not pass through the
@@ -589,9 +1010,9 @@ $$\frac{1}{A\,B\,C^{2}}
    \int_0^1\mathrm{d}z\int_0^{1-z}\mathrm{d}y\;
    \frac{z}{\left[(1-y-z)A+yB+zC\right]^{4}} .$$
 
-### 4.2 Completing the square
+### 5.2 Completing the square
 
-After §4.1 the whole $k$-dependence of the denominator sits in a single
+After §5.1 the whole $k$-dependence of the denominator sits in a single
 quadratic. With $P_i = (k-a_i)^2-m_i^2$ and weights $u_i$ obeying
 $\sum_iu_i=1$,
 
@@ -623,7 +1044,7 @@ The shift is a translation, so the measure is unchanged,
 $\mathrm{d}^4k = \mathrm{d}^4\ell$. (Translating the integration
 variable is unimpeachable for an absolutely convergent integral. The
 only divergent case we ever meet is logarithmic, and there the shift is
-performed on the Pauli–Villars-subtracted integrand of §4.5, which *is*
+performed on the Pauli–Villars-subtracted integrand of §5.5, which *is*
 absolutely convergent; a logarithmically divergent integral generates
 no surface term under a shift in any case.)
 
@@ -643,12 +1064,12 @@ $$D(k) = A\,k^2 + \cdots , \qquad A\ne 1,$$
 — which happens once a sub-loop has been integrated and its
 $\Delta$-like denominator, itself carrying a Feynman-parameter-dependent
 coefficient, is merged with the outer propagators — divide by $A$
-first. Then $D/A$ has unit $k^2$ coefficient, §4.2 applies to it, and
+first. Then $D/A$ has unit $k^2$ coefficient, §5.2 applies to it, and
 
 $$D(k) = A\left(\ell^2-\Delta\right),
 \qquad \frac{1}{D^n} = \frac{1}{A^n}\,\frac{1}{\left(\ell^2-\Delta\right)^n},$$
 
-so the entire master table of §4.4 applies with one extra factor
+so the entire master table of §5.4 applies with one extra factor
 $A^{-n}$. This is `feynman_shift_general(D, k)`, which returns the
 triple $(s,\Delta,A)$: it reads $A$ off as the coefficient of
 $(k^0)^2$, divides, and delegates to `feynman_shift`. (Its callers in
@@ -656,7 +1077,7 @@ $(k^0)^2$, divides, and delegates to `feynman_shift`. (Its callers in
 $A=1$, i.e. they check that the chosen momentum routing has kept the
 coefficient unity.)
 
-**Positivity of $\Delta$.** The Wick rotation of §4.3 needs
+**Positivity of $\Delta$.** The Wick rotation of §5.3 needs
 $\Delta>0$. For the kinematics used here — space-like or vanishing
 $q^2$, all $u_i\ge0$ on the simplex — this holds. For instance the LO
 vertex at $q^2=0$ gives, as printed by `code/g2_lo_trace.py`,
@@ -667,7 +1088,7 @@ which is manifestly positive on the simplex $y,z\ge0$, $y+z\le1$
 (and strictly positive as long as the photon mass $\lambda$ is kept,
 which is exactly the role of the IR regulator).
 
-Both §4.1 and §4.2 check out symbolically:
+Both §5.1 and §5.2 check out symbolically:
 
     >>> import sys; sys.path.insert(0, 'code')
     >>> from sympy import symbols, integrate, simplify, expand, gamma, S
@@ -700,7 +1121,7 @@ Both §4.1 and §4.2 check out symbolically:
     >>> Afound, [simplify(s2[i]-s[i]) for i in range(4)], simplify(Delta2-Delta)
     (A_c, [0, 0, 0, 0], 0)
 
-### 4.3 Wick rotation
+### 5.3 Wick rotation
 
 We must evaluate
 
@@ -767,7 +1188,7 @@ $\ell^2-\Delta = -\left(\ell_E^2+\Delta\right)$ never vanishes for
 $\Delta>0$: after the rotation the $i\epsilon$ has done its job and can
 be dropped.
 
-### 4.4 The master integral
+### 5.4 The master integral
 
 Define
 
@@ -775,7 +1196,7 @@ $$I(a,n,\Delta) \equiv \int\frac{\mathrm{d}^4\ell}{(2\pi)^4}\;
   \frac{\left(\ell^2\right)^a}{\left(\ell^2-\Delta\right)^n},
   \qquad a\ge0,\ n\ge1 \ \text{integers}.$$
 
-Rotating with §4.3, using $\left(\ell^2\right)^a = (-1)^a
+Rotating with §5.3, using $\left(\ell^2\right)^a = (-1)^a
 \left(\ell_E^2\right)^a$ and $\left(\ell^2-\Delta\right)^n = (-1)^n
 \left(\ell_E^2+\Delta\right)^n$ and $\mathrm{d}^4\ell =
 i\,\mathrm{d}^4\ell_E$,
@@ -862,15 +1283,15 @@ $$\int\frac{\mathrm{d}^4\ell}{(2\pi)^4}
 
 both of which are the textbook values.
 
-### 4.5 Pauli–Villars for the logarithmic case
+### 5.5 Pauli–Villars for the logarithmic case
 
-When $n-a-2 = 0$ the Beta integral of §4.4 becomes
+When $n-a-2 = 0$ the Beta integral of §5.4 becomes
 $\int_0^1 v^{a+1}(1-v)^{-1}\mathrm{d}v$, which diverges logarithmically
 at $v=1$, i.e. at $t\to\infty$, i.e. at large loop momentum: this is a
 genuine ultraviolet divergence and needs a regulator.
 
 Before regulating, note a simplification. At $n = a+2$ the prefactor of
-§4.4 collapses:
+§5.4 collapses:
 
 $$(-1)^{n+a} = (-1)^{2a+2} = +1 ,
 \qquad \frac{(a+1)!}{(n-1)!} = \frac{(a+1)!}{(a+1)!} = 1 ,$$
@@ -893,8 +1314,8 @@ Each term separately behaves as $\ell^{2a-2n} = \ell^{-4}$ at large
 $\ell$, but their difference is down by one further power of $\ell^2$
 (expanding in $\Delta_\Lambda-\Delta$), so the bracket falls as
 $\ell^{-6}$ and the subtracted integral converges absolutely. Every
-manipulation of §4.2 and §4.3 is therefore legitimate on it, and the
-radial reduction of §4.4 gives
+manipulation of §5.2 and §5.3 is therefore legitimate on it, and the
+radial reduction of §5.4 gives
 
 $$I_{\rm PV} = \frac{i}{16\pi^2}\int_0^\infty t^{\,a+1}\left[
   \frac{1}{(t+\Delta)^{a+2}} - \frac{1}{(t+\Delta_\Lambda)^{a+2}}
@@ -908,7 +1329,7 @@ $$F(\Delta) \equiv \int_0^R\frac{t^{\,a+1}\,\mathrm{d}t}{(t+\Delta)^{a+2}},
  = -(a+2)\int_0^R\frac{t^{\,a+1}\,\mathrm{d}t}{(t+\Delta)^{a+3}} .$$
 
 The differentiated integral has $n = a+3$, hence $n-a-2 = 1>0$: it is
-convergent and §4.4 evaluates it,
+convergent and §5.4 evaluates it,
 
 $$\lim_{R\to\infty}\int_0^R\frac{t^{\,a+1}\,\mathrm{d}t}{(t+\Delta)^{a+3}}
  = \Delta^{-1}\,\frac{(a+1)!\;0!}{(a+2)!}
@@ -1000,7 +1421,7 @@ Both branches of the master table, checked against direct integration:
     >>> loop_integral(0, 2, D), loop_integral(2, 4, D)
     (I*(LUV - log(Delta))/(16*pi**2), I*(LUV - log(Delta))/(16*pi**2))
 
-### 4.6 Angular averages
+### 5.6 Angular averages
 
 The master table takes scalars. The numerator, however, is a polynomial
 in the components $\ell^\mu$, so we must first reduce
@@ -1008,7 +1429,7 @@ in the components $\ell^\mu$, so we must first reduce
 $$T^{\mu_1\cdots\mu_N} = \int\frac{\mathrm{d}^4\ell}{(2\pi)^4}\,
   f\!\left(\ell^2\right)\,\ell^{\mu_1}\cdots\ell^{\mu_N}$$
 
-to scalar integrals. After the shift of §4.2 the denominator depends on
+to scalar integrals. After the shift of §5.2 the denominator depends on
 $\ell$ only through $\ell^2$, which is what makes this possible.
 
 **Odd $N$ vanishes.** Under $\ell\to-\ell$ the measure and
@@ -1162,16 +1583,16 @@ The first line is the sharpest normalization test available: applying
 the rule to $(\ell\cdot\ell)^n$ must give back $(\ell^2)^n$ exactly,
 which pins $2^n(n+1)!$ with no freedom left.
 
-**Putting §4.1–§4.6 together.** The recipe executed by every
-`assemble` routine is: combine denominators (§4.1), eliminate the first
-parameter with the $\delta$, shift $k = \ell+s$ (§4.2), substitute the
-shift into the numerator, `symmetrize` it (§4.6) so that it becomes a
+**Putting §5.1–§5.6 together.** The recipe executed by every
+`assemble` routine is: combine denominators (§5.1), eliminate the first
+parameter with the $\delta$, shift $k = \ell+s$ (§5.2), substitute the
+shift into the numerator, `symmetrize` it (§5.6) so that it becomes a
 polynomial in the single symbol $\ell^2$, and finally replace each
 power $\left(\ell^2\right)^a$ by `loop_integral(a, n, Delta)`
-(§4.3–§4.5). What is left is an ordinary integral over the Feynman
+(§5.3–§5.5). What is left is an ordinary integral over the Feynman
 simplex.
 
-### 4.7 Dirac contraction identities
+### 5.7 Dirac contraction identities
 
 Everything here follows from the Clifford algebra
 
@@ -1242,7 +1663,7 @@ $$\slashed{a}\slashed{a} = a^2 .$$
 
 The pipeline never uses any of these as *rules* — it multiplies the
 explicit $4\times4$ matrices of `code/dirac.py` — but they are what make
-the hand-derivations of §7 and §9 short, and the explicit matrices do
+the hand-derivations of §8 and §10 short, and the explicit matrices do
 satisfy them:
 
     >>> import sys; sys.path.insert(0, 'code')
@@ -1273,18 +1694,18 @@ satisfy them:
     ...          - 2*dot(A, B)*ID4) == Z
     True
 
-### 4.8 Dimensional regularization as a cross-check
+### 5.8 Dimensional regularization as a cross-check
 
 Pauli–Villars at the level of the master integral is a prescription, and
 a prescription deserves an independent check. We therefore record just
 enough dimensional regularization to redo a log-divergent one-loop
 integral in $d = 4-2\epsilon$ dimensions. (This $\epsilon$ has nothing
-to do with the $i\epsilon$ of §4.3, which has already done its work.)
+to do with the $i\epsilon$ of §5.3, which has already done its work.)
 
-Nothing in §4.1, §4.2 or §4.3 mentions the number of dimensions, so
+Nothing in §5.1, §5.2 or §5.3 mentions the number of dimensions, so
 Feynman parametrization, the shift and the Wick rotation carry over
 verbatim. Only the Euclidean angular measure changes. Repeating the
-Gaussian argument of §4.4 in $d$ dimensions,
+Gaussian argument of §5.4 in $d$ dimensions,
 
 $$\pi^{d/2} = \int\mathrm{d}^dx\;e^{-x^2}
  = S_{d-1}\int_0^\infty r^{d-1}e^{-r^2}\mathrm{d}r
@@ -1296,7 +1717,7 @@ using $t = r^2$ in $\int_0^\infty r^{d-1}e^{-r^2}\mathrm{d}r =
 $$S_{d-1} = \frac{2\pi^{d/2}}{\Gamma\!\left(\frac d2\right)} ,$$
 
 which for $d=4$ reproduces $S_3 = 2\pi^2/\Gamma(2) = 2\pi^2$. The same
-Beta substitution $t = \Delta v/(1-v)$ as in §4.4, now with $p = d/2$
+Beta substitution $t = \Delta v/(1-v)$ as in §5.4, now with $p = d/2$
 and $q = n-d/2$, gives
 
 $$\int_0^\infty\frac{t^{\,d/2-1}\,\mathrm{d}t}{(t+\Delta)^n}
@@ -1333,7 +1754,7 @@ $$\int\frac{\mathrm{d}^d\ell}{(2\pi)^d}
  = \frac{i}{16\pi^2}\left(\frac1\epsilon - \gamma_E + \log4\pi
    - \log\Delta\right) + O(\epsilon).$$
 
-Comparing with the $a=0$, $n=2$ case of §4.5,
+Comparing with the $a=0$, $n=2$ case of §5.5,
 $\frac{i}{16\pi^2}\left(L_{UV}-\log\Delta\right)$, gives the dictionary
 
 $$L_{UV} \;\longleftrightarrow\;
@@ -1341,7 +1762,7 @@ $$L_{UV} \;\longleftrightarrow\;
 
 **A caveat on the dictionary.** It is exact for $a=0$ only. For $a\ge1$
 the numerator $\ell^2$ is itself $d$-dimensional, the angular average of
-§4.6 supplies $d$ where four dimensions supply $4$, and the standard
+§5.6 supplies $d$ where four dimensions supply $4$, and the standard
 result
 
 $$\int\frac{\mathrm{d}^d\ell}{(2\pi)^d}
@@ -1366,7 +1787,7 @@ must be run consistently on a whole integral, not by substituting the
 dictionary term by term.
 
 **Dirac algebra in $d$ dimensions.** The two identities needed for such
-a cross-check follow exactly as in §4.7, with $\delta^\mu_\mu = d$ in
+a cross-check follow exactly as in §5.7, with $\delta^\mu_\mu = d$ in
 place of $4$:
 
 $$\gamma^\mu\gamma_\mu = g_{\mu\nu}g^{\mu\nu} = \delta^\mu_\mu = d ,$$
@@ -1399,7 +1820,7 @@ Both expansions above are checked symbolically:
     >>> simplify(expand(series(M1, eps, 0, 1).removeO() - PV))
     -I/(32*pi**2)
 
-## 5. Warm-up: diagram IIe (vacuum polarization)
+## 6. Warm-up: diagram IIe (vacuum polarization)
 
 Of the five independent two-loop contributions to $a_e$, diagram IIe is
 by far the friendliest, and the right place to learn the machinery.
@@ -1425,7 +1846,7 @@ so that the target of this section is Petermann's
 
 $$\mu_\mathrm{IIe} = \frac{119}{36} - \frac{\pi^2}{3} = 0.0156874\ldots$$
 
-### 5.1 The diagram and its amplitude
+### 6.1 The diagram and its amplitude
 
 ![Diagram IIe](figures/g2-nlo-IIe.svg)
 
@@ -1509,7 +1930,7 @@ $$\Pi^{\mu\nu}(k) = i e^2\int\frac{\mathrm{d}^4l}{(2\pi)^4}\;
 line; when we insert the result back into the vertex it will be
 $k_\gamma$.)
 
-### 5.2 The one-loop photon self-energy
+### 6.2 The one-loop photon self-energy
 
 **The trace.** Expanding the two numerators gives one term with four
 gamma matrices, two with three, and one with two. Traces of an odd
@@ -1715,7 +2136,7 @@ $\Pi_\infty = -\frac{2\alpha}{\pi}L_{UV}\int_0^1 x(1-x)\,\mathrm{d}x
 = -\frac{\alpha}{3\pi}L_{UV}$, independent of $k^2$ — as it must be,
 since the divergence is a local (polynomial) term.
 
-### 5.3 Charge renormalization: why subtract at $k^2 = 0$
+### 6.3 Charge renormalization: why subtract at $k^2 = 0$
 
 Strung on free photon propagators, the 1PI blob resums geometrically,
 
@@ -1811,7 +2232,7 @@ to zero in IIe from the start, and $\mu_\mathrm{IIe}$ is a
 well-defined pure number all by itself — unlike $\mu_\mathrm{IIc}$ and
 $\mu_\mathrm{IId}$, whose $\log\lambda^2$ only cancels between them.
 
-### 5.4 The spectral (dispersion) representation
+### 6.4 The spectral (dispersion) representation
 
 We now trade the Feynman parameter $x$ for a *mass*. The claim is
 
@@ -1962,7 +2383,7 @@ Numerically (`m = 1`, $\rho$ in units of $\alpha/\pi$):
     >>> Pihat(-5)/-5 - quad(lambda t: r(t)/(-5 - t), [4, inf])
     mpf('0.0')
 
-### 5.5 The collapse
+### 6.5 The collapse
 
 Put the transverse form back into the photon chain of IIe, with
 $\lambda = 0$ (justified above) and $\Pi\to\hat\Pi$ (justified above):
@@ -2038,7 +2459,7 @@ The two-loop diagram has become a one-parameter family of *one-loop*
 diagrams. The entire second loop momentum integration has been reduced
 to the single variable $t$.
 
-### 5.6 The massive-photon LO kernel $K(t)$
+### 6.6 The massive-photon LO kernel $K(t)$
 
 It remains to compute the LO anomalous moment with a photon of mass
 $\lambda$, which we do from scratch. Write the LO vertex correction
@@ -2228,7 +2649,7 @@ converging to $1/3$. Combined with $\rho(t)\sim\alpha/(3\pi t)$ this
 confirms that the $t$ integral of the previous subsection converges
 like $\int\mathrm{d}t/t^2$.
 
-### 5.7 Assembling and evaluating $\mu_\mathrm{IIe}$
+### 6.7 Assembling and evaluating $\mu_\mathrm{IIe}$
 
 Putting the last two subsections together,
 
@@ -2502,7 +2923,7 @@ adaptive quadrature at 25 digits gives
 and `pixi run iie-fortran` reproduces the same number from a 128-point
 Gauss–Legendre quadrature in the original $t$ variable.
 
-### 5.8 What was general, and what was luck
+### 6.8 What was general, and what was luck
 
 Three features of this calculation recur in every one of the remaining
 diagrams, and are worth naming.
@@ -2549,11 +2970,11 @@ multi-dimensional parametric integrals. Diagram IIe is the one place
 where the two-loop problem is really a one-loop problem in disguise —
 which is exactly why it makes the right warm-up.
 
-## 6. Diagram IId: the amplitude
+## 7. Diagram IId: the amplitude
 
 ![Diagram IId](figures/g2-nlo-IId.svg)
 
-### 6.1 Writing it down
+### 7.1 Writing it down
 
 We now assemble the contraction identified in §3.3 into an integral,
 using the rules of §1.3. Route the momenta as `code/g2_iid.py` does: the
@@ -2607,19 +3028,19 @@ which would be a disaster. It is not one, and the reason is exactly the
 mass counterterm: $\Sigma_\mathrm{loop}(k)$ does not vanish at
 $\slashed k = m$, but $\Sigma_\mathrm{loop} - \delta m$ does, and a
 factor that vanishes on shell cancels one power of the pole. We will see
-this happen algebraically in §9.1.
+this happen algebraically in §10.1.
 
 Second, this expression is **not yet the diagram we want**: it uses the
 unrenormalized $\Sigma_\mathrm{loop}$, which is ultraviolet divergent.
 The counterterm diagrams are added in §8.
 
-## 7. The self-energy subgraph and its counterterms
+## 8. The self-energy subgraph and its counterterms
 
 Everything in this section is computed by
 `pixi run iid-selfenergy` (`code/g2_iid_selfenergy.py`); the outputs
 quoted are its actual output.
 
-### 7.1 The one-loop self-energy
+### 8.1 The one-loop self-energy
 
 The blob is the order-$e^2$ 1PI two-point function. By the same
 prefactor bookkeeping as above — two vertices $(-ie)^2 = -e^2$, one
@@ -2640,13 +3061,13 @@ $$\Sigma_\mathrm{loop}(k) = -ie^2\int\frac{d^4l}{(2\pi)^4}
   {\left[l^2-m^2\right]\left[\left(k-l\right)^2-\lambda^2\right]}.$$
 
 The numerator collapses immediately with the contraction identities of
-§4.7:
+§5.7:
 
 $$\gamma^\nu\left(\slashed l+m\right)\gamma_\nu
   = \gamma^\nu\slashed l\gamma_\nu + m\gamma^\nu\gamma_\nu
   = -2\slashed l + 4m.$$
 
-Now combine the denominators with one Feynman parameter $u$ (§4.1),
+Now combine the denominators with one Feynman parameter $u$ (§5.1),
 putting $u$ on the photon:
 
 $$\frac{1}{\left[l^2-m^2\right]\left[\left(k-l\right)^2-\lambda^2\right]}
@@ -2659,7 +3080,7 @@ $$u\left(k^2-2k\cdot l+l^2-\lambda^2\right)+\left(1-u\right)
   \left(l^2-m^2\right)
   = l^2 - 2u\,k\cdot l + uk^2 - u\lambda^2 - \left(1-u\right)m^2.$$
 
-Complete the square (§4.2) with the shift $l = \ell + uk$:
+Complete the square (§5.2) with the shift $l = \ell + uk$:
 
 $$l^2-2u\,k\cdot l = \left(\ell+uk\right)^2 - 2uk\cdot\left(\ell+uk\right)
   = \ell^2 - u^2k^2,$$
@@ -2674,8 +3095,8 @@ $$\boxed{\;a = \left(1-u\right)m^2 + u\lambda^2,\qquad
 
 The shifted numerator is $-2(\slashed\ell + u\slashed k) + 4m$, and the
 term linear in $\ell$ integrates to zero by symmetric integration
-(§4.6), leaving $4m - 2u\slashed k$. The remaining integral is the
-logarithmically divergent master integral of §4.5,
+(§5.6), leaving $4m - 2u\slashed k$. The remaining integral is the
+logarithmically divergent master integral of §5.5,
 
 $$\int\frac{d^4\ell}{(2\pi)^4}\frac{1}{\left(\ell^2-\Delta\right)^2}
   = \frac{i}{16\pi^2}\left(L_{UV}-\log\Delta\right),$$
@@ -2703,7 +3124,7 @@ $$A(k^2) = 4mc\left(L_{UV}-\log D\right),\qquad
 (both still under $\int_0^1du$). This is the form the on-shell
 conditions act on.
 
-### 7.2 The on-shell renormalization conditions
+### 8.2 The on-shell renormalization conditions
 
 Now we fix $\delta_m$ and $\delta_2$. Including the counterterm vertex
 $i(\slashed k\delta_2-\delta_m)$ of §1.3, the full 1PI two-point
@@ -2771,7 +3192,7 @@ $$\delta Z_2 = \left[2mA'+B+2m^2B'\right]_{k^2=m^2}
 
 where we used $\partial(-\log D)/\partial k^2 = b/D$.
 
-### 7.3 The counterterms in closed form, and the infrared logarithm
+### 8.3 The counterterms in closed form, and the infrared logarithm
 
 Now integrate over $u$. Set $m=1$. Both constants need
 $\int_0^1 P(u)\log D_0\,du$ for a polynomial $P$, and here is the first
@@ -2824,7 +3245,7 @@ is the soft region of the photon in the self-energy loop. $\delta m$ has
 no such term: the mass shift is infrared safe.
 
 We can already predict the infrared behaviour of the whole diagram.
-Anticipating §8.2, the $\delta Z_2$ part of the subtraction collapses to
+Anticipating §9.2, the $\delta Z_2$ part of the subtraction collapses to
 $\delta Z_2$ times the leading-order diagram, so it contributes to
 $\mu_\mathrm{IId}$ (recall $c = \frac14(\alpha/\pi)$ and
 $F_2^\mathrm{LO} = \frac12(\alpha/\pi)$, and IId carries the mirror
@@ -2845,7 +3266,7 @@ subtraction.** The $L_{UV}/4$ that comes with it is spurious — it must
 cancel against the rest of the diagram, because $\Sigma_R$ as a whole is
 $L_{UV}$-free, as we check next.
 
-### 7.4 The ultraviolet cancellation, in one line
+### 8.4 The ultraviolet cancellation, in one line
 
 Assemble $\Sigma_R$ and look only at the $L_{UV}$ terms. There are three
 sources: $\Sigma_\mathrm{loop}$ contributes $(4m-2u\slashed k)L_{UV}$,
@@ -2885,7 +3306,7 @@ The two terms will be treated separately from here on and are called the
 rational piece: it is a constant (in $k$) times $(\slashed k - m)$. That
 innocuous-looking fact does most of the work in §9.
 
-### 7.5 Sidebar: the same thing in dimensional regularization
+### 8.5 Sidebar: the same thing in dimensional regularization
 
 Is any of this an artifact of Pauli–Villars? Redo the loop in
 $d = 4-2\epsilon$ dimensions. Two things change. The contraction
@@ -2896,7 +3317,7 @@ $$\gamma^\nu\left(\slashed l+m\right)\gamma_\nu
   = \left(2-d\right)\slashed l + d\,m
   = \left(-2+2\epsilon\right)\slashed l + \left(4-2\epsilon\right)m,$$
 
-and the master integral becomes (§4.8)
+and the master integral becomes (§5.8)
 
 $$\int\frac{d^d\ell}{(2\pi)^d}\frac{1}{\left(\ell^2-\Delta\right)^2}
   = \frac{i}{16\pi^2}\left(\frac{1}{\hat\epsilon} - \log\Delta
@@ -2932,7 +3353,7 @@ meaningless in isolation. **$\Sigma_R$ is scheme independent**, and so is
 every physical quantity built from it. The renormalization conditions,
 not the regulator, are what carry the physics.
 
-One caveat, found while verifying §4.8: the dictionary
+One caveat, found while verifying §5.8: the dictionary
 $L_{UV}\leftrightarrow1/\hat\epsilon$ is exact for the log-divergent
 integral with $a=0,n=2$ used here, but not universally — for $a=1,n=3$
 dimensional regularization produces an extra $-\frac12$, because the
@@ -2941,14 +3362,14 @@ supply $2$. A dimreg cross-check must therefore be run on a complete
 integral, not by substituting for $L_{UV}$ term by term. It is legitimate
 here precisely because the $L_{UV}$ coefficient vanishes *pointwise*.
 
-## 8. The counterterm diagrams
+## 9. The counterterm diagrams
 
 Section 7 derived the subtraction $\Sigma_\mathrm{loop}\to\Sigma_R$
 algebraically. It is worth seeing that this *is* the addition of
 counterterm diagrams, since that is the form in which renormalization is
 usually stated.
 
-### 8.1 The $\delta m$ insertion is a diagram
+### 9.1 The $\delta m$ insertion is a diagram
 
 The counterterm vertex of §1.3 is $i(\slashed k\delta_2 - \delta_m)$.
 Its $-i\delta_m$ part, inserted on an internal electron line of the
@@ -2964,7 +3385,7 @@ $$\delta\Gamma^\mu_{\delta m} = -ie^2
  {\left[\left(k-p\right)^2-\lambda^2\right]
   \left[k'^2-m^2\right]\left[k^2-m^2\right]^2},$$
 
-which is the raw diagram of §6.1 with $\Sigma_\mathrm{loop}\to-\delta m$.
+which is the raw diagram of §7.1 with $\Sigma_\mathrm{loop}\to-\delta m$.
 Adding the two is the same as the replacement
 $\Sigma_\mathrm{loop}\to\Sigma_\mathrm{loop}-\delta m$. Likewise the
 $\slashed k\,\delta_2$ part of the counterterm vertex supplies the
@@ -2978,7 +3399,7 @@ $$\underbrace{\text{IId with }\Sigma_R}_{\text{what we compute}}
 three Feynman diagrams whose sum is finite, none of which is finite by
 itself.
 
-### 8.2 The $\delta Z_2$ insertion collapses
+### 9.2 The $\delta Z_2$ insertion collapses
 
 The $\delta Z_2$ counterterm diagram can be evaluated in closed form
 without doing any integral, because of the identity
@@ -3003,9 +3424,9 @@ $$F_2\left[\text{IId};\ \Sigma_R\right]
   = F_2\left[\text{IId};\ \Sigma_\mathrm{loop}-\delta m\right]
   - \delta Z_2\,F_2^\mathrm{LO},$$
 
-which is the identity used in §7.3 to predict the infrared logarithm.
+which is the identity used in §8.3 to predict the infrared logarithm.
 
-### 8.3 Two schemes, and why the total does not care
+### 9.3 Two schemes, and why the total does not care
 
 There is a choice here, and it is worth being explicit about it because
 it is the reason per-diagram numbers must be compared carefully with the
@@ -3031,7 +3452,7 @@ $$\mu_\mathrm{IId}^\mathrm{LSZ}
   = \mu_\mathrm{IId}^\mathrm{KK}
   - \left(\frac{L_{UV}}{4} + \log\lambda + \frac54\right),$$
 
-using §7.3. The two differ by an infrared-divergent — and indeed
+using §8.3. The two differ by an infrared-divergent — and indeed
 ultraviolet-divergent — amount, so the *individual* numbers are entirely
 convention. What is not convention is the sum over all diagrams, and the
 mechanism is the Ward identity: there are three vertex subtractions
@@ -3050,9 +3471,9 @@ constant and changes some other diagram by the negative of it.
 
 We compute in the KK scheme, so as to compare with Petermann.
 
-## 9. The covariant reduction
+## 10. The covariant reduction
 
-We now do the algebra of §6.1 with $\Sigma_R$ inserted. The pipeline
+We now do the algebra of §7.1 with $\Sigma_R$ inserted. The pipeline
 (`code/g2_iid.py`) does this with explicit $4\times4$ matrices in the
 Breit frame, which is convenient for a computer and unilluminating for a
 human. Done covariantly, two structural facts appear that the
@@ -3061,7 +3482,7 @@ verified by `pixi run iid-covariant` (`code/g2_iid_covariant.py`),
 including the Dirac identities, which are checked against the explicit
 matrices of `code/dirac.py` at random momenta.
 
-### 9.1 The insertion sandwich
+### 10.1 The insertion sandwich
 
 Whatever $\Sigma_R$ is, it has the form $f + g\slashed k$ with scalar
 $f,g$, so the object appearing in the numerator is
@@ -3091,7 +3512,7 @@ $$P = f\left(k^2+m^2\right) + 2mg\,k^2,\qquad
        Q = 2 m f + g(k^2+m^2)
     verified on explicit matrices at 3 random momenta        OK
 
-Now specialize to the **rational piece** of $\Sigma_R$, which by §7.4 is
+Now specialize to the **rational piece** of $\Sigma_R$, which by §8.4 is
 $\kappa\,(\slashed k-m)$ with
 
 $$\kappa = -\frac{4m^2c\,b\left(2-u\right)}{D_0}
@@ -3108,13 +3529,13 @@ $$\left(\slashed k+m\right)\kappa\left(\slashed k-m\right)
     (kslash+m) kappa(kslash-m) (kslash+m) = kappa (k^2-m^2)(kslash+m)
     => the rational part cancels one power of the doubled propagator
 
-**This is the resolution of the double-pole worry of §6.1, made
+**This is the resolution of the double-pole worry of §7.1, made
 explicit.** The factor $(k^2-m^2)$ cancels one power of $[k^2-m^2]^2$,
 and what is left is an ordinary single propagator.
 
-### 9.2 The rational piece is the LO diagram times a constant
+### 10.2 The rational piece is the LO diagram times a constant
 
-Put the cancellation back into §6.1. The rational piece of IId is
+Put the cancellation back into §7.1. The rational piece of IId is
 
 $$\delta\Gamma^\mu_\mathrm{rat} = -ie^2\,\kappa
  \int\frac{d^4k}{(2\pi)^4}\;
@@ -3173,11 +3594,11 @@ through the arctangent branch bookkeeping. Note also that SymPy's naive
 no logarithms at all — the second wrong answer of this section, and the
 one `code/g2_lo.py` warns about.)
 
-### 9.3 The log piece: the $\xi$ representation
+### 10.3 The log piece: the $\xi$ representation
 
 The second half of $\Sigma_R$ is
 $-c(4m-2u\slashed k)\log\left(D/D_0\right)$, and a logarithm of the loop
-momentum is not something the master integrals of §4.4 can digest. The
+momentum is not something the master integrals of §5.4 can digest. The
 standard trick converts it into one more propagator at the cost of one
 more parameter. Start from the elementary identity
 
@@ -3201,7 +3622,7 @@ $$\boxed{\;\log\frac{D\left(k^2\right)}{D_0}
 
 Two things happened at once. The factor $(k^2-m^2)$ cancels one power of
 the doubled propagator here too — so *both* pieces of $\Sigma_R$ do,
-which is the double zero of §7.2 showing up in practice. And what
+which is the double zero of §8.2 showing up in practice. And what
 replaces it is an ordinary propagator $1/(k^2-C)$ of squared mass
 $C>m^2$: a heavy fictitious particle. The log piece therefore has four
 propagators,
@@ -3211,12 +3632,12 @@ $$\left[\left(k-p\right)^2-\lambda^2\right]\left[k'^2-m^2\right]
 
 and an overall factor $1/\xi$.
 
-### 9.4 The numerator, contracted
+### 10.4 The numerator, contracted
 
 For both pieces the outer numerator has the same shape,
 $\gamma^\nu(\slashed k'+m)\gamma^\mu(P+Q\slashed k)\gamma_\nu$, and the
 $\gamma^\nu\ldots\gamma_\nu$ contraction can be done once and for all
-with the identities of §4.7. Splitting into the $P$ and $Q$ parts and
+with the identities of §5.7. Splitting into the $P$ and $Q$ parts and
 using, in turn,
 $\gamma^\nu\gamma^\alpha\gamma^\beta\gamma_\nu = 4g^{\alpha\beta}$,
 $\gamma^\nu\gamma^\alpha\gamma_\nu = -2\gamma^\alpha$, and
@@ -3252,17 +3673,17 @@ these, $4k'^\mu$ and $4mk^\mu$ are already of the $(p+p')^\mu$ type that
 $F_2$ lives in (once the loop momentum is averaged away), $-2m\gamma^\mu$
 is pure $F_1$, and $-2\slashed k\gamma^\mu\slashed k'$ contains both.
 
-For the log piece, $P$ and $Q$ follow from §9.1 with $f = -4mc$,
+For the log piece, $P$ and $Q$ follow from §10.1 with $f = -4mc$,
 $g = 2uc$ (the $\log$ having been traded for the $\xi$ propagator):
 
 $$P = -4mc\left[\left(1-u\right)k^2 + m^2\right],\qquad
   Q = 2c\left[u\left(k^2+m^2\right) - 4m^2\right].$$
 
-### 9.5 Feynman parameters, shift, and $\Delta$
+### 10.5 Feynman parameters, shift, and $\Delta$
 
 Combine the four denominators with parameters $x,y,z,t$ summing to one
 ($x$ on the photon, $y$ on the $k'$ line, $z$ on the $k$ line, $t$ on the
-$C$ line), using §4.1 with $\Gamma(4)=3!=6$. The combined denominator is
+$C$ line), using §5.1 with $\Gamma(4)=3!=6$. The combined denominator is
 
 $$D_\mathrm{comb} = x\left[\left(k-p\right)^2-\lambda^2\right]
   + y\left[\left(k+q\right)^2-m^2\right] + z\left[k^2-m^2\right]
@@ -3271,7 +3692,7 @@ $$D_\mathrm{comb} = x\left[\left(k-p\right)^2-\lambda^2\right]
 $$= k^2 - 2x\,k\cdot p + 2y\,k\cdot q + xm^2 - x\lambda^2 + yq^2
   - ym^2 - zm^2 - tC.$$
 
-Complete the square with $k = \ell + s$, $s = xp - yq$ (§4.2). Using
+Complete the square with $k = \ell + s$, $s = xp - yq$ (§5.2). Using
 $p^2 = m^2$, $q^2 = -4w^2 \to 0$ and $p\cdot q = -q^2/2$,
 
 $$s^2 = x^2m^2 + xy\,q^2 + y^2q^2,$$
@@ -3291,13 +3712,13 @@ $$\Delta = m^2\left(1-x\right)^2 - q^2yz + x\lambda^2
   \quad\xrightarrow{q^2\to0}\quad m^2\left(1-x\right)^2 + x\lambda^2,$$
 
 which is the leading-order denominator with a massive photon — as it must
-be, since §9.2 showed the rational piece *is* the leading-order diagram.
+be, since §10.2 showed the rational piece *is* the leading-order diagram.
 
-### 9.6 Extracting $F_2$
+### 10.6 Extracting $F_2$
 
 What remains is bookkeeping: substitute $k = \ell+s$ into $N^\mu$, drop
 terms odd in $\ell$, replace $\ell^{a}\ell^{b}\to g^{ab}\ell^2/4$
-(§4.6), apply the master integrals (§4.4) with $n=4$ and $a=0,1$, and
+(§5.6), apply the master integrals (§5.4) with $n=4$ and $a=0,1$, and
 project onto $F_2$.
 
 The projection is where care is needed, for the reason flagged in §2.2:
@@ -3326,12 +3747,12 @@ to `code/g2_iid_flog.inc`. It is not enlightening to display, and this
 is the honest place to hand over to the machine: the algebra is
 mechanical, the pipeline does it, and the check that it was done right is
 that the final number agrees with Petermann. What we have gained by
-doing §9.1–§9.5 by hand is everything that is *not* mechanical: why the
+doing §10.1–§10.5 by hand is everything that is *not* mechanical: why the
 double pole is harmless, why the rational piece is the leading-order
 diagram in disguise, where the fictitious mass $C$ comes from, and why
 $F_2$ is finite.
 
-## 10. The parameter integrals
+## 11. The parameter integrals
 
 At this point
 
@@ -3344,10 +3765,10 @@ and only the second integral is left. It is done by
 integration is chosen so that nothing worse than a logarithm appears
 until the very last step.
 
-### 10.1 Trading $\xi$ for the fictitious mass
+### 11.1 Trading $\xi$ for the fictitious mass
 
 The parameter $\xi$ enters only through $C(\xi)$, so change variables
-from $\xi$ to $C$ itself. From §9.3,
+from $\xi$ to $C$ itself. From §10.3,
 
 $$C = m^2 + \frac{a-bm^2}{\xi b} = m^2 + \frac{D_0}{\xi b}
   \quad\Longrightarrow\quad
@@ -3355,9 +3776,9 @@ $$C = m^2 + \frac{a-bm^2}{\xi b} = m^2 + \frac{D_0}{\xi b}
 
 and as $\xi$ runs over $(0,1)$, $C$ runs over $(m^2 + D_0/b, \infty)$,
 which at $m=1$ is $(1/u,\infty)$ — a genuine spectral variable. The
-$1/\xi$ prefactor of §9.3 is absorbed exactly by this Jacobian.
+$1/\xi$ prefactor of §10.3 is absorbed exactly by this Jacobian.
 
-### 10.2 The order of integration
+### 11.2 The order of integration
 
 The integrations are then done in the order $z$, $C$, $t$, $s=y+z$, $u$:
 
@@ -3383,15 +3804,15 @@ The output:
     [   4.8s] u-integration done, checked numerically
       mu_log(lam=0) = -pi**2/18 - 1/24
 
-The log piece is infrared finite — consistent with §7.3, which located
+The log piece is infrared finite — consistent with §8.3, which located
 the entire infrared divergence in $\delta Z_2$ — and equals
 
 $$\mu_\mathrm{log} = -\frac1{24} - \frac{\pi^2}{18}.$$
 
-### 10.3 The answer
+### 11.3 The answer
 
 Adding the two pieces, with $\mu_\mathrm{rat} = \log\lambda + \frac12$
-from §9.2:
+from §10.2:
 
 $$\mu_\mathrm{IId} = \left(\log\lambda + \frac12\right)
   + \left(-\frac1{24}-\frac{\pi^2}{18}\right)
@@ -3409,7 +3830,7 @@ $$\boxed{\;\mu_\mathrm{IId} = \frac{11}{24} - \frac{\pi^2}{18}
 in exact agreement with Petermann, Helv. Phys. Acta 30 (1957) 407,
 eq. (4).
 
-## 11. Independent checks
+## 12. Independent checks
 
 **Numerical.** `pixi run iid-fortran` integrates the same parametric
 integrands by Gauss–Legendre quadrature in Fortran, with a smoothstep
@@ -3433,11 +3854,11 @@ term subtracted and still converges.
 **Structural.** Three internal consistency checks were used along the
 way, and each would have caught an error:
 
-1. $L_{UV}$ cancels in $\Sigma_R$ *pointwise in $u$* (§7.4).
-2. The infrared logarithm predicted from $\delta Z_2$ alone (§7.3)
-   matches the one the full calculation produces (§10.3).
+1. $L_{UV}$ cancels in $\Sigma_R$ *pointwise in $u$* (§8.4).
+2. The infrared logarithm predicted from $\delta Z_2$ alone (§8.3)
+   matches the one the full calculation produces (§11.3).
 3. The covariant rational piece reproduces the pipeline's independently
-   derived factorization, $S(\lambda) = -K(\lambda^2)$ (§9.2).
+   derived factorization, $S(\lambda) = -K(\lambda^2)$ (§10.2).
 
 **Where the infrared logarithm goes.** $\mu_\mathrm{IId}$ is not by
 itself physical; its $+\frac12\log(\lambda^2/m^2)$ cancels against the
@@ -3445,7 +3866,7 @@ $-\frac12\log(\lambda^2/m^2)$ of diagram IIc. That cancellation, and the
 vanishing of the whole $\log\lambda$ dependence of $A_2$, is verified in
 the assembly of the NLO section.
 
-## 12. The same calculation, for any other diagram
+## 13. The same calculation, for any other diagram
 
 The point of doing one diagram completely is to be able to do the others.
 Here is the procedure, with a note on what changes.
@@ -3471,11 +3892,11 @@ Here is the procedure, with a note on what changes.
    subgraph is proportional to $(\slashed k - m)$, as the rational part
    was here, it will cancel a propagator and may collapse the diagram to
    a lower-order one. This is worth checking before doing any integral.
-5. **Rationalize any logarithm** with the $\xi$ representation of §9.3,
+5. **Rationalize any logarithm** with the $\xi$ representation of §10.3,
    which costs one parameter and buys one propagator.
-6. **Contract the Dirac string**, using §4.7 to reduce
+6. **Contract the Dirac string**, using §5.7 to reduce
    $\gamma^\nu\ldots\gamma_\nu$.
-7. **Feynman-combine, shift, angular-average, integrate** (§4.1–§4.6).
+7. **Feynman-combine, shift, angular-average, integrate** (§5.1–§5.6).
 8. **Project onto $F_2$** with §2.3, and check that $L_{UV}$ is absent.
 9. **Integrate the parameters** in an order that postpones the
    dilogarithms, verifying each step numerically, and never trusting
