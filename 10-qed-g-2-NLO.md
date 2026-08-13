@@ -23,15 +23,14 @@ Code:
 
 ## Plan of the calculation
 
-**Status: work in progress.** Each contribution below gets its own section:
-the diagram, whether/how it must be renormalized, the computation strategy,
-the known analytic value, and (once done) our own SymPy derivation
-cross-checked numerically in Fortran. Currently done: LO massive-photon
-kernel, the full two-loop pipeline (validated at LO), diagram IIe
-(analytic + numeric), diagram IId (analytic + numeric), diagram IIc
-(analytic + numeric), diagram IIa (analytic + numeric), diagram I
-(numeric), and the assembly proof that the five contributions sum to
-$A_2$ exactly.
+**Status: all five contributions reproduced.** Each gets its own section
+below: the diagram, whether/how it must be renormalized, the computation
+strategy, the known analytic value, and our own SymPy derivation
+cross-checked numerically in Fortran. Diagrams IIe, IId, IIc and IIa are
+established analytically (with the hardest pieces of IIc and IIa
+identified from 11–14-digit quad-precision integrals), diagram I is
+confirmed numerically, and `pixi run assembly` proves in SymPy that the
+five values sum to $A_2$ with the infrared logarithms cancelling.
 
 As in the LO section, the anomalous moment is the on-shell form factor
 
@@ -690,6 +689,86 @@ $\frac1{32}$) even here, caught only by Petermann's analytic evaluation
 (footnote in `petermann1958.pdf`).
 **Target**: $\mu_\mathrm{I} = \frac16 + \frac{13}{36}\pi^2 + \frac54\zeta(3) - \frac56\pi^2\log 2$.
 
+**Derivation** (`pixi run i-sympy`, `code/g2_i.py`): the crossed photon
+contraction is done in the full string (photon $\alpha$ at positions 1
+and 4, $\beta$ at 2 and 5), the inner loop over $a$ has four denominators
+(parameters $u, v, r$, $\Gamma(4)$) and is UV finite by itself, and the
+outer loop over $b$ runs against the composite propagator
+$b^2 - L_b/\hat b - C_A$ with $C_A = \hat a/\hat b$ kept opaque,
+$\hat b = (r+v)(1-r-v)$. The $F_2$ projection is $L_{UV}$-free — checked
+by exact rational-point tests, as it must be for an irreducible diagram —
+leaving a 5-fold parametric integral over $u, v, r$ (with $u+v+r<1$) and
+$y, t$ (with $y+t<1$).
+
+**Numeric evaluation** (`pixi run i-fortran`, `code/g2_i_qmc.f90`). Two
+practical obstacles had to be dealt with, both worth recording:
+
+1. *Compilation*. The generated integrand is a single 850 KB
+   expression; flang needs more than 20 minutes and 30 GB on it at any
+   optimization level. `code/g2_i_split.py` rewrites it as ~5300
+   per-term statements accumulating into `fIv` (large parenthesized
+   factors lifted into temporaries), which compiles in seconds, and
+   emits a quad-precision twin of the same file.
+2. *Cancellation*. $f_\mathrm{I}$ is finite everywhere on the domain,
+   but evaluating it in double precision loses all significance near the
+   face $1-v-r = 0$, where the outer $\hat b$ vanishes. `pixi run
+   i-calibrate` (`code/g2_i_cal.f90`) measures the worst relative error
+   of double against quad on random points:
+
+        scale of (1-v-r)      :  worst relative error of double
+           1.0E-01      1.78E-08
+           1.0E-02      3.61E-04
+           1.0E-03      4.61E-01
+           1.0E-04      1.00E+00
+        quad per eval:       430.3 us
+        dble per eval:         8.4 us
+
+   (Earlier runs which simply discarded the resulting NaNs were biased
+   low by ~1.4%, and a hard cut around the face converged to the wrong
+   value.) The integrand itself is perfectly tame there: at
+   $(u,v,r,y,t) = (10^{-8}, 0.17, 0.82, 0.27, 0.73)$ double gives NaN
+   while quad gives $0.1015317542625155$, and at $u = 10^{-12}$ it is
+   still $0.1015306403866693$.
+
+The integral is then a randomly shifted rank-1 lattice rule over the
+5-dim cube, each coordinate passed through the order-3 smoothstep
+$s(x) = x^3(10-15x+6x^2)$ (its first two derivatives vanish at both
+ends, so the periodic extension is $C^2$ and the rule converges far
+faster than plain Monte Carlo), evaluated in double precision in the
+bulk and in `real(16)` within $10^{-2}$ of the bad face (24% of points,
+which is where essentially all the time goes). Each shift is an
+unbiased estimate, so their spread is an honest error bar:
+
+    lattice rule: N =  16777216,  8 shifts
+      shift  1     -0.4682561743
+      shift  2     -0.4712629444
+      shift  3     -0.4641033821
+      shift  4     -0.4667036707
+      shift  5     -0.4702164503
+      shift  6     -0.4663382325
+      shift  7     -0.4674334653
+      shift  8     -0.4663191134
+
+    mu_I   =      -0.4675791791  +/-  8.13E-04
+    target =      -0.4676454461
+    diff   =       0.0000662670
+    quad-precision evaluations:  24.4471 %
+
+Points closer than $10^{-6}$ to the face are dropped (quad would run out
+of digits there too); the same program reports that they carry
+$3\times10^{-12}$ of the total measure, so they cannot affect the
+result. This confirms
+
+$$\mu_\mathrm{I} = \frac16 + \frac{13}{36}\pi^2 + \frac54\zeta(3)
+  - \frac56\pi^2\log 2 = -0.467645446\ldots$$
+
+to $0.08$ standard deviations. Unlike IIa and IIc this is a numeric
+confirmation rather than an analytic evaluation: an exact treatment
+would need the $y, t$ integrations done in closed form (as was done for
+the inner variables of IIa/IIc) followed by a quad-precision
+identification. Note that diagram I needs no renormalization at all, so
+there is no scheme ambiguity in the comparison.
+
 ## Diagrams IIb, IIf: external-leg self-energies — no contribution
 
 ![Diagram IIb](figures/g2-nlo-IIb.svg)
@@ -743,10 +822,19 @@ $$\boxed{A_2 = \frac{197}{144} + \frac{\pi^2}{12} + \frac34\zeta(3)
 5. ~~Diagram IIc~~ — **done** (three pieces independently evaluated,
    sum equals Petermann's eq. (3) exactly). Optional: comparison with
    Petermann 1958's eqs. (2.3)-(2.4) integrands and his bounds.
-6. Diagram IIa (same machinery as IIc).
-7. Diagram I (direct two-loop; no renormalization — but a genuine
-   two-loop integral, since the crossed photons don't factorize into a
-   one-loop insertion; needs sequential two-loop integration in the
-   pipeline).
-8. Assembly, IR-cancellation check, final $A_2$; analytic values for
-   IIc/IIa/I.
+6. ~~Diagram IIa~~ — **done** (same machinery as IIc; equals
+   Petermann's eq. (2)).
+7. ~~Diagram I~~ — **done numerically** (derived by the pipeline and
+   confirmed against Petermann's closed form to $0.08\sigma$ by a
+   mixed-precision lattice rule). Remaining refinement: exact $y, t$
+   integration to 3 dimensions followed by a quad-precision
+   identification, as was done for the inner variables of IIa/IIc.
+8. ~~Assembly, IR-cancellation check, final $A_2$~~ — **done**
+   (`pixi run assembly`).
+
+So all five contributions have been reproduced and they sum to $A_2$.
+What remains is refinement rather than new physics: an analytic (rather
+than 14-digit-numeric) evaluation of the IIc/IIa pieces, an analytic
+diagram I, a dimensional-regularization cross-check of the whole
+calculation, and the comparison against Petermann 1958's own integrands
+and bounds.

@@ -28,6 +28,7 @@ module i_qmc_mod
    implicit none
    integer, parameter :: dp = kind(1.d0), qp = selected_real_kind(30)
    integer(8) :: nquad = 0, nbad = 0
+   real(kind(1.d0)) :: wdrop = 0, wtot = 0   ! dropped vs total measure
    interface logc
       module procedure logc_r, logc_c, logc_rq, logc_cq
    end interface
@@ -71,7 +72,7 @@ contains
       ffI_qp = real(fIv, qp)
    end function
 
-   real(dp) function feval(u, v, r, y, t)
+   real(dp) function feval(u, v, r, y, t, w)
       ! double precision in the bulk, quad where it breaks down.
       ! Calibration of double against quad on random points (worst
       ! relative error, code/g2_i_cal.f90):
@@ -82,12 +83,16 @@ contains
       ! Below FLOOR even quad would lose its digits; those points carry
       ! a relative measure ~1e-6 under the smoothstep and a bounded
       ! integrand, and are dropped (counted in nbad).
-      real(dp), intent(in) :: u, v, r, y, t
+      real(dp), intent(in) :: u, v, r, y, t, w
       real(dp), parameter :: EDGE = 1e-2_dp, FLOOR = 1e-6_dp
       real(dp) :: gv
+      !$omp atomic
+      wtot = wtot + w
       if (1 - v - r < FLOOR) then
          !$omp atomic
          nbad = nbad + 1
+         !$omp atomic
+         wdrop = wdrop + w
          feval = 0
          return
       else if (1 - v - r < EDGE) then
@@ -101,6 +106,8 @@ contains
       if (gv /= gv) then
          !$omp atomic
          nbad = nbad + 1
+         !$omp atomic
+         wdrop = wdrop + w
          gv = 0
       end if
       feval = gv
@@ -110,14 +117,28 @@ end module
 program g2_i_qmc
    use i_qmc_mod
    implicit none
-   integer(8), parameter :: nn = 16777216_8         ! 2^24 lattice points
-   integer, parameter :: nsh = 8                    ! random shifts
    integer(8), parameter :: agen = 1076671_8        ! Korobov parameter
-   real(dp) :: zv(5), sh(5), vals(nsh), mean, sd, pi, targ
+   integer(8) :: nn = 16777216_8                    ! 2^24 lattice points
+   integer :: nsh = 8                               ! random shifts
+   real(dp) :: zv(5), sh(5), mean, sd, pi, targ
+   real(dp), allocatable :: vals(:)
    real(dp), parameter :: zeta3 = 1.2020569031595942854_dp
-   integer :: is, j
+   integer :: is, j, nargs
    integer(8) :: az
    integer, allocatable :: seed(:)
+   character(len=8) :: argbuf
+   ! optional arguments: log2(N) and the number of shifts, for quick runs
+   nargs = command_argument_count()
+   if (nargs >= 1) then
+      call get_command_argument(1, argbuf)
+      read (argbuf, *) j
+      nn = 2_8**j
+   end if
+   if (nargs >= 2) then
+      call get_command_argument(2, argbuf)
+      read (argbuf, *) nsh
+   end if
+   allocate(vals(nsh))
    pi = 4*atan(1.0_dp)
    targ = 1.0_dp/6 + 13*pi**2/36 + 5*zeta3/4 - 5*pi**2*log(2.0_dp)/6
    call random_seed(size=j)
@@ -144,7 +165,8 @@ program g2_i_qmc
    print "(a,f18.10)", "diff   = ", mean - targ
    print "(a,f8.4,a)", "quad-precision evaluations: ", &
       100.0_dp*nquad/(nn*real(nsh, dp)), " %"
-   print "(a,i12)", "NaN evaluations zeroed:     ", nbad
+   print "(a,i12,a,es9.2)", "points dropped:             ", nbad, &
+      "   fraction of the measure: ", wdrop/wtot
 contains
    real(dp) function lattice_sum(zg, shift, np)
       real(dp), intent(in) :: zg(5), shift(5)
@@ -171,7 +193,7 @@ contains
          t = x(4)
          y = (1 - t)*x(5)
          w = w*(1 - v)*(1 - v - r)*(1 - t)
-         acc = acc + w*feval(u, v, r, y, t)
+         acc = acc + w*feval(u, v, r, y, t, w)
       end do
       lattice_sum = acc/real(np, dp)
    end function
