@@ -3,3 +3,10 @@ _build/
 code/*.pkl
 __pycache__/
 *.mod
+
+# compiled Fortran binaries in code/
+code/g2_i_qmc
+code/g2_i_de
+code/g2_i0
+code/g2_i0_28
+code/g2_i0_40
