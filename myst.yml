@@ -2,6 +2,11 @@
 version: 1
 project:
   id: b3c28fa6-2278-45e5-8dce-77d3630bf3aa
+  math:
+    # Feynman slash: full solidus overlapped on the letter. KaTeX \not sits
+    # too far left (combining overlay); 0.20em was too far right. 0.06em
+    # lands the stroke on the stem of italic p/k.
+    '\slashed': '\mathrlap{\hspace{0.06em}/}{#1}'
   # title:
   # description:
   # keywords: []

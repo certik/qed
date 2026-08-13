@@ -122,9 +122,11 @@ $A_2$:
 
 For the record, KK's two errors: their $\mu_\mathrm{I}$ was too low by
 $\frac{1}{32}$, and their $\mu_\mathrm{IIc} = -3.18$ was too low by
-$\frac{32}{3} - \frac{61}{8}\pi^2 + \frac{17}{2}\pi^2\log 2
-- \frac{109}{4}\zeta(3) = 2.614$, which is how they arrived at the wrong
-total $-2.973$.
+
+$$\frac{32}{3} - \frac{61}{8}\pi^2 + \frac{17}{2}\pi^2\log 2
+- \frac{109}{4}\zeta(3) = 2.614,$$
+
+which is how they arrived at the wrong total $-2.973$.
 
 **Caveat on per-diagram comparisons**: the split of $A_2$ into the five
 $\mu$'s is scheme-dependent — it depends on how the UV subtractions
@@ -213,8 +215,8 @@ All diagrams are computed by one mechanical pipeline
   every step is a scalar polynomial identity that can be checked
   numerically.
 * **Form-factor projection**: sandwiching $\Gamma^\mu$ between explicit
-  spinors and matching against $\gamma^\mu F_1 + i\sigma^{\mu\nu}q_\nu
-  F_2/2m$. The $\mu = 1$ spin-flip sandwich alone measures only the
+  spinors and matching against $\gamma^\mu F_1 + i\sigma^{\mu\nu}q_\nu F_2/2m$.
+  The $\mu = 1$ spin-flip sandwich alone measures only the
   magnetic combination $F_1 + F_2$ (its two basis values coincide), so it
   is paired with the $\mu = 0$ no-flip sandwich; at $q^2 \to 0$,
 
@@ -344,8 +346,8 @@ diagram contributes equally; $\mu_\mathrm{IId}$ includes both (factor 2).
 **Renormalization**: $\Sigma$ is UV divergent; we use the fully
 on-shell-subtracted
 
-$$\Sigma_R(p) = \Sigma(p) - \delta m - (\not p - m)
-   \left.\frac{\partial\Sigma}{\partial\not p}\right|_{\not p = m},$$
+$$\Sigma_R(p) = \Sigma(p) - \delta m - (\slashed{p} - m)
+   \left.\frac{\partial\Sigma}{\partial\slashed{p}}\right|_{\slashed{p} = m},$$
 
 which is equivalent to adding the $\delta m$-insertion counterterm diagram
 
@@ -359,7 +361,7 @@ on-shell subtraction *is* the KK/Petermann scheme for IId.
 **Derivation** (`pixi run iid-sympy`, `code/g2_iid.py`): the pipeline
 derives the inner loop mechanically,
 
-$$\Sigma(k) = \frac{e^2}{16\pi^2}\,(4m - 2u\not k)
+$$\Sigma(k) = \frac{e^2}{16\pi^2}\,(4m - 2u\slashed{k})
    \left(L_{UV} - \log D_\mathrm{in}\right), \qquad
   D_\mathrm{in} = a - b\,k^2,\quad
   a = (1-u)m^2 + u\lambda^2,\quad b = u(1-u),$$
@@ -462,8 +464,8 @@ scheme one subtracts the corresponding second-order renormalization part
 (the $\delta F_1(0)\,\gamma^\mu$ counterterm) *within the diagram*, which
 is what makes their $\mu_\mathrm{IIa}$ UV finite and even IR finite.
 
-**Plan**: compute the renormalized inner vertex $\Gamma^\mu - \gamma^\mu
-\delta F_1(0)$ with its photon legs off shell, keeping Feynman parameters;
+**Plan**: compute the renormalized inner vertex $\Gamma^\mu - \gamma^\mu \delta F_1(0)$
+with its photon legs off shell, keeping Feynman parameters;
 insert into the outer LO-type loop. This and IIc are the genuinely
 hard two-loop parametric integrals (4–5 parameters).
 **Target**: $\mu_\mathrm{IIa} = \frac{11}{48} + \frac{\pi^2}{18}$.
@@ -551,8 +553,8 @@ $2\times10^{-4}$ and confirms the IR term $-\frac12\log\lambda^2$
   $$\mu_b = -\log\lambda - \tfrac54 + O(\lambda\log\lambda),$$
 
   so the whole IR log of IIc lives here, and
-  $A^* + C^* = -\frac{37}{24} + \frac{\pi^2}{18} - \frac{\zeta(3)}{2}
-  + \frac{\pi^2}{3}\log 2$ where $A^*, C^*$ are the $\lambda \to 0$
+  $A^* + C^* = -\frac{37}{24} + \frac{\pi^2}{18} - \frac{\zeta(3)}{2} + \frac{\pi^2}{3}\log 2$
+  where $A^*, C^*$ are the $\lambda \to 0$
   limits of pieces (a), (c) (both finite).
 
 * **Piece (a)**: the $z$, $\chi = u{+}v$, and $s = y{+}z$ integrations are
@@ -605,8 +607,7 @@ sequential analytic integration. Together with IIa/IIc this is where
 $\zeta(3)$ and $\pi^2\log 2$ appear. KK's value was slightly wrong (by
 $\frac1{32}$) even here, caught only by Petermann's analytic evaluation
 (footnote in `petermann1958.pdf`).
-**Target**: $\mu_\mathrm{I} = \frac16 + \frac{13}{36}\pi^2
-+ \frac54\zeta(3) - \frac56\pi^2\log 2$.
+**Target**: $\mu_\mathrm{I} = \frac16 + \frac{13}{36}\pi^2 + \frac54\zeta(3) - \frac56\pi^2\log 2$.
 
 ## Diagrams IIb, IIf: external-leg self-energies — no contribution
 
@@ -624,8 +625,8 @@ IIb/IIf and their renormalization counterterms.
 1. Sum the five contributions; verify the $\log\lambda$ cancellation
    between IIc and IId symbolically.
 2. Verify the total equals
-   $A_2 = \frac{197}{144} + \frac{\pi^2}{12} + \frac34\zeta(3)
-   - \frac12\pi^2\log 2$ (already verified above for Petermann's values;
+   $A_2 = \frac{197}{144} + \frac{\pi^2}{12} + \frac34\zeta(3) - \frac12\pi^2\log 2$
+   (already verified above for Petermann's values;
    must hold for our own derived ones).
 3. Numeric grand total in Fortran as an end-to-end sanity check.
 

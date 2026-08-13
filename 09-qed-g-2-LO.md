@@ -247,15 +247,15 @@ $$=
     \int {\mathrm{d}^4 k\over (2\pi)^4} {-ig_{\nu\rho}\over (k-p)^2 +i\epsilon}
         \bar u(p')
         (-ie\gamma^\nu)
-        {i(\not{k}' + m)\over k'^2-m^2 +i\epsilon}
+        {i(\slashed{k}' + m)\over k'^2-m^2 +i\epsilon}
         \gamma^\mu
-        {i(\not{k} + m)\over k^2-m^2 +i\epsilon}
+        {i(\slashed{k} + m)\over k^2-m^2 +i\epsilon}
         (-ie\gamma^\rho)
         u(p) =$$
 
 $$= 2ie^2\int {\mathrm{d}^4 k\over (2\pi)^4}
     {\bar u(p') \left(
-        \not{k} \gamma^\mu \not{k}' + m^2\gamma^\mu - 2m(k+k')^\mu
+        \slashed{k} \gamma^\mu \slashed{k}' + m^2\gamma^\mu - 2m(k+k')^\mu
         \right) u(p) \over
     ((k-p)^2 + i\epsilon)(k'^2 - m^2 + i\epsilon)(k^2-m^2+i\epsilon)
         }=$$
