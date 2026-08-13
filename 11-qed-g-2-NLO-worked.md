@@ -3930,6 +3930,234 @@ To summarize:
 | what it was | artifact of splitting into diagrams | an ill-posed question | short-distance physics not predicted by the theory |
 | Schwarzschild analogue | coordinate singularity at the horizon | asking for a photon's proper time | needing boundary conditions (and, at the Landau pole, $r=0$) |
 
+### 10.7 The infrared story in full: soft photons and the detector
+
+Section 10.6 asserted that the infrared divergence of a cross section is
+cured by summing over final states, and that the answer then depends on
+the detector's energy resolution $\Delta E$. That deserves to be shown
+rather than asserted, both because it is the one place where a divergence
+turns into something an experimentalist has to measure, and because it
+explains by contrast why $a_e$ needs none of it.
+
+**Infinitely many photons, of finite total energy.** Start from the fact
+underneath everything else. The mean number of photons radiated with
+energy between $\omega$ and $\omega+d\omega$ in a scattering event
+behaves, as we will derive below, like
+
+$$d\langle N\rangle \;\simeq\;
+  \frac{\alpha}{\pi}\,\mathcal{F}\,\frac{d\omega}{\omega},$$
+
+with $\mathcal{F}$ a kinematic factor independent of $\omega$. Integrate
+this two ways:
+
+$$\langle N\rangle \sim \int_0 \frac{d\omega}{\omega}
+  \;=\; \text{logarithmically divergent},
+  \qquad
+  \langle E\rangle \sim \int_0 \omega\,\frac{d\omega}{\omega}
+  = \int_0 d\omega \;=\; \text{finite}.$$
+
+The number of photons diverges while their total energy does not, because
+they accumulate at arbitrarily low energy. **Every real scattering event
+emits infinitely many photons**, all but finitely many of them below any
+threshold one cares to name. The probability of scattering and emitting
+*none* is therefore not small but exactly zero, and a perturbative
+calculation that asks for it is entitled to return $-\infty$. The photon
+mass $\lambda$ works as a regulator precisely because it truncates the
+spectrum at $\omega\sim\lambda$ and makes the photon number finite — but
+$\lambda$ is fictitious, and the honest resolution is to ask a better
+question.
+
+**The eikonal factorization.** To get $\mathcal{F}$, attach one soft
+photon of momentum $k$ and polarization $\varepsilon$ to the elastic
+process, in all possible ways. Since $k\to0$, only attachments to the
+external legs matter: an internal line carries momentum of order the hard
+scale, so adding $k$ to it changes nothing, whereas an external line is
+on shell and adding $k$ to it produces a nearly singular propagator.
+
+Attach to the **outgoing** line. The extra propagator carries $p'+k$, and
+
+$$\left(p'+k\right)^2 - m^2 = p'^2 + 2p'\cdot k + k^2 - m^2
+  = 2\,p'\cdot k$$
+
+using $p'^2 = m^2$ and $k^2=0$. The numerator, in the soft limit where
+$\slashed k$ is dropped, is $\bar u(p')\,\slashed\varepsilon^*
+\left(\slashed p'+m\right)$, and this collapses by the Dirac equation:
+anticommuting,
+$\slashed\varepsilon^*\slashed p' = 2(\varepsilon^*\cdot p') - \slashed p'\slashed\varepsilon^*$, so
+
+$$\bar u(p')\slashed\varepsilon^*\left(\slashed p'+m\right)
+  = 2\left(\varepsilon^*\!\cdot p'\right)\bar u(p')
+  - \bar u(p')\slashed p'\slashed\varepsilon^*
+  + m\,\bar u(p')\slashed\varepsilon^*
+  = 2\left(\varepsilon^*\!\cdot p'\right)\bar u(p'),$$
+
+the last two terms cancelling because
+$\bar u(p')\slashed p' = m\bar u(p')$. Collecting the vertex $-ie$ and
+the propagator's $i$,
+
+$$\bar u(p')\left(-ie\slashed\varepsilon^*\right)
+  \frac{i\left(\slashed p'+m\right)}{2p'\cdot k}
+  = e\,\frac{p'\cdot\varepsilon^*}{p'\cdot k}\;\bar u(p').$$
+
+Attach to the **incoming** line instead. Now the propagator carries
+$p-k$, so its denominator is $-2p\cdot k$, and the same manipulation with
+$\slashed p\,u(p) = m\,u(p)$ gives
+$\left(\slashed p+m\right)\slashed\varepsilon^*u(p)
+ = 2\left(p\cdot\varepsilon^*\right)u(p)$, whence
+
+$$\frac{i\left(\slashed p+m\right)}{-2p\cdot k}
+  \left(-ie\slashed\varepsilon^*\right)u(p)
+  = -\,e\,\frac{p\cdot\varepsilon^*}{p\cdot k}\;u(p).$$
+
+**The relative minus sign is derived, not assumed**: it comes from the
+propagator denominator changing sign when the photon is emitted from the
+incoming rather than the outgoing leg. Adding the two,
+
+$$\boxed{\;\mathcal{M}\left(p\to p'+\gamma\right)
+  \;\simeq\;\mathcal{M}_0\cdot e
+  \left[\frac{p'\cdot\varepsilon^*}{p'\cdot k}
+      - \frac{p\cdot\varepsilon^*}{p\cdot k}\right]
+  \;=\;\mathcal{M}_0\cdot\varepsilon^*_\mu J^\mu,\;}$$
+
+$$J^\mu = e\left[\frac{p'^\mu}{p'\cdot k}
+  - \frac{p^\mu}{p\cdot k}\right].$$
+
+The soft emission has factorized completely: the hard physics sits in
+$\mathcal{M}_0$ and knows nothing about the photon. Note also that the
+eikonal current is conserved,
+
+$$k_\mu J^\mu = e\left[\frac{p'\cdot k}{p'\cdot k}
+  - \frac{p\cdot k}{p\cdot k}\right] = e\left[1-1\right] = 0,$$
+
+which is what makes the polarization sum
+$\sum_\mathrm{pol}\varepsilon^{*\mu}\varepsilon^{\nu}\to-g^{\mu\nu}$
+legitimate and the whole construction gauge invariant.
+
+**The soft cross section.** Squaring and summing polarizations,
+
+$$\sum_\mathrm{pol}\left|\mathcal{M}\right|^2
+  = \left|\mathcal{M}_0\right|^2\left(-J^\mu J_\mu\right)
+  = \left|\mathcal{M}_0\right|^2 e^2
+  \left[\frac{2\,p\cdot p'}{\left(p\cdot k\right)\left(p'\cdot k\right)}
+  - \frac{m^2}{\left(p'\cdot k\right)^2}
+  - \frac{m^2}{\left(p\cdot k\right)^2}\right],$$
+
+and integrating over the photon phase space
+$d^3k/\left[(2\pi)^3 2\omega\right]$: with $d^3k = \omega^2d\omega\,
+d\Omega$ the measure supplies $\omega\,d\omega\,d\Omega/2$, while every
+term in the bracket scales as $1/\omega^2$, leaving
+
+$$\int\frac{d\omega}{\omega}\times\left(\text{angular integral}\right).$$
+
+There is the $d\omega/\omega$ promised at the start. Cutting the
+integral off below at the regulator and above at the detector resolution,
+
+$$\sigma_\mathrm{real}\left(\omega<\Delta E\right)
+  = \sigma_0\,\frac{\alpha}{\pi}\,\mathcal{F}\left(q^2\right)
+  \log\frac{\Delta E^2}{\lambda^2} \;+\;\text{finite},$$
+
+where $\mathcal{F}(q^2)$ is the angular integral, which for
+$-q^2 = Q^2 \gg m^2$ behaves as $\mathcal{F}\simeq\log(Q^2/m^2)$. (The
+electron mass regulates what would otherwise be a second, *collinear*
+divergence when the photon is emitted parallel to a light-like charge;
+that is why $m$ appears here at all.)
+
+**The virtual side, and why the two must match.** The one-loop vertex
+correction interferes with the tree amplitude and contributes to the
+elastic cross section, with the opposite sign,
+
+$$\sigma_\mathrm{virtual}
+  = -\,\sigma_0\,\frac{\alpha}{\pi}\,\mathcal{F}\left(q^2\right)
+  \log\frac{Q^2}{\lambda^2} \;+\;\text{finite}.$$
+
+The same $\mathcal{F}(q^2)$ appears in both, and this is not a
+coincidence to be checked case by case: it is **unitarity**. The virtual
+correction is the amplitude-level shadow of the identical soft-photon
+cloud, and total probability is conserved — if radiating becomes more
+likely, not-radiating must become correspondingly less likely, by exactly
+the same amount.
+
+**The cancellation.** Adding the two, the fictitious $\lambda$ drops out
+and is replaced by the physical $\Delta E$:
+
+$$\boxed{\;\sigma\left(\Delta E\right) = \sigma_0
+  \left[1 - \frac{\alpha}{\pi}\mathcal{F}\left(q^2\right)
+  \log\frac{Q^2}{\Delta E^2} + \cdots\right].\;}$$
+
+Read it in the right direction: loosening the cut *increases* the count,
+because more bremsstrahlung events are accepted as elastic; tightening it
+decreases the count. That is simply what a detector does, and $\Delta E$
+belongs to the definition of the observable in the same way as a bin
+width or an angular acceptance. Two detectors of different resolution are
+measuring genuinely different quantities and are entitled to different
+numbers.
+
+**Exponentiation.** The bracket goes negative once
+$\log(Q^2/\Delta E^2)$ is large enough, which is perturbation theory
+failing exactly where the physics says the answer must vanish. The cure
+is that these logarithms exponentiate, and the reason is that soft
+emissions are independent: each factorizes off the hard process in the
+same way, so the number of soft photons is Poisson distributed,
+
+$$P(n) = \frac{\langle N\rangle^n}{n!}e^{-\langle N\rangle},
+  \qquad P(0) = e^{-\langle N\rangle}.$$
+
+Resumming the leading logarithms accordingly,
+
+$$\sigma\left(\Delta E\right) = \sigma_0
+  \left(\frac{\Delta E^2}{Q^2}\right)
+  ^{\frac{\alpha}{\pi}\mathcal{F}\left(q^2\right)}
+  \;\xrightarrow[\Delta E\to0]{}\;0 .$$
+
+This is the **Sudakov form factor**, and it is Bloch–Nordsieck's theorem
+in one line: the exclusive cross section vanishes as a *power* of the
+resolution, with the exponent equal to the mean number of unobserved
+photons. Because $\mathcal{F}\simeq\log(Q^2/m^2)$ at high energy, the
+exponent itself contains a logarithm — the celebrated Sudakov *double*
+logarithm.
+
+**How big is this in practice?** Not small. For electron scattering at a
+hard scale of $1$ GeV with a detector resolving $10$ MeV:
+
+    >>> from math import log, pi
+    >>> alpha = 1/137.035999084
+    >>> Q, dE, m = 1.0, 0.010, 0.51099895e-3        # GeV
+    >>> F = log(Q**2/m**2)
+    >>> round(F, 1)
+    15.2
+    >>> round(alpha/pi*F*log(Q**2/dE**2), 2)
+    0.32
+    >>> round((dE**2/Q**2)**(alpha/pi*F), 3)
+    0.723
+
+A 30% suppression of the apparently elastic rate, which is why every
+precision electron-scattering experiment quotes a radiative correction
+computed for its own cuts. The infrared divergence is not an academic
+matter that cancels quietly; it becomes a number in the systematic error
+budget.
+
+**Why $a_e$ escapes all of this.** The infrared divergence of the elastic
+amplitude lives entirely in $F_1$ — it is the charge form factor that is
+sensitive to soft radiation — and $F_1$ is exactly the piece that real
+emission cancels against. $F_2(0)$ is infrared finite by itself. The
+magnetic moment is untouched by soft photons, so $a_e$ is a genuine
+number with no $\Delta E$ anywhere in it, and this chapter never had to
+think about detectors.
+
+The $\log\lambda$ we did fight with is a weaker and quite different
+thing: individual *diagrams* contributing to $F_2$ diverge, and cancel
+against one another in the sum (§13). That is an artifact of choosing
+to compute diagram by diagram — the coordinate-singularity case of
+§10.6 — and not a statement about any observable.
+
+**A generalization worth knowing.** Bloch–Nordsieck is the final-state,
+QED version of the Kinoshita–Lee–Nauenberg theorem, which states that
+finiteness requires summing over *all* degenerate states. In QCD the
+initial states must be summed over as well, since coloured partons are
+not isolated, and the leftover dependence is absorbed into
+scale-dependent parton distributions — the same structure as here, with
+the factorization scale playing the role of $\Delta E$.
+
 ## 11. The covariant reduction
 
 We now do the algebra of §7.1 with $\Sigma_R$ inserted. The pipeline
