@@ -29,7 +29,7 @@ the known analytic value, and (once done) our own SymPy derivation
 cross-checked numerically in Fortran. Currently done: LO massive-photon
 kernel, the full two-loop pipeline (validated at LO), diagram IIe
 (analytic + numeric), diagram IId (analytic + numeric), diagram IIc
-(numeric; analytic TODO).
+(analytic + numeric).
 
 As in the LO section, the anomalous moment is the on-shell form factor
 
@@ -122,9 +122,11 @@ $A_2$:
 
 For the record, KK's two errors: their $\mu_\mathrm{I}$ was too low by
 $\frac{1}{32}$, and their $\mu_\mathrm{IIc} = -3.18$ was too low by
-$\frac{32}{3} - \frac{61}{8}\pi^2 + \frac{17}{2}\pi^2\log 2
-- \frac{109}{4}\zeta(3) = 2.614$, which is how they arrived at the wrong
-total $-2.973$.
+
+$$\frac{32}{3} - \frac{61}{8}\pi^2 + \frac{17}{2}\pi^2\log 2
+- \frac{109}{4}\zeta(3) = 2.614,$$
+
+which is how they arrived at the wrong total $-2.973$.
 
 **Caveat on per-diagram comparisons**: the split of $A_2$ into the five
 $\mu$'s is scheme-dependent — it depends on how the UV subtractions
@@ -213,8 +215,8 @@ All diagrams are computed by one mechanical pipeline
   every step is a scalar polynomial identity that can be checked
   numerically.
 * **Form-factor projection**: sandwiching $\Gamma^\mu$ between explicit
-  spinors and matching against $\gamma^\mu F_1 + i\sigma^{\mu\nu}q_\nu
-  F_2/2m$. The $\mu = 1$ spin-flip sandwich alone measures only the
+  spinors and matching against $\gamma^\mu F_1 + i\sigma^{\mu\nu}q_\nu F_2/2m$.
+  The $\mu = 1$ spin-flip sandwich alone measures only the
   magnetic combination $F_1 + F_2$ (its two basis values coincide), so it
   is paired with the $\mu = 0$ no-flip sandwich; at $q^2 \to 0$,
 
@@ -344,8 +346,8 @@ diagram contributes equally; $\mu_\mathrm{IId}$ includes both (factor 2).
 **Renormalization**: $\Sigma$ is UV divergent; we use the fully
 on-shell-subtracted
 
-$$\Sigma_R(p) = \Sigma(p) - \delta m - (\not p - m)
-   \left.\frac{\partial\Sigma}{\partial\not p}\right|_{\not p = m},$$
+$$\Sigma_R(p) = \Sigma(p) - \delta m - (\slashed{p} - m)
+   \left.\frac{\partial\Sigma}{\partial\slashed{p}}\right|_{\slashed{p} = m},$$
 
 which is equivalent to adding the $\delta m$-insertion counterterm diagram
 
@@ -359,7 +361,7 @@ on-shell subtraction *is* the KK/Petermann scheme for IId.
 **Derivation** (`pixi run iid-sympy`, `code/g2_iid.py`): the pipeline
 derives the inner loop mechanically,
 
-$$\Sigma(k) = \frac{e^2}{16\pi^2}\,(4m - 2u\not k)
+$$\Sigma(k) = \frac{e^2}{16\pi^2}\,(4m - 2u\slashed{k})
    \left(L_{UV} - \log D_\mathrm{in}\right), \qquad
   D_\mathrm{in} = a - b\,k^2,\quad
   a = (1-u)m^2 + u\lambda^2,\quad b = u(1-u),$$
@@ -462,13 +464,13 @@ scheme one subtracts the corresponding second-order renormalization part
 (the $\delta F_1(0)\,\gamma^\mu$ counterterm) *within the diagram*, which
 is what makes their $\mu_\mathrm{IIa}$ UV finite and even IR finite.
 
-**Plan**: compute the renormalized inner vertex $\Gamma^\mu - \gamma^\mu
-\delta F_1(0)$ with its photon legs off shell, keeping Feynman parameters;
+**Plan**: compute the renormalized inner vertex $\Gamma^\mu - \gamma^\mu \delta F_1(0)$
+with its photon legs off shell, keeping Feynman parameters;
 insert into the outer LO-type loop. This and IIc are the genuinely
 hard two-loop parametric integrals (4–5 parameters).
 **Target**: $\mu_\mathrm{IIa} = \frac{11}{48} + \frac{\pi^2}{18}$.
 
-## Diagram IIc: corner (vertex part at an internal vertex) — numeric DONE, analytic TODO
+## Diagram IIc: corner (vertex part at an internal vertex) — DONE
 
 ![Diagram IIc](figures/g2-nlo-IIc.svg)
 
@@ -542,10 +544,72 @@ The $\lambda \to 0$ extrapolation agrees with Petermann's constant to
 $2\times10^{-4}$ and confirms the IR term $-\frac12\log\lambda^2$
 (cancelling IId's).
 
-**TODO**: analytic evaluation (the same sequential-integration program as
-IId; this is where $\zeta(3)$ and $\pi^2\log 2$ will appear), target
-$\mu_\mathrm{IIc} = -\frac{67}{24} + \frac{\pi^2}{18}
-- \frac12\zeta(3) + \frac13\pi^2\log 2 - \frac12\log\frac{\lambda^2}{m^2}$.
+**Analytic evaluation** (in progress; `code/g2_iic_analytic.py`,
+`code/g2_iic_a_sint.py`, `code/g2_iic_a_quad.f90`):
+
+* **Piece (b)** (the $\delta F_1 \times$ LO cross term) factorizes into two
+  1-dim integrals over $u{+}v$ and $y{+}z$ and evaluates exactly to
+
+  $$\mu_b = -\log\lambda - \tfrac54 + O(\lambda\log\lambda),$$
+
+  so the whole IR log of IIc lives here, and
+  $A^* + C^* = -\frac{37}{24} + \frac{\pi^2}{18} - \frac{\zeta(3)}{2} + \frac{\pi^2}{3}\log 2$
+  where $A^*, C^*$ are the $\lambda \to 0$
+  limits of pieces (a), (c) (both finite).
+
+* **Piece (a)**: the $z$, $\chi = u{+}v$, and $s = y{+}z$ integrations are
+  done exactly (the outer $\Delta$ is the positive-definite
+  $u(t(\chi-1)+s(u-1))^2 + t(1-u)\chi^2$, whose roots are rational in
+  $R = \sqrt{tu(1-u)}$; atans become complex-linear logs; the dilog
+  primitive is verified by differentiation; every step checked
+  numerically to 15-25 digits). The remaining 2-dim integral is computed
+  by a quad-precision (`real(16)`, gfortran) double-exponential
+  quadrature with a complex-dilogarithm implementation
+  (`g2_iic_a_quad.f90`), with the $u \to 1$ cancellation sliver handled
+  by a $\delta$-cut and pure-$\delta^2$ Richardson extrapolation:
+
+      A* = 0.769965610144859 (Richardson, ~14 digits)
+
+  A rational-lattice search (all coefficient denominators dividing the
+  ones appearing in Petermann's values) gives the **unique** hit at
+  $5\times10^{-13}$:
+
+  $$A^* = -\frac{29}{12} + \frac{\pi^2}{18} - \frac98\zeta(3)
+    + \frac{7}{12}\pi^2\log 2 = 0.7699656101448\ldots$$
+
+* **Piece (c)** (`code/g2_iic_c_red.py`, `code/g2_iic_c_quad.f90`):
+  reduced exactly to 3 dimensions — the $\xi$-integration is rational
+  (its only pole lies outside $(0,1)$; remarkably, the $\xi = 1$
+  denominator is the *same* quadratic $Q$ as in piece (a), so the letter
+  alphabet is shared), the $z$-integration is a trivial factor $s$, and
+  the $\chi = u{+}v$ integration goes through the complex-letters
+  machinery (the rational part's only pole $\chi^* = 1 + s(1-u)/t$ lies
+  outside $(u,1)$). The resulting $G_c(s,t,u)$ (1789 ops) matches direct
+  quadrature to 20 digits. The 3-dim quad-precision DE quadrature
+  (with the $t \to 0$ evaluation-breakdown sliver skipped below
+  $10^{-18}$, dropped mass $\sim 10^{-15}$) gives
+
+      C* = -0.08398655148953 (Richardson, ~14 digits)
+
+  which **directly confirms**
+
+  $$C^* = \frac78 + \frac58\zeta(3) - \frac14\pi^2\log 2
+    = -0.0839865514895327\ldots$$
+
+**Assembly** (verified exactly in SymPy):
+
+$$A^* + \mu_b + C^*
+  = -\frac{67}{24} + \frac{\pi^2}{18} - \frac{\zeta(3)}{2}
+    + \frac{\pi^2}{3}\log 2 - \frac12\log\frac{\lambda^2}{m^2}$$
+
+$$\boxed{\mu_\mathrm{IIc} = -\frac{67}{24} + \frac{\pi^2}{18}
+  - \frac12\zeta(3) + \frac13\pi^2\log 2
+  - \frac12\log\frac{\lambda^2}{m^2}}$$
+
+in agreement with `petermann1957.pdf`, eq. (3) — with every piece
+computed independently (pieces (a) and (c) identified from ~14-digit
+quad-precision integrals; their exact sequential integration remains an
+optional refinement).
 
 ## Diagram I: crossed ladder — TODO
 
@@ -563,8 +627,7 @@ sequential analytic integration. Together with IIa/IIc this is where
 $\zeta(3)$ and $\pi^2\log 2$ appear. KK's value was slightly wrong (by
 $\frac1{32}$) even here, caught only by Petermann's analytic evaluation
 (footnote in `petermann1958.pdf`).
-**Target**: $\mu_\mathrm{I} = \frac16 + \frac{13}{36}\pi^2
-+ \frac54\zeta(3) - \frac56\pi^2\log 2$.
+**Target**: $\mu_\mathrm{I} = \frac16 + \frac{13}{36}\pi^2 + \frac54\zeta(3) - \frac56\pi^2\log 2$.
 
 ## Diagrams IIb, IIf: external-leg self-energies — no contribution
 
@@ -582,8 +645,8 @@ IIb/IIf and their renormalization counterterms.
 1. Sum the five contributions; verify the $\log\lambda$ cancellation
    between IIc and IId symbolically.
 2. Verify the total equals
-   $A_2 = \frac{197}{144} + \frac{\pi^2}{12} + \frac34\zeta(3)
-   - \frac12\pi^2\log 2$ (already verified above for Petermann's values;
+   $A_2 = \frac{197}{144} + \frac{\pi^2}{12} + \frac34\zeta(3) - \frac12\pi^2\log 2$
+   (already verified above for Petermann's values;
    must hold for our own derived ones).
 3. Numeric grand total in Fortran as an end-to-end sanity check.
 
@@ -595,9 +658,9 @@ IIb/IIf and their renormalization counterterms.
    at LO~~ — **done**.
 4. ~~Diagram IId + $\delta m$ counterterm~~ — **done** (exact analytic
    value + Fortran numeric confirmation).
-5. Diagram IIc — **parametric integrands derived, value confirmed
-   numerically** (2e-4); analytic evaluation TODO, plus the comparison
-   with Petermann 1958's eqs. (2.3)-(2.4) integrands.
+5. ~~Diagram IIc~~ — **done** (three pieces independently evaluated,
+   sum equals Petermann's eq. (3) exactly). Optional: comparison with
+   Petermann 1958's eqs. (2.3)-(2.4) integrands and his bounds.
 6. Diagram IIa (same machinery as IIc).
 7. Diagram I (direct two-loop; no renormalization — but a genuine
    two-loop integral, since the crossed photons don't factorize into a
